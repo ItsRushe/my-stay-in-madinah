@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* THIS REPLACES THE TAILWIND CONFIG FILE */
+@theme {
+  --color-ivory: #F9F8F4;
+  --color-ink: #09101A;
+  --color-gold: #C5A059;
+  --color-goldHover: #B08D4C;
+  --font-playfair: "Playfair Display", serif;
+  --font-jost: "Jost", sans-serif;
+}
+
+/* CUSTOM STYLES */
+.bg-radial-glow { 
+  background-image: radial-gradient(circle at center, rgba(197, 160, 89, 0.15) 0%, transparent 70%); 
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.premium-glass { 
+  background: rgba(9, 16, 26, 0.7); 
+  backdrop-filter: blur(16px); 
+  -webkit-backdrop-filter: blur(16px); 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3); 
+}
+
+@keyframes slowPan { 
+  0% { transform: scale(1.05) translateY(0); } 
+  50% { transform: scale(1.05) translateY(-2%); } 
+  100% { transform: scale(1.05) translateY(0); } 
+}
+.animate-pan { animation: slowPan 20s ease-in-out infinite; }
