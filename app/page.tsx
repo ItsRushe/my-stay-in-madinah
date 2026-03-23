@@ -211,9 +211,9 @@ export default async function Home() {
       {/* BRANDED FOOTER */}
       <footer className="bg-ink pt-20 md:pt-32 pb-8 md:pb-12 px-6 md:px-12 border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center mb-16 md:mb-24 flex flex-col items-center">
-          <Link href="/" className="flex flex-col items-center group mb-10 md:mb-12 cursor-pointer">
-            <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-16 md:h-24 w-auto object-contain mb-5 opacity-90 transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl" />
-            <span className="text-gold font-jost text-xl md:text-2xl font-medium tracking-[0.2em] uppercase opacity-90 drop-shadow-lg">My Stay In Madinah</span>
+          <Link href="/" translate="no" className="flex flex-col items-center group mb-10 md:mb-12 cursor-pointer notranslate">
+           <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-16 md:h-24 w-auto object-contain mb-5 opacity-90 transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl" />
+           <span className="text-gold font-jost text-xl md:text-2xl font-medium tracking-[0.2em] uppercase opacity-90 drop-shadow-lg">My Stay In Madinah</span>
           </Link>
           <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-medium mb-6 md:mb-8 leading-tight">Your spiritual journey deserves a peaceful stay.</h2>
           <p className="text-white/50 font-light text-base md:text-lg mb-8 md:mb-12 max-w-2xl mx-auto px-4">Skip the platform fees. Secure your premium room in Madinah today for the best guaranteed rate.</p>
