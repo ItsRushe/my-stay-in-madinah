@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
-import Footer from "../components/Footer";
+import Footer from "../../components/Footer";
 import PriceDisplay from "../../components/PriceDisplay";
 
 export default function ToursPage() {

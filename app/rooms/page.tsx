@@ -1,7 +1,7 @@
 // app/rooms/page.tsx
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
-import Footer from "../components/Footer";
+import Footer from "../../components/Footer";
 import { createClient } from "../../lib/supabase/server";
 
 // Forces the page to fetch fresh data from Supabase
