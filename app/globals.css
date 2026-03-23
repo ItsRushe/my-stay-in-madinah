@@ -32,3 +32,10 @@
   100% { transform: scale(1.05) translateY(0); } 
 }
 .animate-pan { animation: slowPan 20s ease-in-out infinite; }
+
+/* GOOGLE TRANSLATE CUSTOMIZATION - Hides the default UI so our custom Navbar handles it */
+.skiptranslate iframe { display: none !important; }
+body { top: 0 !important; }
+#google_translate_element { display: none !important; }
+.goog-te-balloon-frame { display: none !important; }
+font { background: transparent !important; color: inherit !important; box-shadow: none !important; }
