@@ -173,7 +173,7 @@ export default async function Home() {
               <div className="p-8 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-playfair text-2xl text-ink font-medium">Madinah Islamic Heritage Tour</h3>
-                  <span className="text-2xl font-medium text-gold"><PriceDisplay amount={99} /></span>
+                  <span className="text-2xl font-medium text-gold">£99</span>
                 </div>
                 <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group (Up to 3 people)</p>
                 <p className="text-ink/70 font-light mb-8 flex-1 text-lg leading-relaxed">A comprehensive journey through the most significant historical landmarks in the Prophet's city.</p>
@@ -190,7 +190,7 @@ export default async function Home() {
               <div className="p-8 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-playfair text-2xl text-ink font-medium">Uhud Battlefield Private Tour</h3>
-                  <span className="text-2xl font-medium text-gold"><PriceDisplay amount={99} /></span>
+                  <span className="text-2xl font-medium text-gold">£60</span>
                 </div>
                 <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group (Up to 4 people)</p>
                 <p className="text-ink/70 font-light mb-8 flex-1 text-lg leading-relaxed">Walk the historic battlefield of Uhud. Pay respects at the Martyrs' Cemetery and climb Archers' Hill.</p>
