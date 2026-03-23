@@ -1,13 +1,20 @@
-// components/Navbar.tsx
 "use client";
 import { useState } from "react";
 import Link from "next/link";
 
 export default function Navbar({ activePage = "home" }: { activePage?: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const[isLangOpen, setIsLangOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState("EN");
+
+  const languages =[
+    { code: "EN", name: "English" },
+    { code: "AR", name: "العربية" },
+    { code: "RU", name: "Русский" },
+  ];
 
   return (
-    <nav className="fixed top-0 w-full z-[100] bg-ivory/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
+    <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center relative z-20">
         
         {/* Brand Logos */}
@@ -24,25 +31,65 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Rooms</Link>
           <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Tours</Link>
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
-          <Link href="/contact" className="bg-ink hover:bg-gold text-white px-5 py-2 rounded-sm font-medium transition-all duration-300 shadow-md">Book Direct</Link>
+          
+          {/* Language Toggle (Desktop) */}
+          <div className="relative">
+            <button 
+              onClick={() => setIsLangOpen(!isLangOpen)}
+              className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none"
+            >
+              {currentLang}
+              <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            {isLangOpen && (
+              <div className="absolute top-full right-0 mt-4 w-32 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50">
+                {languages.map((lang) => (
+                  <button 
+                    key={lang.code}
+                    onClick={() => { setCurrentLang(lang.code); setIsLangOpen(false); }}
+                    className={`text-left px-4 py-2 hover:bg-ivory hover:text-gold transition-colors ${currentLang === lang.code ? 'text-gold font-medium bg-ivory' : 'text-ink'}`}
+                  >
+                    {lang.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Sharp Edged Button */}
+          <Link href="/contact" className="bg-ink hover:bg-gold text-white px-6 py-3 font-medium transition-all duration-300 shadow-md rounded-none">Book Direct</Link>
         </div>
         
         {/* Mobile Hamburger Button */}
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="md:hidden text-ink hover:text-gold focus:outline-none">
           <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
           </svg>
         </button>
       </div>
       
       {/* Mobile Dropdown Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-ink/95 backdrop-blur-xl border-b border-white/10 flex flex-col items-center py-8 gap-6 text-ivory shadow-2xl z-10">
+        <div className="absolute top-full left-0 w-full bg-white border-b border-gray-200 flex flex-col items-center py-8 gap-6 text-ink shadow-2xl z-10">
           <Link href="/" className={`${activePage === 'home' ? 'text-gold' : 'hover:text-gold'} text-lg transition-colors`}>Home</Link>
           <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold' : 'hover:text-gold'} text-lg transition-colors`}>Rooms</Link>
           <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold' : 'hover:text-gold'} text-lg transition-colors`}>Tours</Link>
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold' : 'hover:text-gold'} text-lg transition-colors`}>Contact</Link>
-          <Link href="/contact" className="bg-gold hover:bg-white text-ink px-8 py-3 rounded-sm font-medium transition-all duration-300 mt-2">Book Direct</Link>
+          
+          {/* Mobile Language Selection */}
+          <div className="flex gap-4 pt-4 border-t border-gray-100 w-1/2 justify-center">
+            {languages.map((lang) => (
+              <button 
+                key={lang.code}
+                onClick={() => { setCurrentLang(lang.code); setIsMobileMenuOpen(false); }}
+                className={`text-sm font-medium ${currentLang === lang.code ? 'text-gold border-b border-gold' : 'text-ink/50'}`}
+              >
+                {lang.code}
+              </button>
+            ))}
+          </div>
+
+          <Link href="/contact" className="bg-gold hover:bg-ink text-white px-10 py-4 font-medium transition-all duration-300 mt-2 rounded-none">Book Direct</Link>
         </div>
       )}
     </nav>
