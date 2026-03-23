@@ -46,12 +46,11 @@ export default function Footer() {
             {/* Desktop Divider */}
             <div className="hidden md:block w-px h-5 bg-white/20"></div>
 
-            {/* FLAWLESS STRIPE BADGE */}
+            {/* FLAWLESS STRIPE BADGE USING YOUR IMAGE FILE */}
             <div className="flex items-center gap-3">
               <span className="tracking-widest uppercase text-[10px] text-white/50 font-medium">Secure Payments By</span>
-              <svg viewBox="0 0 60 25" xmlns="http://www.w3.org/2000/svg" className="w-[50px] h-auto text-white/70">
-                <path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M59.64 14.28h-8.06c.19 1.93 1.6 2.55 3.2 2.55 1.64 0 2.96-.37 4.05-.95v3.32a8.33 8.33 0 0 1-4.56 1.1c-4.01 0-6.83-2.5-6.83-7.48 0-4.19 2.39-7.52 6.3-7.52 3.92 0 5.96 3.28 5.96 7.5v1.48zm-5.92-5.62c-1.03 0-2.17.73-2.17 2.58h4.25c0-1.85-1.07-2.58-2.08-2.58zM43.7 15.3c-1.44 0-2.44-.6-2.92-1.22v5.57h-4.09V5.7h4.09v1.06c.7-.8 1.92-1.37 3.39-1.37 3.12 0 5.39 2.54 5.39 7.45 0 5.14-2.54 7.61-5.86 7.61zm-1.11-8.52c-1.56 0-2.91 1.2-2.91 3.7s1.36 3.91 2.91 3.91c1.55 0 2.93-1.36 2.93-3.91s-1.36-3.7-2.93-3.7zM31.25 20.08h-4.09V5.7h4.09v14.38zm-2.04-16.72c-1.32 0-2.39-1.06-2.39-2.38 0-1.31 1.07-2.37 2.39-2.37 1.31 0 2.38 1.06 2.38 2.37 0 1.32-1.07 2.38-2.38 2.38zM24.76 11.23v-5.5h-4.09v14.35h4.09v-5.26c0-2.28 1.4-2.85 2.55-2.85.25 0 .52.03.74.07V7.81c-.26-.06-.59-.11-.93-.11-1.36 0-2.08.57-2.36 1.1zM14.93 20.08h-4.09v-7.9c0-1.92-.81-2.61-2.01-2.61-1.4 0-2.52 1.15-2.52 3.1v7.4h-4.09V5.7h4.09v1.33c.8-1.07 1.98-1.63 3.36-1.63 2.92 0 5.26 1.83 5.26 5.67v8.99zM2.87 2.9C2.87 1.31 1.81.25.49.25-.83.25-1.9.1.8-1.9 2.37c0 1.32 1.07 2.39 2.39 2.39 1.32 0 2.38-1.07 2.38-2.38z" />
-              </svg>
+              {/* brightness-0 invert forces the image to become pure white! */}
+              <img src="/stripe-logo.png" alt="Stripe" className="h-6 w-auto opacity-70 object-contain brightness-0 invert" />
             </div>
             
           </div>
