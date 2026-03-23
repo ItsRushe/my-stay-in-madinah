@@ -114,12 +114,13 @@ html[dir="rtl"] .border-l { border-right-width: 1px !important; border-left-widt
 html[dir="rtl"] .border-r { border-left-width: 1px !important; border-right-width: 0 !important; }
 
 /* ABSOLUTE PROTECTION FOR LOGO & PRICING */
-.notranslate, 
-.notranslate * {
-  font-family: var(--font-jost) !important;
+/* The asterisk (*) ensures it applies to the text INSIDE the logo link too! */
+html[dir="rtl"] .notranslate, 
+html[dir="rtl"] .notranslate * {
+  font-family: 'Jost', sans-serif !important;
 }
 
 html[dir="rtl"] .notranslate {
-  direction: ltr !important;
   display: inline-flex;
+  unicode-bidi: isolate;
 }
