@@ -104,3 +104,11 @@ html[dir="rtl"] .mr-4 { margin-left: 1rem !important; margin-right: 0 !important
 html[dir="rtl"] .pl-6 { padding-right: 1.5rem !important; padding-left: 0 !important; }
 html[dir="rtl"] .border-l { border-right-width: 1px !important; border-left-width: 0 !important; }
 html[dir="rtl"] .border-r { border-left-width: 1px !important; border-right-width: 0 !important; }
+
+/* PROTECT LOGO & PRICING FONTS/DIRECTION IN ARABIC */
+html[dir="rtl"] .notranslate {
+  font-family: var(--font-jost) !important;
+  direction: ltr !important; 
+  display: inline-block;
+  unicode-bidi: isolate;
+}
