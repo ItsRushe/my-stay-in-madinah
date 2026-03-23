@@ -72,7 +72,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           {/* CURRENCY TOGGLE */}
           <div className="relative notranslate" translate="no">
             <button onClick={() => setIsCurrOpen(!isCurrOpen)} className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none font-medium">
-              {mounted ? currency : "GBP"}
+              {mounted ? currency : "SAR"}
               <svg className={`w-4 h-4 transition-transform duration-300 ${isCurrOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             {isCurrOpen && (

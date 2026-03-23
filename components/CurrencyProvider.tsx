@@ -3,7 +3,6 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 type Currency = "GBP" | "USD" | "EUR" | "SAR";
 
-// Exchange rates (Base: GBP)
 export const RATES: Record<Currency, { rate: number; symbol: string }> = {
   GBP: { rate: 1, symbol: "£" },
   USD: { rate: 1.27, symbol: "$" },
@@ -14,7 +13,7 @@ export const RATES: Record<Currency, { rate: number; symbol: string }> = {
 const CurrencyContext = createContext<any>(null);
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
-  const[currency, setCurrency] = useState<Currency>("GBP");
+  const [currency, setCurrency] = useState<Currency>("SAR"); // ✅ Changed to SAR
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

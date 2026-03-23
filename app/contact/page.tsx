@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function ContactPage() {
   return (
@@ -75,14 +76,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-ink py-12 px-6 md:px-12 border-t border-white/5 flex flex-col items-center">
-        <Link href="/" translate="no" className="flex flex-col items-center group mb-10 md:mb-12 cursor-pointer notranslate">
-         <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-16 md:h-24 w-auto object-contain mb-5 opacity-90 transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl" />
-         <span className="text-gold font-jost text-xl md:text-2xl font-medium tracking-[0.2em] uppercase opacity-90 drop-shadow-lg">My Stay In Madinah</span>
-        </Link>
-        <p className="text-white/40 text-xs font-light">&copy; 2026 My Stay in Madinah. All rights reserved.</p>
-      </footer>
+      {/* BRANDED FOOTER */}
+      <Footer />  {/* 👈 REPLACED 20 LINES OF CODE WITH THIS ONE LINE! */}
     </main>
   );
 }
