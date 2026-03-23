@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
+import PriceDisplay from "../../components/PriceDisplay";
 
 export default function ToursPage() {
   return (
@@ -32,11 +33,17 @@ export default function ToursPage() {
               <span className="bg-ink/5 text-ink px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase">Up to 3 People</span>
             </div>
             <h2 className="font-playfair text-3xl md:text-5xl font-medium mb-2">Madinah Islamic Heritage Tour</h2>
-            <p className="text-2xl text-gold font-medium mb-6">£99 <span className="text-sm font-light opacity-50 uppercase tracking-wide">Per Group</span></p>
+            
+            {/* DYNAMIC PRICE DISPLAY */}
+            <p className="text-3xl text-gold font-medium mb-6">
+              <PriceDisplay amountGBP={99} />
+              <span className="text-sm font-light opacity-50 uppercase tracking-wide ml-2">Per Group</span>
+            </p>
+            
             <div className="space-y-4 font-light leading-relaxed mb-8 text-lg opacity-80">
               <p>Immerse yourself in the profound history of the Prophet's city. This comprehensive journey takes you through the most significant historical landmarks in Madinah.</p>
             </div>
-            <a href="https://wa.me/201067040337?text=I%20would%20like%20to%20book%20the%20Madinah%20Islamic%20Heritage%20Tour%20(£99)." target="_blank" rel="noreferrer" className="inline-flex items-center justify-center bg-ink text-white px-10 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-xl w-full sm:w-auto">
+            <a href="https://wa.me/201067040337?text=I%20would%20like%20to%20book%20the%20Madinah%20Islamic%20Heritage%20Tour." target="_blank" rel="noreferrer" className="inline-flex items-center justify-center bg-ink text-white px-10 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-xl w-full sm:w-auto">
               Book via WhatsApp
             </a>
           </div>
@@ -52,11 +59,17 @@ export default function ToursPage() {
               <span className="bg-ink/5 text-ink px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase">Up to 4 People</span>
             </div>
             <h2 className="font-playfair text-3xl md:text-5xl font-medium mb-2">Uhud Battlefield Private Tour</h2>
-            <p className="text-2xl text-gold font-medium mb-6">£60 <span className="text-sm font-light opacity-50 uppercase tracking-wide">Per Group</span></p>
+            
+            {/* DYNAMIC PRICE DISPLAY */}
+            <p className="text-3xl text-gold font-medium mb-6">
+              <PriceDisplay amountGBP={60} />
+              <span className="text-sm font-light opacity-50 uppercase tracking-wide ml-2">Per Group</span>
+            </p>
+
             <div className="space-y-4 font-light leading-relaxed mb-8 text-lg opacity-80">
               <p>Walk the sacred grounds of the historic Battle of Uhud. Stand before the towering red mountains, pay your respects at the Martyrs' Cemetery, and climb Archers' Hill.</p>
             </div>
-            <a href="https://wa.me/201067040337?text=I%20would%20like%20to%20book%20the%20Uhud%20Battlefield%20Private%20Tour%20(£60)." target="_blank" rel="noreferrer" className="inline-flex items-center justify-center bg-ink text-white px-10 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-xl w-full sm:w-auto">
+            <a href="https://wa.me/201067040337?text=I%20would%20like%20to%20book%20the%20Uhud%20Battlefield%20Private%20Tour." target="_blank" rel="noreferrer" className="inline-flex items-center justify-center bg-ink text-white px-10 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-xl w-full sm:w-auto">
               Book via WhatsApp
             </a>
           </div>
@@ -68,13 +81,28 @@ export default function ToursPage() {
             </div>
           </div>
         </div>
+
+        {/* Alternative 3 person Tour Option */}
+        <div className="bg-white rounded-2xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group md:col-span-2 lg:w-2/3 mx-auto mt-8">
+            <div className="p-8 md:p-10 flex-1 flex flex-col items-center text-center">
+                <h3 className="font-playfair text-2xl md:text-3xl font-medium mb-3">Premium Private Tour</h3>
+                
+                <p className="text-ink/50 text-sm mb-4 uppercase tracking-wider font-semibold flex items-center justify-center gap-2">
+                    <span className="text-gold text-lg"><PriceDisplay amountGBP={99} /></span> | Per group (Up to 3 people) | 4 Hours
+                </p>
+                
+                <p className="font-light mb-8 leading-relaxed max-w-2xl opacity-80">Looking for a more intimate, elevated experience? Book our premium private tier for up to 3 people, ensuring absolute personalized attention from our expert guides.</p>
+                <a href="https://wa.me/201067040337?text=I%20would%20like%20to%20inquire%20about%20the%20Premium%20Private%20Tour." target="_blank" rel="noreferrer" className="inline-block bg-transparent border-2 border-ink text-ink px-12 py-4 font-medium hover:bg-ink hover:text-white transition-colors duration-300">Inquire via WhatsApp</a>
+            </div>
+        </div>
+
       </section>
 
       {/* FOOTER */}
       <footer className="bg-ink py-12 px-6 md:px-12 border-t border-white/5 flex flex-col items-center">
-        <Link href="/" translate="no" className="flex flex-col items-center group mb-10 md:mb-12 cursor-pointer notranslate">
-          <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-16 md:h-24 w-auto object-contain mb-5 opacity-90 transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl" />
-          <span className="text-gold font-jost text-xl md:text-2xl font-medium tracking-[0.2em] uppercase opacity-90 drop-shadow-lg">My Stay In Madinah</span>
+        <Link href="/" className="flex flex-col items-center group mb-6 cursor-pointer notranslate" translate="no">
+          <img src="/icon-logo.png" alt="Icon" className="h-16 w-auto object-contain mb-3 opacity-90 transition-transform duration-700 group-hover:scale-105" />
+          <span className="text-gold font-jost text-xl font-medium tracking-[0.2em] uppercase opacity-90">My Stay In Madinah</span>
         </Link>
         <p className="text-white/40 text-xs font-light">&copy; 2026 My Stay in Madinah. All rights reserved.</p>
       </footer>

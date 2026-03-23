@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import PriceDisplay from "../components/PriceDisplay";
 import { createClient } from "../lib/supabase/server";
-import PriceDisplay from "@/components/PriceDisplay";
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +10,8 @@ export default async function Home() {
   const { data: rooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
 
   return (
-    <main className="bg-ivory">
+    <main className="pt-16 lg:pt-0 bg-ivory">
+      {/* GLOBAL NAVIGATION */}
       <Navbar activePage="home" />
 
       {/* STICKY WHATSAPP WIDGET */}
@@ -18,12 +19,11 @@ export default async function Home() {
         <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 .003 5.385.003 12.031c0 2.126.556 4.198 1.613 6.02L.03 24l6.105-1.602a11.968 11.968 0 0 0 5.896 1.542h.005c6.643 0 12.025-5.384 12.025-12.028C24.055 5.385 18.675 0 12.031 0zm-.005 21.954a9.982 9.982 0 0 1-5.09-1.39l-.365-.217-3.784.992.998-3.69-.237-.377a9.96 9.96 0 0 1-1.523-5.27C1.995 6.486 6.483 2 12.031 2c5.545 0 10.033 4.488 10.033 10.003 0 5.513-4.488 10-10.038 10h-.001zm5.505-7.519c-.302-.151-1.787-.882-2.064-.983-.277-.101-.48-.151-.681.151-.202.302-.78 1.034-.956 1.235-.177.202-.353.227-.655.076-1.574-.789-2.73-1.66-3.784-3.32-.177-.278.177-.278.756-1.41.076-.151.038-.278-.038-.428-.076-.151-.681-1.636-.932-2.24-.246-.59-.496-.51-.681-.52-.177-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.034-1.058 2.518 0 1.484 1.084 2.92 1.235 3.12.151.202 2.116 3.224 5.127 4.524 1.965.848 2.704.899 3.484.75.78-.151 2.368-.968 2.704-1.902.336-.934.336-1.737.236-1.903-.101-.166-.378-.267-.68-.418z"/></svg>
       </a>
 
-      {/* HERO SECTION - Optimized Mobile Order & Padding */}
-      <header className="relative min-h-screen w-full bg-ivory flex flex-col justify-center overflow-hidden pt-32 pb-16 lg:pt-0 lg:pb-0">
+      {/* HERO SECTION */}
+      <header className="relative min-h-screen w-full bg-ivory flex items-center justify-center overflow-hidden pt-24 pb-16 lg:py-0">
         <div className="max-w-[90rem] mx-auto w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 items-center relative z-10">
           
-          {/* Text is now Order 1 on mobile, so it appears ABOVE the image */}
-          <div className="lg:col-span-6 flex flex-col justify-center order-1 lg:order-1 text-center lg:text-left">
+          <div className="lg:col-span-6 flex flex-col justify-center order-2 lg:order-1 text-center lg:text-left mt-8 lg:mt-0">
             <div className="inline-flex items-center justify-center lg:justify-start gap-4 mb-6 md:mb-8">
               <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
               <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs lg:text-sm uppercase font-medium">Boutique Stays in Madinah</span>
@@ -36,20 +36,16 @@ export default async function Home() {
               Elevate your Ziyarah with premium, direct-booking accommodation in the heart of Madinah. Experience impeccable comfort without the hidden platform fees of Airbnb.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto justify-center lg:justify-start">
-              {/* Sharp Buttons */}
               <Link href="/rooms" className="bg-ink hover:bg-gold text-white px-8 py-4 text-center transition-all duration-500 font-medium tracking-wide w-full sm:w-auto shadow-xl rounded-none">Reserve Your Room</Link>
               <Link href="/contact" className="border border-ink/20 hover:border-ink text-ink px-8 py-4 text-center transition-all duration-500 font-medium flex items-center justify-center gap-3 w-full sm:w-auto rounded-none">Chat Direct</Link>
             </div>
           </div>
 
-          {/* Image is now Order 2 on mobile, so it appears BELOW the text */}
-          <div className="lg:col-span-6 relative order-2 lg:order-2 flex justify-center lg:justify-end mt-4 lg:mt-0">
-            <div className="relative w-full max-w-[90%] sm:max-w-md xl:max-w-lg aspect-[4/5] overflow-hidden shadow-2xl border border-gray-100 rounded-none">
+          <div className="lg:col-span-6 relative order-1 lg:order-2 flex justify-center lg:justify-end mt-12 lg:mt-0">
+            <div className="relative w-full max-w-[90%] sm:max-w-md xl:max-w-lg aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-gray-100 rounded-none">
               <img src="/room-1.jpg" alt="Premium Madinah Room" className="w-full h-full object-cover animate-pan" />
             </div>
-            
-            {/* Top Rated Badge - Static (No Bounce), Sharp Edges */}
-            <div className="absolute -bottom-6 -left-2 md:bottom-10 md:-left-8 bg-white/95 backdrop-blur-md p-5 shadow-xl border border-gray-100 flex items-center gap-4 rounded-none">
+            <div className="absolute -bottom-6 -left-2 md:bottom-10 md:-left-8 bg-white/95 backdrop-blur-md p-5 rounded-xl shadow-xl border border-gray-100 flex items-center gap-4 rounded-none">
               <div className="w-12 h-12 bg-gold/10 flex items-center justify-center text-gold text-2xl rounded-none">★</div>
               <div>
                 <p className="text-ink font-playfair font-medium text-lg leading-tight">Top Rated</p>
@@ -111,9 +107,13 @@ export default async function Home() {
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="font-playfair text-2xl text-ink font-medium mb-2">{room.name}</h3>
-                <p className="text-gold font-medium mb-4">£{room.price_per_night} <span className="text-sm font-light text-ink/50 uppercase">/ Night</span></p>
+                
+                {/* DYNAMIC PRICE DISPLAY */}
+                <p className="text-xl font-medium text-gold mb-4">
+                  <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">/ Night</span>
+                </p>
+                
                 <p className="text-ink/70 font-light text-sm line-clamp-2 mb-8 flex-grow">{room.description}</p>
-                {/* Sharp Button */}
                 <Link href={`/rooms/${room.id}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Room</Link>
               </div>
             </div>
@@ -149,9 +149,12 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TOURS BANNER SECTION (Solid Background) */}
+      {/* TOURS BANNER SECTION */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
-        {/* Removed blurred image, kept clean solid bg-ink */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+           <img src="/heritage-1.jpg" alt="Background" className="w-full h-full object-cover filter grayscale blur-sm" />
+        </div>
+
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <div className="inline-flex items-center gap-4 mb-6">
@@ -174,11 +177,13 @@ export default async function Home() {
               <div className="p-8 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-playfair text-2xl text-ink font-medium">Madinah Islamic Heritage Tour</h3>
-                  <span className="text-2xl font-medium text-gold"><PriceDisplay amount={99} /></span>
+                  
+                  {/* DYNAMIC PRICE DISPLAY */}
+                  <span className="text-2xl font-medium text-gold"><PriceDisplay amountGBP={99} /></span>
+                
                 </div>
                 <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group (Up to 3 people)</p>
                 <p className="text-ink/70 font-light mb-8 flex-1 text-lg leading-relaxed">A comprehensive journey through the most significant historical landmarks in the Prophet's city.</p>
-                {/* Sharp Button */}
                 <Link href="/tours" className="w-full text-center border-2 border-ink text-ink py-4 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>
               </div>
             </div>
@@ -191,11 +196,13 @@ export default async function Home() {
               <div className="p-8 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="font-playfair text-2xl text-ink font-medium">Uhud Battlefield Private Tour</h3>
-                  <span className="text-2xl font-medium text-gold"><PriceDisplay amount={60} /></span>
+                  
+                  {/* DYNAMIC PRICE DISPLAY */}
+                  <span className="text-2xl font-medium text-gold"><PriceDisplay amountGBP={60} /></span>
+                
                 </div>
                 <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group (Up to 4 people)</p>
                 <p className="text-ink/70 font-light mb-8 flex-1 text-lg leading-relaxed">Walk the historic battlefield of Uhud. Pay respects at the Martyrs' Cemetery and climb Archers' Hill.</p>
-                {/* Sharp Button */}
                 <Link href="/tours" className="w-full text-center border-2 border-ink text-ink py-4 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>
               </div>
             </div>
@@ -209,16 +216,16 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* BRANDED FOOTER */}
+      {/* FOOTER */}
       <footer className="bg-ink pt-20 md:pt-32 pb-8 md:pb-12 px-6 md:px-12 border-t border-white/5">
         <div className="max-w-4xl mx-auto text-center mb-16 md:mb-24 flex flex-col items-center">
-          <Link href="/" translate="no" className="flex flex-col items-center group mb-10 md:mb-12 cursor-pointer notranslate">
-           <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-16 md:h-24 w-auto object-contain mb-5 opacity-90 transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl" />
-           <span className="text-gold font-jost text-xl md:text-2xl font-medium tracking-[0.2em] uppercase opacity-90 drop-shadow-lg">My Stay In Madinah</span>
+          <Link href="/" className="flex flex-col items-center group mb-10 md:mb-12 cursor-pointer notranslate" translate="no">
+            <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-16 md:h-24 w-auto object-contain mb-5 opacity-90 transition-transform duration-700 group-hover:scale-105 drop-shadow-2xl" />
+            <span className="text-gold font-jost text-xl md:text-2xl font-medium tracking-[0.2em] uppercase opacity-90 drop-shadow-lg">My Stay In Madinah</span>
           </Link>
           <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-medium mb-6 md:mb-8 leading-tight">Your spiritual journey deserves a peaceful stay.</h2>
           <p className="text-white/50 font-light text-base md:text-lg mb-8 md:mb-12 max-w-2xl mx-auto px-4">Skip the platform fees. Secure your premium room in Madinah today for the best guaranteed rate.</p>
-          <Link href="/rooms" className="inline-block bg-gold hover:bg-white text-ink px-8 md:px-12 py-4 md:py-5 font-medium tracking-wide transition-all duration-500 shadow-xl text-base md:text-lg w-full sm:w-auto rounded-none">Secure Your Room</Link>
+          <Link href="/rooms" className="inline-block bg-gold hover:bg-white text-ink px-8 md:px-12 py-4 md:py-5 rounded-sm font-medium tracking-wide transition-all duration-500 shadow-xl text-base md:text-lg w-full sm:w-auto">Secure Your Room</Link>
         </div>
         <div className="max-w-[90rem] mx-auto flex flex-col md:flex-row justify-between items-center border-t border-white/10 pt-8 text-xs md:text-sm text-white/40 font-light gap-4 md:gap-0">
           <p>&copy; 2026 My Stay in Madinah. All rights reserved.</p>
