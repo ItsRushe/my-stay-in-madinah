@@ -4,13 +4,17 @@ import Link from "next/link";
 import { useCurrency } from "./CurrencyProvider";
 
 export default function Navbar({ activePage = "home" }: { activePage?: string }) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const[isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const[isCurrOpen, setIsCurrOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("EN");
+  const [isCurrOpen, setIsCurrOpen] = useState(false);
+  const[currentLang, setCurrentLang] = useState("EN");
   const { currency, changeCurrency, mounted } = useCurrency();
 
-  const languages =[{ code: "EN", name: "English" }, { code: "AR", name: "العربية" }, { code: "RU", name: "Русский" }];
+  const languages =[
+    { code: "EN", name: "English" }, 
+    { code: "AR", name: "العربية" }, 
+    { code: "RU", name: "Русский" }
+  ];
   const currencies = ["GBP", "USD", "EUR", "SAR"];
 
   useEffect(() => {
@@ -50,13 +54,15 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center relative z-20">
         
-        <Link href="/" className="flex items-center gap-4 group notranslate" translate="no">
+        {/* BRAND LOGOS - Added dir="ltr" and flex-row so it NEVER stacks or reverses in Arabic */}
+        <Link href="/" dir="ltr" translate="no" className="flex flex-row items-center gap-4 group notranslate">
           <img src="/icon-logo.png" alt="Icon" className="h-8 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-          <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden sm:block transition-opacity duration-500 group-hover:opacity-80">
+          <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden sm:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap">
             My Stay In Madinah
           </span>
         </Link>
         
+        {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 items-center text-sm tracking-wide text-ink/80">
           <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Home</Link>
           <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Rooms</Link>
@@ -64,7 +70,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
           
           {/* CURRENCY TOGGLE */}
-          <div className="relative notranslate" translate="no">
+          <div className="relative notranslate" translate="no" dir="ltr">
             <button onClick={() => setIsCurrOpen(!isCurrOpen)} className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none font-medium">
               {mounted ? currency : "GBP"}
               <svg className={`w-4 h-4 transition-transform duration-300 ${isCurrOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -81,7 +87,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           </div>
 
           {/* LANGUAGE TOGGLE */}
-          <div className="relative notranslate" translate="no">
+          <div className="relative notranslate" translate="no" dir="ltr">
             <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none font-medium">
               {currentLang}
               <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -114,7 +120,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Tours</Link>
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Contact</Link>
           
-          <div className="flex gap-6 pt-4 border-t border-gray-100 w-1/2 justify-center notranslate" translate="no">
+          <div className="flex gap-6 pt-4 border-t border-gray-100 w-1/2 justify-center notranslate" translate="no" dir="ltr">
             {currencies.map((curr) => (
               <button key={curr} onClick={() => { changeCurrency(curr as any); setIsMobileMenuOpen(false); }} className={`text-sm font-medium ${currency === curr ? 'text-gold border-b border-gold' : 'text-ink/50 hover:text-ink'}`}>
                 {curr}
@@ -122,7 +128,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
             ))}
           </div>
 
-          <div className="flex gap-6 pt-2 w-1/2 justify-center notranslate" translate="no">
+          <div className="flex gap-6 pt-2 w-1/2 justify-center notranslate" translate="no" dir="ltr">
             {languages.map((lang) => (
               <button key={lang.code} onClick={() => switchLanguage(lang.code)} className={`text-sm font-medium ${currentLang === lang.code ? 'text-gold border-b border-gold' : 'text-ink/50 hover:text-ink'}`}>
                 {lang.code}

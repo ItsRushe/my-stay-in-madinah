@@ -114,9 +114,12 @@ html[dir="rtl"] .border-l { border-right-width: 1px !important; border-left-widt
 html[dir="rtl"] .border-r { border-left-width: 1px !important; border-right-width: 0 !important; }
 
 /* ABSOLUTE PROTECTION FOR LOGO & PRICING */
-html[dir="rtl"] .notranslate {
+.notranslate, 
+.notranslate * {
   font-family: var(--font-jost) !important;
-  direction: ltr !important; 
-  display: inline-block;
-  unicode-bidi: isolate;
+}
+
+html[dir="rtl"] .notranslate {
+  direction: ltr !important;
+  display: inline-flex;
 }
