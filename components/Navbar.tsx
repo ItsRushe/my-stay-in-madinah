@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useCurrency } from "./CurrencyProvider";
 
 export default function Navbar({ activePage = "home" }: { activePage?: string }) {
-  const[isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
-  const [isCurrOpen, setIsCurrOpen] = useState(false);
-  const[currentLang, setCurrentLang] = useState("EN");
+  const[isCurrOpen, setIsCurrOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState("EN");
   const { currency, changeCurrency, mounted } = useCurrency();
 
   const languages =[
@@ -54,7 +54,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center relative z-20">
         
-        {/* BRAND LOGOS - Removed dir="ltr" so it natively flips in Arabic! */}
         <Link href="/" translate="no" className="flex items-center gap-4 group notranslate">
           <img src="/icon-logo.png" alt="Icon" className="h-8 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
           <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden sm:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap">
@@ -62,9 +61,9 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           </span>
         </Link>
         
-        {/* Desktop Menu */}
         <div className="hidden md:flex gap-8 items-center text-sm tracking-wide text-ink/80">
           <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Home</Link>
+          <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>About Us</Link>
           <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Rooms</Link>
           <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Tours</Link>
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
@@ -116,6 +115,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-white border-b border-gray-200 flex flex-col items-center py-8 gap-6 text-ink shadow-2xl z-10">
           <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Home</Link>
+          <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>About Us</Link>
           <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Rooms</Link>
           <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Tours</Link>
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Contact</Link>
