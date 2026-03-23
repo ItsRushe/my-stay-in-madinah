@@ -17,10 +17,10 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+        {/* ADDED 'Cairo' FONT FOR PREMIUM ARABIC TYPOGRAPHY */}
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
       </head>
       
-      {/* suppressHydrationWarning prevents React from crashing when Google translates the text */}
       <body suppressHydrationWarning className="font-jost bg-ivory text-ink antialiased selection:bg-gold selection:text-white">
         
         {/* Hidden Translation Engine Element */}

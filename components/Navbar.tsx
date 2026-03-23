@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Navbar({ activePage = "home" }: { activePage?: string }) {
-  const[isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const[isLangOpen, setIsLangOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState("EN");
 
@@ -13,41 +13,48 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     { code: "RU", name: "Русский" },
   ];
 
-  // 1. Read the current language from the browser cookie when the page loads
+  // Read the current language from the cookie and flip the layout if Arabic!
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
     if (match && match[1]) {
-      setCurrentLang(match[1].toUpperCase());
+      const lang = match[1].toUpperCase();
+      setCurrentLang(lang);
+      
+      // FLIP DOM DIRECTION FOR ARABIC
+      if (lang === 'AR') {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.lang = 'ar';
+      } else {
+        document.documentElement.dir = 'ltr';
+        document.documentElement.lang = lang.toLowerCase();
+      }
     } else {
       setCurrentLang("EN");
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = 'en';
     }
   },[]);
 
-  // 2. The function that triggers the translation!
   const switchLanguage = (langCode: string) => {
     const code = langCode.toLowerCase();
-    
     if (code === "en") {
-      // Clear the cookie to revert back to original English
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/;`;
     } else {
-      // Set the translation cookie
       document.cookie = `googtrans=/en/${code}; path=/`;
       document.cookie = `googtrans=/en/${code}; domain=${window.location.hostname}; path=/`;
     }
-    
     setIsLangOpen(false);
     setIsMobileMenuOpen(false);
-    window.location.reload(); // Reload to apply the translation
+    window.location.reload(); 
   };
 
   return (
     <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center relative z-20">
         
-        {/* Brand Logos */}
-        <Link href="/" className="flex items-center gap-4 group notranslate">
+        {/* BRAND LOGOS - translate="no" and class notranslate protects it! */}
+        <Link href="/" className="flex items-center gap-4 group notranslate" translate="no">
           <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-8 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
           <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden sm:block transition-opacity duration-500 group-hover:opacity-80">
             My Stay In Madinah
@@ -62,7 +69,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
           
           {/* Language Toggle (Desktop) */}
-          <div className="relative">
+          <div className="relative notranslate" translate="no">
             <button 
               onClick={() => setIsLangOpen(!isLangOpen)}
               className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none font-medium"
@@ -71,7 +78,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
               <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             {isLangOpen && (
-              <div className="absolute top-full right-0 mt-4 w-32 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50">
+              <div className="absolute top-full right-0 mt-4 w-32 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-left">
                 {languages.map((lang) => (
                   <button 
                     key={lang.code}
@@ -105,7 +112,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Contact</Link>
           
           {/* Mobile Language Selection */}
-          <div className="flex gap-6 pt-4 border-t border-gray-100 w-1/2 justify-center">
+          <div className="flex gap-6 pt-4 border-t border-gray-100 w-1/2 justify-center notranslate" translate="no">
             {languages.map((lang) => (
               <button 
                 key={lang.code}
