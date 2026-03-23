@@ -94,7 +94,7 @@ export default async function Home() {
               <span className="h-[1px] w-8 bg-gold"></span>
               <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">Our Selection</span>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Rooms & Suites</h2>
+            <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Rooms</h2>
           </div>
           <Link href="/rooms" className="text-ink hover:text-gold transition-colors font-medium border-b border-ink hover:border-gold pb-1">View All Rooms &rarr;</Link>
         </div>
