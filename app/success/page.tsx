@@ -14,8 +14,9 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
 
   let guestName = "Valued Guest";
   let roomName = "Premium Room";
+  let orderNumber = "Pending";
 
-  // If we have a Stripe session ID, fetch the Guest Name and Room Name securely
+  // If we have a Stripe session ID, fetch the Guest, Room, and Booking ID
   if (sessionId) {
     try {
       // 1. Get Guest Name from Stripe
@@ -27,27 +28,32 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
         guestName = session.customer_details.name;
       }
 
-      // 2. Get Room Name from Supabase using the Session ID
+      // 2. Get Room Name and Booking ID from Supabase
       const supabase = await createClient();
       const { data: booking } = await supabase
         .from('bookings')
-        .select('room_id, rooms(name)')
+        .select('id, room_id, rooms(name)')
         .eq('stripe_session_id', sessionId)
         .single();
 
-      // @ts-ignore - Supabase join typing
-      if (booking?.rooms?.name) {
-        // @ts-ignore
-        roomName = booking.rooms.name;
+      if (booking) {
+        // Take the first 8 characters of the database UUID for a clean Order Number
+        orderNumber = booking.id.split('-')[0].toUpperCase();
+        
+        // @ts-ignore - Supabase join typing
+        if (booking.rooms?.name) {
+          // @ts-ignore
+          roomName = booking.rooms.name;
+        }
       }
     } catch (error) {
       console.error("Error fetching booking details for success page:", error);
     }
   }
 
-  // Format the Custom WhatsApp Message
+  // Format the Custom WhatsApp Message with Line Breaks (\n)
   const phoneNumber = "201067040337";
-  const whatsappMessage = `Hi, I have a special request for my booking. Name: ${guestName} | Room: ${roomName}`;
+  const whatsappMessage = `Hi, I have a special request for my booking.\n\nName: ${guestName}\nOrder: #${orderNumber}\nRoom: ${roomName}`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
