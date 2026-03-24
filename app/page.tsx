@@ -9,7 +9,10 @@ export const dynamic = 'force-dynamic';
 export default async function Home() {
   const supabase = await createClient();
   const { data: rooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
-
+  
+  // ADD THIS LINE TO GET TOURS FOR THE HOMEPAGE:
+  const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
+  
   return (
     <main className="bg-ivory">
       {/* GLOBAL NAVIGATION */}
@@ -150,7 +153,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TOURS BANNER SECTION (Removed blurred image, solid Ink background) */}
+      {/* TOURS BANNER SECTION (DYNAMIC FROM SUPABASE) */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
@@ -165,38 +168,32 @@ export default async function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-white overflow-hidden shadow-2xl flex flex-col group relative rounded-none">
-              <div className="h-72 w-full relative overflow-hidden bg-gray-100">
-                <img src="/heritage-1.jpg" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Madinah Heritage" />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm pointer-events-none rounded-none">3-4 Hours</div>
-              </div>
-              <div className="p-8 flex-1 flex flex-col">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-playfair text-2xl text-ink font-medium">Madinah Islamic Heritage Tour</h3>
-                  <span className="text-2xl font-medium text-gold"><PriceDisplay amountGBP={99} /></span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+            
+            {/* DYNAMICALLY FETCH TOURS FOR HOME PAGE */}
+            {/* We fetch tours at the top alongside rooms, so make sure to add this near line 11:
+                const { data: tours } = await supabase.from('tours').select('*').limit(3); 
+            */}
+            {tours?.slice(0, 3).map((tour: any) => (
+              <div key={tour.id} className="bg-white overflow-hidden shadow-2xl flex flex-col group relative rounded-none">
+                <div className="h-64 w-full relative overflow-hidden bg-gray-100">
+                  <img src={tour.images[0]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt={tour.name} />
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm pointer-events-none rounded-none">{tour.duration}</div>
                 </div>
-                <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group (Up to 3 people)</p>
-                <p className="text-ink/70 font-light mb-8 flex-1 text-lg leading-relaxed">A comprehensive journey through the most significant historical landmarks in the Prophet's city.</p>
-                <Link href="/tours" className="w-full text-center border-2 border-ink text-ink py-4 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>
-              </div>
-            </div>
-
-            <div className="bg-white overflow-hidden shadow-2xl flex flex-col group relative rounded-none">
-              <div className="h-72 w-full relative overflow-hidden bg-gray-100">
-                <img src="/uhud-1.jpg" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Uhud Battlefield" />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm pointer-events-none rounded-none">4 Hours</div>
-              </div>
-              <div className="p-8 flex-1 flex flex-col">
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="font-playfair text-2xl text-ink font-medium">Uhud Battlefield Private Tour</h3>
-                  <span className="text-2xl font-medium text-gold"><PriceDisplay amountGBP={60} /></span>
+                <div className="p-8 flex-1 flex flex-col">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-playfair text-2xl text-ink font-medium">{tour.name}</h3>
+                  </div>
+                  
+                  {/* Dynamic Pricing */}
+                  <span className="text-2xl font-medium text-gold mb-4"><PriceDisplay amountGBP={tour.price} /></span>
+                  
+                  <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group ({tour.group_size})</p>
+                  <p className="text-ink/70 font-light mb-8 flex-1 text-base leading-relaxed line-clamp-3">{tour.description}</p>
+                  <Link href="/tours" className="w-full text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>
                 </div>
-                <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group (Up to 4 people)</p>
-                <p className="text-ink/70 font-light mb-8 flex-1 text-lg leading-relaxed">Walk the historic battlefield of Uhud. Pay respects at the Martyrs' Cemetery and climb Archers' Hill.</p>
-                <Link href="/tours" className="w-full text-center border-2 border-ink text-ink py-4 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>
               </div>
-            </div>
+            ))}
           </div>
           
           <div className="mt-16 text-center">
