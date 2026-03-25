@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
-/* THIS REPLACES THE TAILWIND CONFIG FILE */
 @theme {
-  --color-ivory: #F9F8F4;
-  --color-ink: #09101A;
-  --color-gold: #C5A059;
-  --color-goldHover: #B08D4C;
+  --color-ivory: #F9F8F4; /* Keeping the warm ivory background */
+  --color-ink: #1B2420;   /* NEW: "Deep Earth" - A very dark, warm forest/charcoal */
+  --color-gold: #BA6A42;  /* NEW: Your exact Terracotta logo color */
+  --color-goldHover: #A05835; /* NEW: A slightly darker Terracotta for button hovers */
+  
   --font-playfair: "Playfair Display", serif;
   --font-jost: "Jost", sans-serif;
+}
+
+/* CUSTOM STYLES */
+/* Updated the glow effect to use the new Terracotta color */
+.bg-radial-glow { 
+  background-image: radial-gradient(circle at center, rgba(186, 106, 66, 0.15) 0%, transparent 70%); 
 }
 
 /* CUSTOM STYLES */
