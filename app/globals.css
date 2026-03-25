@@ -1,31 +1,28 @@
+/* 1. MUST BE AT THE VERY TOP */
 @import "tailwindcss";
 
+/* 2. THE NEW TERRACOTTA & DEEP EARTH THEME */
 @theme {
-  --color-ivory: #F9F8F4; /* Keeping the warm ivory background */
-  --color-ink: #1B2420;   /* NEW: "Deep Earth" - A very dark, warm forest/charcoal */
-  --color-gold: #BA6A42;  /* NEW: Your exact Terracotta logo color */
-  --color-goldHover: #A05835; /* NEW: A slightly darker Terracotta for button hovers */
+  --color-ivory: #F9F8F4;
+  --color-ink: #1B2420;   /* Deep Earth / Onyx Green */
+  --color-gold: #BA6A42;  /* Terracotta */
+  --color-goldHover: #A05835; /* Darker Terracotta for hovers */
   
   --font-playfair: "Playfair Display", serif;
   --font-jost: "Jost", sans-serif;
 }
 
-/* CUSTOM STYLES */
-/* Updated the glow effect to use the new Terracotta color */
+/* 3. CUSTOM STYLES */
 .bg-radial-glow { 
+  /* Updated RGB values to match Terracotta */
   background-image: radial-gradient(circle at center, rgba(186, 106, 66, 0.15) 0%, transparent 70%); 
 }
 
-/* CUSTOM STYLES */
-.bg-radial-glow { 
-  background-image: radial-gradient(circle at center, rgba(197, 160, 89, 0.15) 0%, transparent 70%); 
-}
-
 .hide-scrollbar::-webkit-scrollbar { display: none; }
 .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
 .premium-glass { 
-  background: rgba(9, 16, 26, 0.7); 
+  background: rgba(27, 36, 32, 0.7); /* Adjusted glass to match Deep Earth */
   backdrop-filter: blur(16px); 
   -webkit-backdrop-filter: blur(16px); 
   border: 1px solid rgba(255, 255, 255, 0.08); 
@@ -39,54 +36,16 @@
 }
 .animate-pan { animation: slowPan 20s ease-in-out infinite; }
 
-/* GOOGLE TRANSLATE CUSTOMIZATION - Hides the default UI so our custom Navbar handles it */
+
+/* 4. GOOGLE TRANSLATE CUSTOMIZATION */
 .skiptranslate iframe { display: none !important; }
 body { top: 0 !important; }
 #google_translate_element { display: none !important; }
 .goog-te-balloon-frame { display: none !important; }
 font { background: transparent !important; color: inherit !important; box-shadow: none !important; }
 
-@import "tailwindcss";
 
-@theme {
-  --color-ivory: #F9F8F4;
-  --color-ink: #09101A;
-  --color-gold: #C5A059;
-  --color-goldHover: #B08D4C;
-  --font-playfair: "Playfair Display", serif;
-  --font-jost: "Jost", sans-serif;
-}
-
-/* CUSTOM STYLES */
-.bg-radial-glow { background-image: radial-gradient(circle at center, rgba(197, 160, 89, 0.15) 0%, transparent 70%); }
-.hide-scrollbar::-webkit-scrollbar { display: none; }
-.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-.premium-glass { 
-  background: rgba(9, 16, 26, 0.7); 
-  backdrop-filter: blur(16px); 
-  -webkit-backdrop-filter: blur(16px); 
-  border: 1px solid rgba(255, 255, 255, 0.08); 
-  box-shadow: 0 30px 60px rgba(0,0,0,0.3); 
-}
-
-@keyframes slowPan { 
-  0% { transform: scale(1.05) translateY(0); } 
-  50% { transform: scale(1.05) translateY(-2%); } 
-  100% { transform: scale(1.05) translateY(0); } 
-}
-.animate-pan { animation: slowPan 20s ease-in-out infinite; }
-
-/* GOOGLE TRANSLATE CUSTOMIZATION (Hides Google UI) */
-.skiptranslate iframe { display: none !important; }
-body { top: 0 !important; }
-#google_translate_element { display: none !important; }
-.goog-te-balloon-frame { display: none !important; }
-font { background: transparent !important; color: inherit !important; box-shadow: none !important; }
-
-/* ========================================================
-   RIGHT-TO-LEFT (RTL) & ARABIC TYPOGRAPHY OVERRIDES
-   ======================================================== */
+/* 5. RIGHT-TO-LEFT (RTL) & ARABIC TYPOGRAPHY OVERRIDES */
 html[dir="rtl"] body:not(.notranslate), 
 html[dir="rtl"] p:not(.notranslate), 
 html[dir="rtl"] span:not(.notranslate), 
@@ -104,7 +63,6 @@ html[dir="rtl"] h4:not(.notranslate) {
 }
 
 /* ABSOLUTE PROTECTION FOR LOGO & PRICING */
-/* This deeply protects any span or div INSIDE a notranslate block */
 html[dir="rtl"] .notranslate, 
 html[dir="rtl"] .notranslate span,
 html[dir="rtl"] .notranslate div {
@@ -130,15 +88,3 @@ html[dir="rtl"] .mr-4 { margin-left: 1rem !important; margin-right: 0 !important
 html[dir="rtl"] .pl-6 { padding-right: 1.5rem !important; padding-left: 0 !important; }
 html[dir="rtl"] .border-l { border-right-width: 1px !important; border-left-width: 0 !important; }
 html[dir="rtl"] .border-r { border-left-width: 1px !important; border-right-width: 0 !important; }
-
-/* ABSOLUTE PROTECTION FOR LOGO & PRICING */
-/* The asterisk (*) ensures it applies to the text INSIDE the logo link too! */
-html[dir="rtl"] .notranslate, 
-html[dir="rtl"] .notranslate * {
-  font-family: 'Jost', sans-serif !important;
-}
-
-html[dir="rtl"] .notranslate {
-  display: inline-flex;
-  unicode-bidi: isolate;
-}
