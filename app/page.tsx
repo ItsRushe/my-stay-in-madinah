@@ -9,13 +9,10 @@ export const dynamic = 'force-dynamic';
 export default async function Home() {
   const supabase = await createClient();
   const { data: rooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
-  
-  // ADD THIS LINE TO GET TOURS FOR THE HOMEPAGE:
   const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
-  
+
   return (
     <main className="bg-ivory">
-      {/* GLOBAL NAVIGATION */}
       <Navbar activePage="home" />
 
       {/* STICKY WHATSAPP WIDGET */}
@@ -23,10 +20,9 @@ export default async function Home() {
         <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 .003 5.385.003 12.031c0 2.126.556 4.198 1.613 6.02L.03 24l6.105-1.602a11.968 11.968 0 0 0 5.896 1.542h.005c6.643 0 12.025-5.384 12.025-12.028C24.055 5.385 18.675 0 12.031 0zm-.005 21.954a9.982 9.982 0 0 1-5.09-1.39l-.365-.217-3.784.992.998-3.69-.237-.377a9.96 9.96 0 0 1-1.523-5.27C1.995 6.486 6.483 2 12.031 2c5.545 0 10.033 4.488 10.033 10.003 0 5.513-4.488 10-10.038 10h-.001zm5.505-7.519c-.302-.151-1.787-.882-2.064-.983-.277-.101-.48-.151-.681.151-.202.302-.78 1.034-.956 1.235-.177.202-.353.227-.655.076-1.574-.789-2.73-1.66-3.784-3.32-.177-.278.177-.278.756-1.41.076-.151.038-.278-.038-.428-.076-.151-.681-1.636-.932-2.24-.246-.59-.496-.51-.681-.52-.177-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.034-1.058 2.518 0 1.484 1.084 2.92 1.235 3.12.151.202 2.116 3.224 5.127 4.524 1.965.848 2.704.899 3.484.75.78-.151 2.368-.968 2.704-1.902.336-.934.336-1.737.236-1.903-.101-.166-.378-.267-.68-.418z"/></svg>
       </a>
 
-      {/* HERO SECTION - Added pt-32 to push it down below the navbar */}
+      {/* HERO SECTION */}
       <header className="relative min-h-screen w-full bg-ivory flex flex-col justify-center overflow-hidden pt-32 lg:pt-24 pb-16">
         <div className="max-w-[90rem] mx-auto w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 items-center relative z-10">
-          
           <div className="lg:col-span-6 flex flex-col justify-center order-1 lg:order-1 text-center lg:text-left">
             <div className="inline-flex items-center justify-center lg:justify-start gap-4 mb-6 md:mb-8">
               <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
@@ -44,12 +40,10 @@ export default async function Home() {
               <Link href="/contact" className="border border-ink/20 hover:border-ink text-ink px-8 py-4 text-center transition-all duration-500 font-medium flex items-center justify-center gap-3 w-full sm:w-auto rounded-none">Chat Direct</Link>
             </div>
           </div>
-
           <div className="lg:col-span-6 relative order-2 lg:order-2 flex justify-center lg:justify-end mt-4 lg:mt-0">
             <div className="relative w-full max-w-[90%] sm:max-w-md xl:max-w-lg aspect-[4/5] overflow-hidden shadow-2xl border border-gray-100 rounded-none">
               <img src="/room-1.jpg" alt="Premium Madinah Room" className="w-full h-full object-cover animate-pan" />
             </div>
-            
             <div className="absolute -bottom-6 -left-2 md:bottom-10 md:-left-8 bg-white/95 backdrop-blur-md p-5 shadow-xl border border-gray-100 flex items-center gap-4 rounded-none">
               <div className="w-12 h-12 bg-gold/10 flex items-center justify-center text-gold text-2xl rounded-none">★</div>
               <div>
@@ -97,7 +91,7 @@ export default async function Home() {
               <span className="h-[1px] w-8 bg-gold"></span>
               <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">Our Selection</span>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Rooms</h2>
+            <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Rooms & Suites</h2>
           </div>
           <Link href="/rooms" className="text-ink hover:text-gold transition-colors font-medium border-b border-ink hover:border-gold pb-1">View All Rooms &rarr;</Link>
         </div>
@@ -112,11 +106,9 @@ export default async function Home() {
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="font-playfair text-2xl text-ink font-medium mb-2">{room.name}</h3>
-                
                 <p className="text-xl font-medium text-gold mb-4">
                   <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">/ Night</span>
                 </p>
-                
                 <p className="text-ink/70 font-light text-sm line-clamp-2 mb-8 flex-grow">{room.description}</p>
                 <Link href={`/rooms/${room.id}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Room</Link>
               </div>
@@ -125,15 +117,62 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* LOCAL CURATED "THINGS TO DO" SECTION */}
+      <section className="py-20 md:py-32 px-6 md:px-12 bg-ivory">
+        <div className="max-w-[90rem] mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
+            <div>
+              <div className="inline-flex items-center gap-4 mb-4">
+                <span className="h-[1px] w-8 bg-gold"></span>
+                <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">Local Guide</span>
+              </div>
+              <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Things To Do Nearby</h2>
+            </div>
+            <p className="text-ink/60 font-light text-base md:text-lg max-w-md leading-relaxed">
+              Curated experiences and local favorites just steps away from your premium accommodation in the vibrant Al-Aziziyyah district.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-ink">
+            {/* Guide Item 1 */}
+            <div className="bg-white border border-gray-100 p-8 shadow-xl flex flex-col rounded-none group hover:border-gold transition-colors duration-300">
+              <div className="w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
+              </div>
+              <h3 className="font-playfair text-2xl font-medium mb-3">Authentic Dining</h3>
+              <p className="font-light opacity-70 leading-relaxed text-sm">Discover Al-Aziziyyah's vibrant food scene. From specialty coffee roasters to authentic Middle Eastern cuisine, the best local dining is just a short walk away.</p>
+            </div>
+            
+            {/* Guide Item 2 */}
+            <div className="bg-white border border-gray-100 p-8 shadow-xl flex flex-col rounded-none group hover:border-gold transition-colors duration-300">
+              <div className="w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+              </div>
+              <h3 className="font-playfair text-2xl font-medium mb-3">Parks & Recreation</h3>
+              <p className="font-light opacity-70 leading-relaxed text-sm">Take a serene evening walk through nearby manicured parks and palm-lined trails. A perfect way for families to unwind after completing their Ziyarah.</p>
+            </div>
+
+            {/* Guide Item 3 */}
+            <div className="bg-white border border-gray-100 p-8 shadow-xl flex flex-col rounded-none group hover:border-gold transition-colors duration-300">
+              <div className="w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              </div>
+              <h3 className="font-playfair text-2xl font-medium mb-3">Local Shopping</h3>
+              <p className="font-light opacity-70 leading-relaxed text-sm">Enjoy effortless access to local boutiques, premium supermarkets, and traditional markets to pick up everything you need during your stay.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* THE SMARTER ALTERNATIVE */}
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-ivory">
+      <section className="py-16 md:py-24 px-6 md:px-12 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 md:mb-16">
             <h2 className="font-playfair text-3xl md:text-4xl text-ink font-semibold mb-4">The Smarter Alternative</h2>
             <p className="text-ink/60 font-light text-base md:text-lg max-w-xl mx-auto">Why paying a middleman doesn't make sense for your Ziyarah.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-200 overflow-hidden shadow-xl md:shadow-2xl rounded-none">
-            <div className="bg-white p-8 sm:p-10 md:p-14 border-b md:border-b-0 md:border-r border-gray-200">
+            <div className="bg-ivory p-8 sm:p-10 md:p-14 border-b md:border-b-0 md:border-r border-gray-200">
               <h3 className="font-playfair text-xl md:text-2xl text-ink/50 mb-6 md:mb-8 border-b border-gray-200 pb-4">The Platform Way</h3>
               <ul className="space-y-6">
                 <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">Hidden Service Fees</strong><span className="text-xs md:text-sm font-light">Up to 20% added to your final bill at checkout.</span></div></li>
@@ -153,7 +192,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TOURS BANNER SECTION (DYNAMIC FROM SUPABASE) */}
+      {/* TOURS BANNER SECTION */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
@@ -169,11 +208,6 @@ export default async function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-            
-            {/* DYNAMICALLY FETCH TOURS FOR HOME PAGE */}
-            {/* We fetch tours at the top alongside rooms, so make sure to add this near line 11:
-                const { data: tours } = await supabase.from('tours').select('*').limit(3); 
-            */}
             {tours?.slice(0, 3).map((tour: any) => (
               <div key={tour.id} className="bg-white overflow-hidden shadow-2xl flex flex-col group relative rounded-none">
                 <div className="h-64 w-full relative overflow-hidden bg-gray-100">
@@ -184,10 +218,7 @@ export default async function Home() {
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="font-playfair text-2xl text-ink font-medium">{tour.name}</h3>
                   </div>
-                  
-                  {/* Dynamic Pricing */}
                   <span className="text-2xl font-medium text-gold mb-4"><PriceDisplay amountGBP={tour.price} /></span>
-                  
                   <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group ({tour.group_size})</p>
                   <p className="text-ink/70 font-light mb-8 flex-1 text-base leading-relaxed line-clamp-3">{tour.description}</p>
                   <Link href="/tours" className="w-full text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>
@@ -204,8 +235,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* BRANDED FOOTER */}
-      <Footer />  {/* 👈 REPLACED 20 LINES OF CODE WITH THIS ONE LINE! */}
+      <Footer />
     </main>
   );
 }
