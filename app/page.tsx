@@ -117,7 +117,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* LOCAL CURATED "THINGS TO DO" SECTION */}
+      {/* NEW: LOCAL CURATED "THINGS TO DO" SECTION (Image Cards with Hover Animations) */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ivory">
         <div className="max-w-[90rem] mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-16">
@@ -129,37 +129,68 @@ export default async function Home() {
               <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Things To Do Nearby</h2>
             </div>
             <p className="text-ink/60 font-light text-base md:text-lg max-w-md leading-relaxed">
-              Curated experiences and local favorites just steps away from your premium accommodation in the vibrant Al-Aziziyyah district.
+              Curated experiences, sacred sites, and local favorites just steps away from your premium accommodation.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-ink">
-            {/* Guide Item 1 */}
-            <div className="bg-white border border-gray-100 p-8 shadow-xl flex flex-col rounded-none group hover:border-gold transition-colors duration-300">
-              <div className="w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
-              </div>
-              <h3 className="font-playfair text-2xl font-medium mb-3">Authentic Dining</h3>
-              <p className="font-light opacity-70 leading-relaxed text-sm">Discover Al-Aziziyyah's vibrant food scene. From specialty coffee roasters to authentic Middle Eastern cuisine, the best local dining is just a short walk away.</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            {/* Guide Item 2 */}
-            <div className="bg-white border border-gray-100 p-8 shadow-xl flex flex-col rounded-none group hover:border-gold transition-colors duration-300">
-              <div className="w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+            {/* Card 1: Sacred Mosques */}
+            <div className="group relative h-80 md:h-[450px] w-full overflow-hidden rounded-none shadow-xl cursor-pointer">
+              {/* Using your high quality heritage/mosque image as background */}
+              <img src="/heritage-1.jpg" alt="Sacred Mosques" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+              
+              {/* Visible Tag (Fades out on hover) */}
+              <div className="absolute top-6 left-6 bg-ink/80 backdrop-blur text-white px-4 py-2 text-xs uppercase tracking-widest font-medium group-hover:opacity-0 transition-opacity duration-300">
+                 Sacred Sites
               </div>
-              <h3 className="font-playfair text-2xl font-medium mb-3">Parks & Recreation</h3>
-              <p className="font-light opacity-70 leading-relaxed text-sm">Take a serene evening walk through nearby manicured parks and palm-lined trails. A perfect way for families to unwind after completing their Ziyarah.</p>
+
+               {/* Terracotta Overlay + Text Fade Up */}
+              <div className="absolute inset-0 bg-gold/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-end z-10 pointer-events-none">
+                 <div className="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+                   <h3 className="font-playfair text-3xl font-medium text-white mb-2">Masjid Quba</h3>
+                   <p className="text-white/80 text-sm font-medium uppercase tracking-wider">10 Min Drive</p>
+                 </div>
+              </div>
             </div>
 
-            {/* Guide Item 3 */}
-            <div className="bg-white border border-gray-100 p-8 shadow-xl flex flex-col rounded-none group hover:border-gold transition-colors duration-300">
-              <div className="w-14 h-14 bg-gold/10 flex items-center justify-center text-gold mb-6 group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            {/* Card 2: Sightseeing */}
+            <div className="group relative h-80 md:h-[450px] w-full overflow-hidden rounded-none shadow-xl cursor-pointer">
+              {/* Using your Uhud image as background */}
+              <img src="/uhud-1.jpg" alt="Sightseeing" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+              
+              <div className="absolute top-6 left-6 bg-ink/80 backdrop-blur text-white px-4 py-2 text-xs uppercase tracking-widest font-medium group-hover:opacity-0 transition-opacity duration-300">
+                 Sightseeing
               </div>
-              <h3 className="font-playfair text-2xl font-medium mb-3">Local Shopping</h3>
-              <p className="font-light opacity-70 leading-relaxed text-sm">Enjoy effortless access to local boutiques, premium supermarkets, and traditional markets to pick up everything you need during your stay.</p>
+
+              <div className="absolute inset-0 bg-gold/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-end z-10 pointer-events-none">
+                 <div className="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-75">
+                   <h3 className="font-playfair text-3xl font-medium text-white mb-2">Mount Uhud</h3>
+                   <p className="text-white/80 text-sm font-medium uppercase tracking-wider">15 Min Drive</p>
+                 </div>
+              </div>
             </div>
+
+            {/* Card 3: Local Cafes */}
+            <div className="group relative h-80 md:h-[450px] w-full overflow-hidden rounded-none shadow-xl cursor-pointer">
+              {/* Beautiful placeholder for a cafe/local street */}
+              <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="Local Cafes" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+              
+              <div className="absolute top-6 left-6 bg-ink/80 backdrop-blur text-white px-4 py-2 text-xs uppercase tracking-widest font-medium group-hover:opacity-0 transition-opacity duration-300">
+                 Local Cafés
+              </div>
+
+              <div className="absolute inset-0 bg-gold/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 p-8 flex flex-col justify-end z-10 pointer-events-none">
+                 <div className="transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-150">
+                   <h3 className="font-playfair text-3xl font-medium text-white mb-2">Artisan Coffee</h3>
+                   <p className="text-white/80 text-sm font-medium uppercase tracking-wider">5 Min Walk</p>
+                 </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -192,8 +223,12 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TOURS BANNER SECTION */}
+      {/* TOURS BANNER SECTION (LIMITED TO 2 PACKAGES) */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+           <img src="/heritage-1.jpg" alt="Background" className="w-full h-full object-cover filter grayscale blur-sm" />
+        </div>
+
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <div className="inline-flex items-center gap-4 mb-6">
@@ -207,8 +242,9 @@ export default async function Home() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-            {tours?.slice(0, 3).map((tour: any) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            {/* UPDATED: We specifically slice to exactly 2 tours so the 3rd one is completely hidden */}
+            {tours?.slice(0, 2).map((tour: any) => (
               <div key={tour.id} className="bg-white overflow-hidden shadow-2xl flex flex-col group relative rounded-none">
                 <div className="h-64 w-full relative overflow-hidden bg-gray-100">
                   <img src={tour.images[0]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt={tour.name} />
@@ -218,7 +254,9 @@ export default async function Home() {
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="font-playfair text-2xl text-ink font-medium">{tour.name}</h3>
                   </div>
+                  
                   <span className="text-2xl font-medium text-gold mb-4"><PriceDisplay amountGBP={tour.price} /></span>
+                  
                   <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group ({tour.group_size})</p>
                   <p className="text-ink/70 font-light mb-8 flex-1 text-base leading-relaxed line-clamp-3">{tour.description}</p>
                   <Link href="/tours" className="w-full text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>

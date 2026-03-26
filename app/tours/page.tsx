@@ -8,8 +8,6 @@ export const dynamic = 'force-dynamic';
 
 export default async function ToursPage() {
   const supabase = await createClient();
-  
-  // Fetch all tours from Supabase dynamically!
   const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
 
   return (
@@ -27,12 +25,12 @@ export default async function ToursPage() {
 
       <section className="py-20 px-6 md:px-12 max-w-[90rem] mx-auto text-ink">
         
-        {/* DYNAMICALLY MAPPED TOURS */}
-        {tours?.map((tour: any, index: number) => (
+        {/* UPDATED: Sliced to strictly show only the first 2 tours */}
+        {tours?.slice(0, 2).map((tour: any, index: number) => (
           <div key={tour.id}>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               
-              {/* IMAGE GRID (Alternates left/right based on index) */}
+              {/* IMAGE GRID */}
               <div className={`grid grid-cols-3 gap-4 h-[350px] md:h-[500px] ${index % 2 !== 0 ? 'order-2 lg:order-2' : 'order-2 lg:order-1'}`}>
                 <div className="col-span-2 rounded-2xl overflow-hidden relative bg-gray-100">
                   <img src={tour.images[0]} alt={tour.name} className="w-full h-full object-cover lightbox-trigger cursor-zoom-in hover:scale-105 transition-transform duration-700" />
@@ -73,8 +71,8 @@ export default async function ToursPage() {
               </div>
             </div>
 
-            {/* Separator line between tours (Except for the very last one) */}
-            {index !== tours.length - 1 && <hr className="border-gray-200 my-24" />}
+            {/* Separator line between the 2 tours */}
+            {index === 0 && <hr className="border-gray-200 my-24" />}
           </div>
         ))}
       </section>
@@ -87,7 +85,6 @@ export default async function ToursPage() {
           <img id="lightbox-img" src="" alt="Full Screen Tour View" className="max-w-[95vw] max-h-[90vh] object-contain shadow-2xl rounded-sm" />
       </div>
 
-      {/* LIGHTBOX SCRIPT */}
       <script dangerouslySetInnerHTML={{
         __html: `
           document.addEventListener('DOMContentLoaded', () => {
