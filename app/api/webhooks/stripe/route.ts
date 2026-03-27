@@ -12,7 +12,6 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
-// Initialize Resend Email Client
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export async function POST(req: Request) {
@@ -32,7 +31,6 @@ export async function POST(req: Request) {
     return new NextResponse(`Webhook Error: ${error.message}`, { status: 400 });
   }
 
-  // EVENT: PAYMENT SUCCESSFUL
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
     const bookingId = session.metadata?.booking_id; 
@@ -66,20 +64,20 @@ export async function POST(req: Request) {
       // 3. SEND THE LUXURY CONFIRMATION EMAIL
       if (guestEmail) {
         await resend.emails.send({
-          from: 'concierge@resend.dev', // Note: Once you verify your domain in Resend, change this to reservations@mystayinmadinah.com
+          from: 'reservations@mystayinmadinah.com', // MUST match your verified Resend domain!
           to: guestEmail,
           subject: `Booking Confirmed: Your stay at ${roomName}`,
           html: `
-            <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto; color: #09101A; line-height: 1.6;">
+            <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto; color: #1B2420; line-height: 1.6;">
               <div style="text-align: center; padding: 30px 0; background-color: #F9F8F4;">
-                <h1 style="margin: 0; font-size: 24px; color: #C5A059;">MY STAY IN MADINAH</h1>
+                <h1 style="margin: 0; font-size: 24px; color: #BA6A42;">MY STAY IN MADINAH</h1>
               </div>
               <div style="padding: 40px 30px; border: 1px solid #EAEAEA;">
                 <h2 style="font-size: 22px; font-weight: 500; margin-bottom: 20px;">Booking Confirmed</h2>
                 <p>Dear ${guestName},</p>
                 <p>Alhamdulillah, your payment has been successfully processed and your reservation is confirmed.</p>
                 
-                <div style="background-color: #F9F8F4; padding: 20px; border-left: 4px solid #C5A059; margin: 30px 0;">
+                <div style="background-color: #F9F8F4; padding: 20px; border-left: 4px solid #BA6A42; margin: 30px 0;">
                   <p style="margin: 0 0 10px 0;"><strong>Order Number:</strong> #${orderNumber}</p>
                   <p style="margin: 0 0 10px 0;"><strong>Room:</strong> ${roomName}</p>
                   <p style="margin: 0 0 10px 0;"><strong>Check-in:</strong> ${checkIn} (3:00 PM)</p>
@@ -89,12 +87,13 @@ export async function POST(req: Request) {
                 <p>To ensure a seamless arrival, we have prepared a Digital Guestbook containing our property location, house rules, and direct concierge contact information.</p>
                 
                 <div style="text-align: center; margin: 40px 0;">
-                  <a href="${domain}/guestbook" style="background-color: #09101A; color: #ffffff; padding: 16px 32px; text-decoration: none; font-weight: bold; display: inline-block;">
-                    View Digital Guestbook
+                  <!-- ✅ UPDATED LINK: Now passes the session ID to the guestbook! -->
+                  <a href="${domain}/guestbook?session_id=${session.id}" style="background-color: #1B2420; color: #ffffff; padding: 16px 32px; text-decoration: none; font-weight: bold; display: inline-block;">
+                    View Personalized Guestbook
                   </a>
                 </div>
 
-                <p>If you have any special requests or require airport transfers, please reply directly to this email or contact us via WhatsApp.</p>
+                <p>If you have any special requests, please reply directly to this email or contact us via WhatsApp.</p>
                 <p>Warm regards,<br/><strong>The Concierge Team</strong></p>
               </div>
             </div>
