@@ -4,10 +4,10 @@ import Link from "next/link";
 import { useCurrency } from "./CurrencyProvider";
 
 export default function Navbar({ activePage = "home" }: { activePage?: string }) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const[isLangOpen, setIsLangOpen] = useState(false);
+  const[isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
   const [isCurrOpen, setIsCurrOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("EN");
+  const[currentLang, setCurrentLang] = useState("EN");
   const { currency, changeCurrency, mounted } = useCurrency();
 
   const languages =[
@@ -15,7 +15,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     { code: "AR", name: "العربية" }, 
     { code: "RU", name: "Русский" }
   ];
-  const currencies =["GBP", "USD", "EUR", "SAR"];
+  const currencies = ["GBP", "USD", "EUR", "SAR"];
 
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
@@ -64,7 +64,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           </Link>
         </div>
         
-        {/* CENTER: Page Links (Absolute centered on large screens) */}
+        {/* CENTER: Page Links */}
         <div className="hidden lg:flex flex-1 justify-center items-center gap-8 text-sm tracking-wide text-ink/80 absolute left-1/2 transform -translate-x-1/2">
           <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Home</Link>
           <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>About Us</Link>
@@ -73,7 +73,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
         </div>
         
-        {/* RIGHT: Utilities (Currency, Language, CTA) */}
+        {/* RIGHT: Utilities (Currency, Language) */}
         <div className="hidden lg:flex flex-1 justify-end items-center gap-6 text-sm tracking-wide text-ink/80">
           
           {/* Currency Toggle */}
@@ -109,8 +109,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
               </div>
             )}
           </div>
-
-          <Link href="/contact" className="bg-ink hover:bg-gold text-white px-6 py-3 font-medium transition-all duration-300 shadow-md rounded-none">Book Direct</Link>
         </div>
         
         {/* Mobile Hamburger Button */}
@@ -145,8 +143,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
               </button>
             ))}
           </div>
-
-          <Link href="/contact" className="bg-gold hover:bg-ink text-white px-10 py-4 font-medium transition-all duration-300 mt-2 rounded-none">Book Direct</Link>
         </div>
       )}
     </nav>

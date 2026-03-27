@@ -8,8 +8,6 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   const supabase = await createClient();
-  
-  // Fetch all dynamic data from Supabase
   const { data: rooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
   const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
   const { data: thingsToDo } = await supabase.from('things_to_do').select('*').order('created_at', { ascending: true });
@@ -121,7 +119,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* DYNAMIC "THINGS TO DO" SLIDER */}
+      {/* DYNAMIC "THINGS TO DO" SLIDER (UPDATED TO PREMIUM DARK CARDS) */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ivory overflow-hidden">
         <div className="max-w-[90rem] mx-auto mb-16">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -138,24 +136,24 @@ export default async function Home() {
           </div>
         </div>
 
-        {/* Database Driven Slider */}
         <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 px-6 md:px-12 pb-10 w-full max-w-[100rem] mx-auto">
           {thingsToDo?.map((item: any, index: number) => (
-            <div key={item.id} className="snap-start shrink-0 w-[85vw] sm:w-[400px] group relative h-80 md:h-[450px] overflow-hidden rounded-none shadow-xl cursor-pointer">
-              <img src={item.image} alt={item.title} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
+            <div key={item.id} className="snap-start shrink-0 w-[85vw] sm:w-[400px] group relative h-64 md:h-[320px] overflow-hidden rounded-none shadow-xl cursor-pointer border border-white/10">
+              {/* Image */}
+              <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
               
-              {/* Visible Tag (Fades out on hover) */}
-              <div className="absolute top-6 left-6 bg-ink/80 backdrop-blur text-white px-4 py-2 text-xs uppercase tracking-widest font-medium group-hover:opacity-0 transition-opacity duration-300">
+              {/* Premium Dark Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100"></div>
+
+              {/* Top Right Tag */}
+              <div className="absolute top-4 right-4 bg-gold text-white px-3 py-1 text-xs uppercase tracking-widest font-medium shadow-sm z-10 rounded-none">
                  {item.tag}
               </div>
 
-               {/* Terracotta Overlay + Text Fade Up */}
-              <div className="absolute inset-0 bg-gold/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute inset-0 p-8 flex flex-col justify-end z-10 pointer-events-none">
-                 <div className={`transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out ${index % 2 === 0 ? 'delay-75' : 'delay-150'}`}>
-                   <h3 className="font-playfair text-3xl font-medium text-white mb-2">{item.title}</h3>
-                   <p className="text-white/90 text-sm font-medium uppercase tracking-wider">{item.distance}</p>
-                 </div>
+              {/* Bottom Text Details */}
+              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-10 pointer-events-none">
+                 <h3 className="font-playfair text-2xl font-medium text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">{item.title}</h3>
+                 <p className="text-gold text-xs font-medium uppercase tracking-wider transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-75">{item.distance}</p>
               </div>
             </div>
           ))}
@@ -190,8 +188,12 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TOURS BANNER SECTION (RESTORED PREMIUM FULL-HEIGHT DESIGN) */}
+      {/* TOURS BANNER SECTION */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+           <img src="/heritage-1.jpg" alt="Background" className="w-full h-full object-cover filter grayscale blur-sm" />
+        </div>
+
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <div className="inline-flex items-center gap-4 mb-6">
@@ -206,34 +208,22 @@ export default async function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {/* LIMITED TO 2 TOURS USING .slice(0, 2) WITH PREMIUM DARK OVERLAY */}
             {tours?.slice(0, 2).map((tour: any) => (
-              <div key={tour.id} className="group relative h-[500px] md:h-[600px] w-full overflow-hidden rounded-none cursor-pointer border border-white/10 shadow-2xl">
-                <img src={tour.images[0]} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt={tour.name} />
-                
-                {/* Gradient overlay to make text readable */}
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-transparent opacity-90 transition-opacity duration-500"></div>
-                
-                {/* Top Badge */}
-                <div className="absolute top-6 right-6 bg-gold text-white px-4 py-2 text-xs uppercase tracking-widest font-medium shadow-sm">
-                  {tour.duration}
+              <div key={tour.id} className="bg-white overflow-hidden shadow-2xl flex flex-col group relative rounded-none">
+                <div className="h-64 w-full relative overflow-hidden bg-gray-100">
+                  <img src={tour.images[0]} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt={tour.name} />
+                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm pointer-events-none rounded-none">{tour.duration}</div>
                 </div>
-
-                <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end z-10">
-                  <div className="flex justify-between items-end mb-4">
-                    <h3 className="font-playfair text-3xl md:text-4xl text-white font-medium">{tour.name}</h3>
+                <div className="p-8 flex-1 flex flex-col">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-playfair text-2xl text-ink font-medium">{tour.name}</h3>
                   </div>
                   
-                  <div className="flex items-center gap-3 mb-4">
-                     <span className="text-2xl font-medium text-gold"><PriceDisplay amountGBP={tour.price} /></span>
-                     <span className="text-white/50 text-xs tracking-wider uppercase font-semibold">Per group ({tour.group_size})</span>
-                  </div>
+                  <span className="text-2xl font-medium text-gold mb-4"><PriceDisplay amountGBP={tour.price} /></span>
                   
-                  <p className="text-white/70 font-light mb-8 text-base md:text-lg leading-relaxed line-clamp-3">{tour.description}</p>
-                  
-                  <Link href="/tours" className="w-full sm:w-max text-center border border-white/30 text-white py-4 px-10 font-medium hover:bg-gold hover:border-gold transition-colors duration-300 rounded-none backdrop-blur-sm">
-                    View Details
-                  </Link>
+                  <p className="text-ink/50 text-xs tracking-wider uppercase font-semibold mb-4">Per group ({tour.group_size})</p>
+                  <p className="text-ink/70 font-light mb-8 flex-1 text-base leading-relaxed line-clamp-3">{tour.description}</p>
+                  <Link href="/tours" className="w-full text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Details</Link>
                 </div>
               </div>
             ))}
