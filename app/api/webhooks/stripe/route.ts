@@ -64,7 +64,7 @@ export async function POST(req: Request) {
       // 3. SEND THE LUXURY CONFIRMATION EMAIL
       if (guestEmail) {
         await resend.emails.send({
-          from: 'reservations@mystayinmadinah.com', // MUST match your verified Resend domain!
+          from: 'onboarding@resend.dev', // MUST match your verified Resend domain!
           to: guestEmail,
           subject: `Booking Confirmed: Your stay at ${roomName}`,
           html: `
