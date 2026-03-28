@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useCurrency } from "./CurrencyProvider";
 
 export default function Navbar({ activePage = "home" }: { activePage?: string }) {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLangOpen, setIsLangOpen] = useState(false);
-  const[isCurrOpen, setIsCurrOpen] = useState(false);
+  const[isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const[isLangOpen, setIsLangOpen] = useState(false);
+  const [isCurrOpen, setIsCurrOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState("EN");
   
   const { currency, changeCurrency, mounted, RATES } = useCurrency();
@@ -16,6 +16,8 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     { code: "AR", name: "العربية", flag: "🇸🇦" }, 
     { code: "RU", name: "Русский", flag: "🇷🇺" }
   ];
+  
+  const currencies = ["GBP", "USD", "EUR", "SAR"];
 
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
@@ -52,7 +54,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
 
   const activeLangObj = languages.find(l => l.code === currentLang) || languages[0];
 
-  // Smart Toggle Functions to prevent overlap
   const toggleLanguage = () => {
     setIsLangOpen(!isLangOpen);
     if (isCurrOpen) setIsCurrOpen(false);
@@ -62,6 +63,27 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     setIsCurrOpen(!isCurrOpen);
     if (isLangOpen) setIsLangOpen(false);
   };
+
+  // Helper function to format the display text in the dropdown and button
+  const renderCurrencyDisplay = (currCode: string) => {
+      if (currCode === "SAR") {
+          return <span className="w-full text-center tracking-widest uppercase">SAR</span>;
+      }
+      return (
+          <div className="flex items-center justify-center gap-3 w-full">
+              <span className="text-lg w-4 text-center">{RATES[currCode as keyof typeof RATES]?.symbol}</span>
+              <span className="text-sm tracking-widest uppercase opacity-70">{currCode}</span>
+          </div>
+      );
+  };
+
+  // Helper for the top button display
+  const renderTopButtonDisplay = () => {
+    if (!mounted || !RATES) return "SAR";
+    if (currency === "SAR") return "SAR";
+    return `${RATES[currency as keyof typeof RATES]?.symbol} ${currency}`;
+  }
+
 
   return (
     <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
@@ -92,19 +114,19 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           {/* CURRENCY TOGGLE */}
           <div className="relative notranslate" translate="no">
             <button onClick={toggleCurrency} className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none font-medium text-base">
-              {mounted && RATES ? currency : "SAR"}
+              {renderTopButtonDisplay()}
               <svg className={`w-4 h-4 transition-transform duration-300 ${isCurrOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             
             {isCurrOpen && (
-              <div className="absolute top-full right-0 mt-4 w-28 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-center">
-                {RATES && Object.keys(RATES).map((curr) => (
+              <div className="absolute top-full right-0 mt-4 w-32 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-center">
+                {currencies.map((curr) => (
                   <button 
                     key={curr} 
                     onClick={() => { changeCurrency(curr as any); setIsCurrOpen(false); }} 
-                    className={`px-4 py-3 hover:bg-ivory hover:text-gold transition-colors text-sm font-medium tracking-widest ${currency === curr ? 'text-gold bg-ivory' : 'text-ink'}`}
+                    className={`flex items-center justify-center w-full px-4 py-3 hover:bg-ivory hover:text-gold transition-colors text-sm font-medium ${currency === curr ? 'text-gold bg-ivory' : 'text-ink'}`}
                   >
-                    {curr}
+                    {renderCurrencyDisplay(curr)}
                   </button>
                 ))}
               </div>
@@ -153,14 +175,14 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Contact</Link>
           
           {/* MOBILE CURRENCY SELECTION */}
-          <div className="flex gap-8 pt-6 border-t border-gray-100 w-2/3 justify-center notranslate" translate="no" dir="ltr">
-            {RATES && Object.keys(RATES).map((curr) => (
+          <div className="flex gap-8 pt-6 border-t border-gray-100 w-full justify-center notranslate" translate="no" dir="ltr">
+            {currencies.map((curr) => (
               <button 
                 key={curr} 
                 onClick={() => { changeCurrency(curr as any); setIsMobileMenuOpen(false); }} 
-                className={`text-lg font-medium transition-all duration-300 ${currency === curr ? 'text-gold scale-125' : 'text-ink/50 hover:text-ink'}`}
+                className={`text-lg transition-all duration-300 font-medium tracking-widest uppercase ${currency === curr ? 'text-gold scale-110' : 'text-ink/50 hover:text-ink'}`}
               >
-                {curr}
+                {curr === "SAR" ? "SAR" : RATES?.[curr as keyof typeof RATES]?.symbol || curr}
               </button>
             ))}
           </div>
