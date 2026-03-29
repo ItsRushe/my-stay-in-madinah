@@ -7,7 +7,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
   const[isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isCurrOpen, setIsCurrOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("EN");
+  const[currentLang, setCurrentLang] = useState("EN");
   
   const { currency, changeCurrency, mounted, RATES } = useCurrency();
 
@@ -17,8 +17,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     { code: "RU", name: "Русский", flag: "🇷🇺" }
   ];
   
-  // 👉 FIXED: Added the missing currencies array back here!
-  const currencies =["GBP", "USD", "EUR", "SAR"];
+  const currencies = ["GBP", "USD", "EUR", "SAR"];
 
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
@@ -152,4 +151,68 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <div className="relative notranslate" translate="no">
             <button onClick={toggleLanguage} className="flex items-center gap-2 hover:text-gold transition-colors focus:outline-none font-medium text-lg">
               {activeLangObj.flag}
-              <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19
+              <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+            
+            {isLangOpen && (
+              <div className="absolute top-full right-0 mt-4 w-36 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-left">
+                {languages.map((lang) => (
+                  <button 
+                    key={lang.code} 
+                    onClick={() => switchLanguage(lang.code)} 
+                    className={`flex items-center gap-3 px-4 py-3 hover:bg-ivory hover:text-gold transition-colors ${currentLang === lang.code ? 'text-gold font-medium bg-ivory' : 'text-ink'}`}
+                  >
+                    <span className="text-xl">{lang.flag}</span>
+                    <span className="text-sm">{lang.name}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {/* Mobile Hamburger Button */}
+        <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden text-ink hover:text-gold focus:outline-none ml-auto">
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+          </svg>
+        </button>
+      </div>
+      
+      {/* Mobile Dropdown Menu */}
+      {isMobileMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-white border-b border-gray-200 flex flex-col items-center py-8 gap-6 text-ink shadow-2xl z-10 lg:hidden">
+          <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Home</Link>
+          <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>About Us</Link>
+          <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Rooms</Link>
+          <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Tours</Link>
+          <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Contact</Link>
+          
+          <div className="flex gap-8 pt-6 border-t border-gray-100 w-full justify-center notranslate" translate="no" dir="ltr">
+            {currencies.map((curr) => (
+              <button 
+                key={curr} 
+                onClick={() => { changeCurrency(curr as any); setIsMobileMenuOpen(false); }} 
+                className={`text-lg transition-all duration-300 font-medium tracking-widest uppercase ${currency === curr ? 'text-gold scale-110' : 'text-ink/50 hover:text-ink'}`}
+              >
+                {curr === "SAR" ? "SAR" : RATES?.[curr as keyof typeof RATES]?.symbol || curr}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex gap-8 pt-4 pb-2 w-2/3 justify-center notranslate" translate="no" dir="ltr">
+            {languages.map((lang) => (
+              <button 
+                key={lang.code} 
+                onClick={() => switchLanguage(lang.code)} 
+                className={`text-3xl transition-all duration-300 ${currentLang === lang.code ? 'opacity-100 scale-110 drop-shadow-md' : 'opacity-40 hover:opacity-100'}`}
+              >
+                {lang.flag}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
