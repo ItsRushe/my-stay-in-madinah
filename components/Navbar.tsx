@@ -5,9 +5,9 @@ import { useCurrency } from "./CurrencyProvider";
 
 export default function Navbar({ activePage = "home" }: { activePage?: string }) {
   const[isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const[isLangOpen, setIsLangOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
   const [isCurrOpen, setIsCurrOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState("EN");
+  const[currentLang, setCurrentLang] = useState("EN");
   
   const { currency, changeCurrency, mounted, RATES } = useCurrency();
 
@@ -21,7 +21,8 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
 
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
-    if (match && match[1]) {
+    // Ignore if it somehow got set to English-to-English (/en/en)
+    if (match && match[1] && match[1].toLowerCase() !== 'en') {
       const lang = match[1].toUpperCase();
       setCurrentLang(lang);
       if (lang === 'AR') {
@@ -38,15 +39,23 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     }
   },[]);
 
+  // THE FIX: Thoroughly wipe the cookie from all domain variations
   const switchLanguage = (langCode: string) => {
     const code = langCode.toLowerCase();
+    const domain = window.location.hostname;
+    // Google uses a leading dot (.domain.com) for cookies. We must clear both!
+    const dotDomain = domain.startsWith('.') ? domain : `.${domain}`;
+
     if (code === "en") {
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${window.location.hostname}; path=/;`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=/;`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${dotDomain}; path=/;`;
     } else {
       document.cookie = `googtrans=/en/${code}; path=/`;
-      document.cookie = `googtrans=/en/${code}; domain=${window.location.hostname}; path=/`;
+      document.cookie = `googtrans=/en/${code}; domain=${domain}; path=/`;
+      document.cookie = `googtrans=/en/${code}; domain=${dotDomain}; path=/`;
     }
+    
     setIsLangOpen(false);
     setIsMobileMenuOpen(false);
     window.location.reload(); 
@@ -64,7 +73,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     if (isLangOpen) setIsLangOpen(false);
   };
 
-  // Helper function to format the display text in the dropdown and button
   const renderCurrencyDisplay = (currCode: string) => {
       if (currCode === "SAR") {
           return <span className="w-full text-center tracking-widest uppercase">SAR</span>;
@@ -77,7 +85,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
       );
   };
 
-  // Helper for the top button display
   const renderTopButtonDisplay = () => {
     if (!mounted || !RATES) return "SAR";
     if (currency === "SAR") return "SAR";
@@ -108,7 +115,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
         </div>
         
-        {/* RIGHT: Utilities (Currency, Language) */}
+        {/* RIGHT: Utilities */}
         <div className="hidden lg:flex flex-1 justify-end items-center gap-6 text-sm tracking-wide text-ink/80">
           
           {/* CURRENCY TOGGLE */}
@@ -174,7 +181,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Tours</Link>
           <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} text-lg transition-colors`}>Contact</Link>
           
-          {/* MOBILE CURRENCY SELECTION */}
           <div className="flex gap-8 pt-6 border-t border-gray-100 w-full justify-center notranslate" translate="no" dir="ltr">
             {currencies.map((curr) => (
               <button 
@@ -187,7 +193,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
             ))}
           </div>
 
-          {/* MOBILE LANGUAGE SELECTION */}
           <div className="flex gap-8 pt-4 pb-2 w-2/3 justify-center notranslate" translate="no" dir="ltr">
             {languages.map((lang) => (
               <button 
