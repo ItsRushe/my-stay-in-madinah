@@ -16,8 +16,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     { code: "AR", name: "العربية", flag: "🇸🇦" }, 
     { code: "RU", name: "Русский", flag: "🇷🇺" }
   ];
-  
-  const currencies = ["GBP", "USD", "EUR", "SAR"];
 
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
@@ -39,26 +37,45 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     }
   },[]);
 
-  // THE FIX: Thoroughly wipe the cookie from all domain variations
+  // THE ULTIMATE COOKIE NUKE FUNCTION
   const switchLanguage = (langCode: string) => {
     const code = langCode.toLowerCase();
     const domain = window.location.hostname;
-    // Google uses a leading dot (.domain.com) for cookies. We must clear both!
-    const dotDomain = domain.startsWith('.') ? domain : `.${domain}`;
-
+    const domainParts = domain.split('.');
+    
+    // If selecting English, we completely eradicate the cookie from all possible domains
     if (code === "en") {
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      // 1. Clear generic path
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      
+      // 2. Clear exact domain and dot-domain
       document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${domain}; path=/;`;
-      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${dotDomain}; path=/;`;
+      document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${domain}; path=/;`;
+      
+      // 3. If using www. (e.g. www.mystayinmadinah.com), clear the base domain too
+      if (domainParts.length > 2) {
+        const baseDomain = domainParts.slice(1).join('.');
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=${baseDomain}; path=/;`;
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=.${baseDomain}; path=/;`;
+      }
+      
+      // Force Document instantly back to English format before reload
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = 'en';
+
     } else {
-      document.cookie = `googtrans=/en/${code}; path=/`;
-      document.cookie = `googtrans=/en/${code}; domain=${domain}; path=/`;
-      document.cookie = `googtrans=/en/${code}; domain=${dotDomain}; path=/`;
+      // Setting Arabic or Russian
+      const dotDomain = domain.startsWith('.') ? domain : `.${domain}`;
+      document.cookie = `googtrans=/en/${code}; path=/;`;
+      document.cookie = `googtrans=/en/${code}; domain=${domain}; path=/;`;
+      document.cookie = `googtrans=/en/${code}; domain=${dotDomain}; path=/;`;
     }
     
     setIsLangOpen(false);
     setIsMobileMenuOpen(false);
-    window.location.reload(); 
+    
+    // Force a hard assign to bypass cached DOM states
+    window.location.assign(window.location.href);
   };
 
   const activeLangObj = languages.find(l => l.code === currentLang) || languages[0];
@@ -90,7 +107,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
     if (currency === "SAR") return "SAR";
     return `${RATES[currency as keyof typeof RATES]?.symbol} ${currency}`;
   }
-
 
   return (
     <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
@@ -124,7 +140,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
               {renderTopButtonDisplay()}
               <svg className={`w-4 h-4 transition-transform duration-300 ${isCurrOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            
             {isCurrOpen && (
               <div className="absolute top-full right-0 mt-4 w-32 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-center">
                 {currencies.map((curr) => (
@@ -146,7 +161,6 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
               {activeLangObj.flag}
               <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
-            
             {isLangOpen && (
               <div className="absolute top-full right-0 mt-4 w-36 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-left">
                 {languages.map((lang) => (
