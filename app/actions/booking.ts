@@ -2,21 +2,66 @@
 
 import { createClient } from "../../lib/supabase/server";
 import Stripe from "stripe";
+import { headers } from "next/headers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-02-25.clover", 
 });
 
+const RATES: Record<string, number> = {
+  GBP: 1,
+  USD: 1.27,
+  EUR: 1.17,
+  SAR: 4.76,
+};
+
+const rateLimitMap = new Map<string, { count: number, lastReset: number }>();
+const RATE_LIMIT_MAX = 5; 
+const RATE_LIMIT_WINDOW = 60000;
+
+// FIXED: The definition here now perfectly matches what the frontend is sending
 export async function startBookingCheckout(formData: {
   roomId: string;
-  roomName: string;
-  pricePerNight: number; // This is the CONVERTED amount (e.g. SAR 400)
-  currency: string;      // The currency code (e.g. 'sar')
+  currency: string;
   checkIn: string;
   checkOut: string;
   nights: number;
 }) {
+  
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for") || "unknown_ip";
+  const now = Date.now();
+  
+  const userLimit = rateLimitMap.get(ip);
+  if (userLimit && now - userLimit.lastReset < RATE_LIMIT_WINDOW) {
+    if (userLimit.count >= RATE_LIMIT_MAX) {
+      throw new Error("Too many booking attempts. Please wait a minute and try again.");
+    }
+    userLimit.count++;
+  } else {
+    rateLimitMap.set(ip, { count: 1, lastReset: now });
+  }
+
+  if (!formData.roomId || !formData.checkIn || !formData.checkOut || !formData.currency) {
+    throw new Error("Missing required booking details.");
+  }
+  if (typeof formData.nights !== 'number' || formData.nights <= 0 || formData.nights > 60) {
+    throw new Error("Invalid booking duration.");
+  }
+
   const supabase = await createClient();
+
+  const { data: realRoom, error: roomError } = await supabase
+    .from('rooms')
+    .select('*')
+    .eq('id', formData.roomId)
+    .single();
+
+  if (roomError || !realRoom) throw new Error("Room not found or no longer available.");
+
+  const activeRate = RATES[formData.currency.toUpperCase()] || 1;
+  const securePricePerNight = Math.round(realRoom.price_per_night * activeRate);
+  const secureTotalPrice = securePricePerNight * formData.nights;
 
   let { data: { user } } = await supabase.auth.getUser();
   if (!user) {
@@ -24,8 +69,6 @@ export async function startBookingCheckout(formData: {
     if (authError) throw new Error("Could not create guest session.");
     user = authData.user;
   }
-
-  const totalPrice = formData.pricePerNight * formData.nights;
 
   const { data: availableRooms, error: checkError } = await supabase
     .rpc('available_rooms', { req_check_in: formData.checkIn, req_check_out: formData.checkOut });
@@ -42,25 +85,25 @@ export async function startBookingCheckout(formData: {
       user_id: user?.id,
       check_in: formData.checkIn,
       check_out: formData.checkOut,
-      total_price: totalPrice,
+      total_price: secureTotalPrice,
       status: 'pending'
     }).select().single();
 
   if (insertError || !booking) throw new Error("Could not reserve room.");
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mystayinmadinah.com';
   
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     line_items:[
       {
         price_data: {
-          currency: formData.currency.toLowerCase(), // DYNAMIC CURRENCY
+          currency: formData.currency.toLowerCase(),
           product_data: {
-            name: formData.roomName,
+            name: realRoom.name, 
             description: `${formData.nights} Nights (${formData.checkIn} to ${formData.checkOut})`,
           },
-          unit_amount: Math.round(formData.pricePerNight * 100), // Pass the converted amount!
+          unit_amount: securePricePerNight * 100, 
         },
         quantity: formData.nights,
       },
@@ -72,5 +115,6 @@ export async function startBookingCheckout(formData: {
   });
 
   await supabase.from('bookings').update({ stripe_session_id: session.id }).eq('id', booking.id);
+  
   return { url: session.url };
 }
