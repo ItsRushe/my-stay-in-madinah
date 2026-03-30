@@ -32,10 +32,10 @@ export default function BookingWidget({ room }: { room: any }) {
     setError('');
 
     try {
+      // SECURE PAYLOAD: Notice we are NO LONGER sending roomName or pricePerNight!
+      // The server figures that out itself to prevent price hacking.
       const response = await startBookingCheckout({
         roomId: room.id,
-        roomName: room.name,
-        pricePerNight: convertedPricePerNight,
         currency: currency, 
         checkIn: checkIn,
         checkOut: checkOut,
