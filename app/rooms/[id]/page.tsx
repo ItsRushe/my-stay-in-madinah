@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import BookingWidget from '../../../components/BookingWidget';
@@ -7,6 +8,26 @@ import Footer from '../../../components/Footer';
 import { createClient } from '../../../lib/supabase/server';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+  const { data: room } = await supabase.from('rooms').select('name, description, images').eq('id', id).single();
+
+  if (!room) return { title: 'Room Not Found' };
+
+  return {
+    title: `${room.name} — Book Direct in Madinah`,
+    description: `${room.description?.slice(0, 140)} Book directly with no platform fees and get the guaranteed best rate.`,
+    alternates: { canonical: `/rooms/${id}` },
+    openGraph: {
+      title: `${room.name} | My Stay in Madinah`,
+      description: room.description?.slice(0, 160),
+      url: `/rooms/${id}`,
+      images: room.images?.[0] ? [{ url: room.images[0], alt: room.name }] : [],
+    },
+  };
+}
 
 export default async function RoomPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;

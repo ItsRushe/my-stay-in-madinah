@@ -1,6 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+
+export const metadata: Metadata = {
+  title: "Contact & Book Direct — Madinah Accommodation",
+  description:
+    "Contact My Stay in Madinah to book your room directly via WhatsApp or our booking form. Skip the platforms, save on fees, and get the guaranteed best rate.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Book Direct | My Stay in Madinah",
+    description:
+      "Get in touch to book your Madinah stay directly. No fees, instant confirmation, and guaranteed best rates.",
+    url: "/contact",
+  },
+};
 
 export default function ContactPage() {
   return (

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -5,6 +6,13 @@ import PriceDisplay from "../components/PriceDisplay";
 import { createClient } from "../lib/supabase/server";
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: "My Stay in Madinah | Premium Direct Booking — No Platform Fees",
+  description:
+    "Book premium boutique accommodation in Madinah directly with no platform fees. Guaranteed lowest rates, hotel-grade cleanliness, and a central location near the Prophet's Mosque. Save up to 20% vs Airbnb.",
+  alternates: { canonical: "/" },
+};
 
 export default async function Home() {
   const supabase = await createClient();

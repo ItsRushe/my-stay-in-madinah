@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -5,6 +6,19 @@ import PriceDisplay from "../../components/PriceDisplay";
 import { createClient } from "../../lib/supabase/server";
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: "Ziyarah Tours in Madinah — Guided Experiences",
+  description:
+    "Discover curated Ziyarah tour experiences in Madinah led by knowledgeable local guides. Visit the Prophet's Mosque, Uhud, and other sacred sites with My Stay in Madinah.",
+  alternates: { canonical: "/tours" },
+  openGraph: {
+    title: "Curated Ziyarah Tours in Madinah | My Stay in Madinah",
+    description:
+      "Explore Madinah's sacred sites with expert local guides. Tours covering the Prophet's Mosque, Uhud, and more. Book directly for the best rates.",
+    url: "/tours",
+  },
+};
 
 export default async function ToursPage() {
   const supabase = await createClient();

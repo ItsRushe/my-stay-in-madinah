@@ -1,5 +1,19 @@
+import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+
+export const metadata: Metadata = {
+  title: "About Us — Premium Madinah Accommodation",
+  description:
+    "Learn about My Stay in Madinah — a direct-booking boutique accommodation service offering guaranteed lowest rates and hotel-grade standards near the Prophet's Mosque.",
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About My Stay in Madinah",
+    description:
+      "A direct-booking boutique accommodation service in Madinah. No fees, guaranteed lowest rates, hotel-grade cleanliness near the Prophet's Mosque.",
+    url: "/about",
+  },
+};
 
 export default function AboutPage() {
   return (

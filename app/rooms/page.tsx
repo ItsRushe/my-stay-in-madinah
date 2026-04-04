@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
@@ -5,6 +6,19 @@ import PriceDisplay from "../../components/PriceDisplay";
 import { createClient } from "../../lib/supabase/server";
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: "Rooms & Suites — Direct Booking in Madinah",
+  description:
+    "Browse our premium rooms and suites in Madinah. Book directly with no platform fees and get the guaranteed lowest rate for your Ziyarah stay near the Prophet's Mosque.",
+  alternates: { canonical: "/rooms" },
+  openGraph: {
+    title: "Premium Rooms & Suites in Madinah | My Stay in Madinah",
+    description:
+      "Browse and book our boutique rooms in Madinah directly. No Airbnb fees, no hidden charges — just honest, guaranteed best rates.",
+    url: "/rooms",
+  },
+};
 
 export default async function RoomsPage() {
   const supabase = await createClient();
