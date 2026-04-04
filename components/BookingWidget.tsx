@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { startBookingCheckout } from '../app/actions/booking';
 import { useCurrency } from './CurrencyProvider';
 
@@ -8,8 +8,13 @@ export default function BookingWidget({ room }: { room: any }) {
   const[checkOut, setCheckOut] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [today, setToday] = useState('');
 
   const { currency, RATES, formatPrice, mounted } = useCurrency();
+
+  useEffect(() => {
+    setToday(new Date().toISOString().split('T')[0]);
+  }, []);
 
   const calculateNights = () => {
     if (!checkIn || !checkOut) return 0;
@@ -48,8 +53,6 @@ export default function BookingWidget({ room }: { room: any }) {
       setLoading(false);
     }
   };
-
-  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div className="sticky top-32 bg-white p-8 shadow-2xl border border-gray-100 flex flex-col items-center rounded-none">
