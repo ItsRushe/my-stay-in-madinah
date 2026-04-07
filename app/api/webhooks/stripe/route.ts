@@ -66,37 +66,123 @@ export async function POST(req: Request) {
         await resend.emails.send({
           from: 'onboarding@resend.dev', // MUST match your verified Resend domain!
           to: guestEmail,
-          subject: `Booking Confirmed: Your stay at ${roomName}`,
+          subject: `Booking Confirmed — ${roomName} | My Stay in Madinah`,
           html: `
-            <div style="font-family: sans-serif; max-w: 600px; margin: 0 auto; color: #1B2420; line-height: 1.6;">
-              <div style="text-align: center; padding: 30px 0; background-color: #F9F8F4;">
-                <h1 style="margin: 0; font-size: 24px; color: #BA6A42;">MY STAY IN MADINAH</h1>
-              </div>
-              <div style="padding: 40px 30px; border: 1px solid #EAEAEA;">
-                <h2 style="font-size: 22px; font-weight: 500; margin-bottom: 20px;">Booking Confirmed</h2>
-                <p>Dear ${guestName},</p>
-                <p>Alhamdulillah, your payment has been successfully processed and your reservation is confirmed.</p>
-                
-                <div style="background-color: #F9F8F4; padding: 20px; border-left: 4px solid #BA6A42; margin: 30px 0;">
-                  <p style="margin: 0 0 10px 0;"><strong>Order Number:</strong> #${orderNumber}</p>
-                  <p style="margin: 0 0 10px 0;"><strong>Room:</strong> ${roomName}</p>
-                  <p style="margin: 0 0 10px 0;"><strong>Check-in:</strong> ${checkIn} (3:00 PM)</p>
-                  <p style="margin: 0;"><strong>Check-out:</strong> ${checkOut} (11:00 AM)</p>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Confirmed</title>
+</head>
+<body style="margin:0;padding:0;background-color:#EFEFEA;font-family:Georgia,'Times New Roman',serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#EFEFEA;padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
 
-                <p>To ensure a seamless arrival, we have prepared a Digital Guestbook containing our property location, house rules, and direct concierge contact information.</p>
-                
-                <div style="text-align: center; margin: 40px 0;">
-                  <!-- ✅ UPDATED LINK: Now passes the session ID to the guestbook! -->
-                  <a href="${domain}/guestbook?session_id=${session.id}" style="background-color: #1B2420; color: #ffffff; padding: 16px 32px; text-decoration: none; font-weight: bold; display: inline-block;">
-                    View Personalized Guestbook
-                  </a>
-                </div>
+          <!-- HEADER -->
+          <tr>
+            <td style="background-color:#1B2420;text-align:center;padding:36px 40px 28px;">
+              <img src="${domain}/icon-logo.png" alt="My Stay in Madinah" width="48" style="display:block;margin:0 auto 16px;" />
+              <p style="margin:0;font-family:Georgia,serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#BA6A42;font-weight:normal;">My Stay in Madinah</p>
+            </td>
+          </tr>
 
-                <p>If you have any special requests, please reply directly to this email or contact us via WhatsApp.</p>
-                <p>Warm regards,<br/><strong>The Concierge Team</strong></p>
-              </div>
-            </div>
+          <!-- GOLD DIVIDER -->
+          <tr>
+            <td style="background-color:#BA6A42;height:3px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+
+          <!-- CONFIRMATION BADGE -->
+          <tr>
+            <td style="background-color:#F9F8F4;text-align:center;padding:40px 40px 32px;">
+              <table cellpadding="0" cellspacing="0" style="display:inline-table;border:1px solid #e0ddd6;padding:10px 28px;margin-bottom:24px;">
+                <tr>
+                  <td style="font-family:Georgia,serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#BA6A42;">Reservation Confirmed</td>
+                </tr>
+              </table>
+              <h1 style="margin:0 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:30px;font-weight:normal;color:#1B2420;line-height:1.25;">Your room is reserved.</h1>
+              <p style="margin:0;font-family:Arial,sans-serif;font-size:15px;color:#5a5a52;font-weight:300;line-height:1.6;">
+                Dear ${guestName}, your booking at <strong style="color:#1B2420;font-weight:600;">${roomName}</strong> has been confirmed and your payment processed successfully.
+              </p>
+            </td>
+          </tr>
+
+          <!-- BOOKING DETAILS CARD -->
+          <tr>
+            <td style="background-color:#F9F8F4;padding:0 40px 40px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e0ddd6;background-color:#ffffff;">
+                <!-- Card Header -->
+                <tr>
+                  <td colspan="2" style="padding:18px 24px;border-bottom:1px solid #e0ddd6;">
+                    <p style="margin:0;font-family:Arial,sans-serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#BA6A42;">Booking Details</p>
+                  </td>
+                </tr>
+                <!-- Order Number -->
+                <tr>
+                  <td style="padding:16px 24px 8px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#9a9a90;">Order Number</td>
+                  <td style="padding:16px 24px 8px;font-family:Georgia,serif;font-size:15px;color:#1B2420;text-align:right;">#${orderNumber}</td>
+                </tr>
+                <!-- Divider -->
+                <tr><td colspan="2" style="padding:0 24px;"><div style="border-top:1px solid #f0ede6;"></div></td></tr>
+                <!-- Room -->
+                <tr>
+                  <td style="padding:14px 24px 8px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#9a9a90;">Room</td>
+                  <td style="padding:14px 24px 8px;font-family:Georgia,serif;font-size:15px;color:#1B2420;text-align:right;">${roomName}</td>
+                </tr>
+                <!-- Divider -->
+                <tr><td colspan="2" style="padding:0 24px;"><div style="border-top:1px solid #f0ede6;"></div></td></tr>
+                <!-- Check-in -->
+                <tr>
+                  <td style="padding:14px 24px 8px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#9a9a90;">Check-in</td>
+                  <td style="padding:14px 24px 8px;font-family:Georgia,serif;font-size:15px;color:#1B2420;text-align:right;">${checkIn} &nbsp;&middot;&nbsp; 3:00 PM</td>
+                </tr>
+                <!-- Divider -->
+                <tr><td colspan="2" style="padding:0 24px;"><div style="border-top:1px solid #f0ede6;"></div></td></tr>
+                <!-- Check-out -->
+                <tr>
+                  <td style="padding:14px 24px 24px;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#9a9a90;">Check-out</td>
+                  <td style="padding:14px 24px 24px;font-family:Georgia,serif;font-size:15px;color:#1B2420;text-align:right;">${checkOut} &nbsp;&middot;&nbsp; 11:00 AM</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- GUESTBOOK CTA -->
+          <tr>
+            <td style="background-color:#F9F8F4;padding:0 40px 48px;text-align:center;">
+              <p style="margin:0 0 24px;font-family:Arial,sans-serif;font-size:14px;color:#5a5a52;font-weight:300;line-height:1.7;">
+                We have prepared your <strong style="color:#1B2420;">Digital Guestbook</strong> with everything you need for arrival — property address, house rules, Wi-Fi details, and your dedicated concierge contact.
+              </p>
+              <a href="${domain}/guestbook?session_id=${session.id}"
+                style="display:inline-block;background-color:#1B2420;color:#ffffff;padding:16px 40px;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;">
+                View Your Guestbook
+              </a>
+            </td>
+          </tr>
+
+          <!-- GOLD DIVIDER -->
+          <tr>
+            <td style="background-color:#BA6A42;height:1px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td style="background-color:#1B2420;padding:28px 40px;text-align:center;">
+              <p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#BA6A42;">My Stay in Madinah</p>
+              <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#ffffff;opacity:0.45;font-weight:300;">
+                Questions? Reply to this email or message us on WhatsApp.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
           `
         });
       }
