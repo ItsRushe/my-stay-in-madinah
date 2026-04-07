@@ -28,7 +28,7 @@ export default function AboutPage() {
           We noticed a growing frustration with traditional booking platforms—hidden service fees, unpredictable hosts, and inflated pricing. We created this platform as a direct alternative, allowing you to bypass the middleman and secure luxury rooms at the absolute best guaranteed rate.
         </p>
         <p className="font-light leading-relaxed text-lg opacity-80">
-          From impeccably designed rooms to curated Ziyarah tours led by knowledgeable local guides, we handle the details so you can focus entirely on your worship and peace of mind.
+          From impeccably designed rooms to curated guided tours led by knowledgeable local guides, we handle the details so you can focus entirely on your worship and peace of mind.
         </p>
       </section>
       <Footer />

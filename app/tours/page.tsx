@@ -8,12 +8,12 @@ import { createClient } from "../../lib/supabase/server";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: "Ziyarah Tours in Madinah — Guided Experiences",
+  title: "Guided Tours in Madinah — Curated Experiences",
   description:
-    "Discover curated Ziyarah tour experiences in Madinah led by knowledgeable local guides. Visit the Prophet's Mosque, Uhud, and other sacred sites with My Stay in Madinah.",
+    "Discover curated guided tour experiences in Madinah led by knowledgeable local guides. Visit the Prophet's Mosque, Uhud, and other sacred sites with My Stay in Madinah.",
   alternates: { canonical: "/tours" },
   openGraph: {
-    title: "Curated Ziyarah Tours in Madinah | My Stay in Madinah",
+    title: "Curated Guided Tours in Madinah | My Stay in Madinah",
     description:
       "Explore Madinah's sacred sites with expert local guides. Tours covering the Prophet's Mosque, Uhud, and more. Book directly for the best rates.",
     url: "/tours",
@@ -33,7 +33,7 @@ export default async function ToursPage() {
       </a>
 
       <header className="bg-ink py-24 md:py-32 px-6 border-b border-white/10 text-center">
-        <h1 className="font-playfair text-4xl md:text-6xl text-white font-medium mb-6">Curated Ziyarah Experiences</h1>
+        <h1 className="font-playfair text-4xl md:text-6xl text-white font-medium mb-6">Curated Madinah Experiences</h1>
         <p className="text-ivory/60 font-light text-lg max-w-2xl mx-auto">Discover the rich spiritual heritage of Madinah with our deeply knowledgeable local guides. All tours include free cancellation up to 24 hours before your experience.</p>
       </header>
 

@@ -10,7 +10,7 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: "Rooms & Suites — Direct Booking in Madinah",
   description:
-    "Browse our premium rooms and suites in Madinah. Book directly with no platform fees and get the guaranteed lowest rate for your Ziyarah stay near the Prophet's Mosque.",
+    "Browse our premium rooms and suites in Madinah. Book directly with no platform fees and get the guaranteed lowest rate for your stay near the Prophet's Mosque.",
   alternates: { canonical: "/rooms" },
   openGraph: {
     title: "Premium Rooms & Suites in Madinah | My Stay in Madinah",

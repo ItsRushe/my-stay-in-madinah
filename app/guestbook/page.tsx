@@ -82,7 +82,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
         <div className="border-l-2 border-gold pl-6 md:pl-10">
           <h2 className="font-playfair text-3xl font-medium mb-4">Your Sanctuary</h2>
           <p className="font-light leading-relaxed opacity-80">
-            Alhamdulillah, we are honored to host you during your Ziyarah. Our concierge team has meticulously prepared your accommodation to ensure a serene and comfortable environment so you can focus entirely on your spiritual journey.
+            Alhamdulillah, we are honored to host you during your visit. Our concierge team has meticulously prepared your accommodation to ensure a serene and comfortable environment so you can focus entirely on your spiritual journey.
           </p>
         </div>
 
@@ -143,7 +143,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
         <div className="border-l-2 border-gold pl-6 md:pl-10">
           <h2 className="font-playfair text-3xl font-medium mb-4">24/7 Concierge Contact</h2>
           <p className="font-light leading-relaxed opacity-80 mb-6">
-            If you need anything at all during your stay—from extra towels to booking a private Ziyarah tour—our team is available around the clock.
+            If you need anything at all during your stay—from extra towels to booking a private tour—our team is available around the clock.
           </p>
           <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-3 bg-[#25D366] text-white px-8 py-4 font-medium hover:bg-[#1da851] transition-colors duration-300 shadow-xl rounded-none notranslate" translate="no">
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 .003 5.385.003 12.031c0 2.126.556 4.198 1.613 6.02L.03 24l6.105-1.602a11.968 11.968 0 0 0 5.896 1.542h.005c6.643 0 12.025-5.384 12.025-12.028C24.055 5.385 18.675 0 12.031 0zm-.005 21.954a9.982 9.982 0 0 1-5.09-1.39l-.365-.217-3.784.992.998-3.69-.237-.377a9.96 9.96 0 0 1-1.523-5.27C1.995 6.486 6.483 2 12.031 2c5.545 0 10.033 4.488 10.033 10.003 0 5.513-4.488 10-10.038 10h-.001zm5.505-7.519c-.302-.151-1.787-.882-2.064-.983-.277-.101-.48-.151-.681.151-.202.302-.78 1.034-.956 1.235-.177.202-.353.227-.655.076-1.574-.789-2.73-1.66-3.784-3.32-.177-.278.177-.278.756-1.41.076-.151.038-.278-.038-.428-.076-.151-.681-1.636-.932-2.24-.246-.59-.496-.51-.681-.52-.177-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.034-1.058 2.518 0 1.484 1.084 2.92 1.235 3.12.151.202 2.116 3.224 5.127 4.524 1.965.848 2.704.899 3.484.75.78-.151 2.368-.968 2.704-1.902.336-.934.336-1.737.236-1.903-.101-.166-.378-.267-.68-.418z"/></svg>

@@ -43,7 +43,7 @@ export default async function Home() {
               Stay More.<br/>Pay Less.<br/><span className="text-gold italic font-normal">Guaranteed.</span>
             </h1>
             <p className="text-base md:text-lg text-ink/70 font-light max-w-xl mx-auto lg:mx-0 mb-10 md:mb-12 leading-relaxed">
-              Elevate your Ziyarah with premium, direct-booking accommodation in the heart of Madinah. Experience impeccable comfort without the hidden platform fees of Airbnb.
+              Elevate your visit with premium, direct-booking accommodation in the heart of Madinah. Experience impeccable comfort without the hidden platform fees of Airbnb.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto justify-center lg:justify-start">
               <Link href="/rooms" className="bg-ink hover:bg-gold text-white px-8 py-4 text-center transition-all duration-500 font-medium tracking-wide w-full sm:w-auto shadow-xl rounded-none">Reserve Your Room</Link>
@@ -173,7 +173,7 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 md:mb-16">
             <h2 className="font-playfair text-3xl md:text-4xl text-ink font-semibold mb-4">The Smarter Alternative</h2>
-            <p className="text-ink/60 font-light text-base md:text-lg max-w-xl mx-auto">Why paying a middleman doesn't make sense for your Ziyarah.</p>
+            <p className="text-ink/60 font-light text-base md:text-lg max-w-xl mx-auto">Why paying a middleman doesn't make sense for your trip.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-200 overflow-hidden shadow-xl md:shadow-2xl rounded-none">
             <div className="bg-ivory p-8 sm:p-10 md:p-14 border-b md:border-b-0 md:border-r border-gray-200">
@@ -205,7 +205,7 @@ export default async function Home() {
               <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs uppercase font-medium">Beyond The Accommodation</span>
               <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 leading-tight text-white">Curated Ziyarah Experiences</h2>
+            <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 leading-tight text-white">Curated Madinah Experiences</h2>
             <p className="text-ivory/60 font-light text-lg md:text-xl leading-relaxed">
               Your spiritual journey doesn't end at your room. Journey through the Prophet's city with our deeply knowledgeable local guides for an unforgettable experience.
             </p>

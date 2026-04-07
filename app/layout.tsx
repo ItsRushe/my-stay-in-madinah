@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     "stay in Madinah",
     "Madinah hotel",
     "direct booking Madinah",
-    "Ziyarah accommodation",
+    "visit Madinah accommodation",
     "Prophet's Mosque hotel",
   ],
   openGraph: {

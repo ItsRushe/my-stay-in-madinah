@@ -82,7 +82,7 @@ export default function ContactPage() {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Message or Special Requests</label>
-              <textarea name="message" rows={4} required className="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-gold transition-colors font-light placeholder-gray-400 resize-none" placeholder="Let us know how we can make your Ziyarah perfect..."></textarea>
+              <textarea name="message" rows={4} required className="w-full border-b border-gray-300 bg-transparent py-2 focus:outline-none focus:border-gold transition-colors font-light placeholder-gray-400 resize-none" placeholder="Let us know how we can make your visit perfect..."></textarea>
             </div>
             <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
             <button type="submit" className="w-full bg-ink text-white py-4 font-medium hover:bg-gold transition-colors duration-300 mt-4 shadow-xl">Request Best Direct Rate</button>
