@@ -12,9 +12,9 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
   const { currency, changeCurrency, mounted, RATES } = useCurrency();
 
   const languages =[
-    { code: "EN", name: "English", flag: "🇬🇧" }, 
-    { code: "AR", name: "العربية", flag: "🇸🇦" }, 
-    { code: "RU", name: "Русский", flag: "🇷🇺" }
+    { code: "EN", name: "English", flag: "/flags/gb.svg" }, 
+    { code: "AR", name: "العربية", flag: "/flags/sa.svg" }, 
+    { code: "RU", name: "Русский", flag: "/flags/ru.svg" }
   ];
   
   const currencies = ["GBP", "USD", "EUR", "SAR"];
@@ -149,8 +149,8 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
 
           {/* LANGUAGE TOGGLE */}
           <div className="relative notranslate" translate="no">
-            <button onClick={toggleLanguage} className="flex items-center gap-2 hover:text-gold transition-colors focus:outline-none font-medium text-lg">
-              {activeLangObj.flag}
+            <button onClick={toggleLanguage} className="flex items-center gap-2 hover:text-gold transition-colors focus:outline-none font-medium">
+              <img src={activeLangObj.flag} alt={activeLangObj.name} width="22" height="16" className="rounded-[2px] object-cover shadow-sm" />
               <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             
@@ -162,7 +162,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
                     onClick={() => switchLanguage(lang.code)} 
                     className={`flex items-center gap-3 px-4 py-3 hover:bg-ivory hover:text-gold transition-colors ${currentLang === lang.code ? 'text-gold font-medium bg-ivory' : 'text-ink'}`}
                   >
-                    <span className="text-xl">{lang.flag}</span>
+                    <img src={lang.flag} alt={lang.name} width="22" height="16" className="rounded-[2px] object-cover shadow-sm shrink-0" />
                     <span className="text-sm">{lang.name}</span>
                   </button>
                 ))}
@@ -205,9 +205,9 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
               <button 
                 key={lang.code} 
                 onClick={() => switchLanguage(lang.code)} 
-                className={`text-3xl transition-all duration-300 ${currentLang === lang.code ? 'opacity-100 scale-110 drop-shadow-md' : 'opacity-40 hover:opacity-100'}`}
+                className={`transition-all duration-300 ${currentLang === lang.code ? 'opacity-100 scale-110 drop-shadow-md' : 'opacity-40 hover:opacity-100'}`}
               >
-                {lang.flag}
+                <img src={lang.flag} alt={lang.name} width="30" height="22" className="rounded-[2px] object-cover shadow-sm" />
               </button>
             ))}
           </div>
