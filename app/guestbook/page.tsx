@@ -6,58 +6,7 @@ import { createClient } from "../../lib/supabase/server";
 
 export const dynamic = 'force-dynamic';
 
-// ─── Inline SVG Icons ────────────────────────────────────────────────────────
-const IconClock = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-  </svg>
-);
-const IconMapPin = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-  </svg>
-);
-const IconCar = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
-  </svg>
-);
-const IconCoffee = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
-  </svg>
-);
-const IconPhone = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.29 6.29l1.32-1.32a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-  </svg>
-);
-const IconFood = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><rect x="2" y="7" width="13" height="13" rx="2"/><path d="M2 12h11"/>
-  </svg>
-);
-const IconShield = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-  </svg>
-);
-const IconHospital = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="2" width="18" height="20" rx="2"/><path d="M9 22V12h6v10"/><path d="M12 7v6"/><path d="M9 10h6"/>
-  </svg>
-);
-const IconStar = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-  </svg>
-);
-const IconWash = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-    <circle cx="12" cy="13" r="3"/>
-  </svg>
-);
+// ─── Icons ───────────────────────────────────────────────────────────────────
 const IconWhatsApp = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
     <path d="M12.031 0C5.385 0 .003 5.385.003 12.031c0 2.126.556 4.198 1.613 6.02L.03 24l6.105-1.602a11.968 11.968 0 0 0 5.896 1.542h.005c6.643 0 12.025-5.384 12.025-12.028C24.055 5.385 18.675 0 12.031 0zm-.005 21.954a9.982 9.982 0 0 1-5.09-1.39l-.365-.217-3.784.992.998-3.69-.237-.377a9.96 9.96 0 0 1-1.523-5.27C1.995 6.486 6.483 2 12.031 2c5.545 0 10.033 4.488 10.033 10.003 0 5.513-4.488 10-10.038 10h-.001zm5.505-7.519c-.302-.151-1.787-.882-2.064-.983-.277-.101-.48-.151-.681.151-.202.302-.78 1.034-.956 1.235-.177.202-.353.227-.655.076-1.574-.789-2.73-1.66-3.784-3.32-.177-.278.177-.278.756-1.41.076-.151.038-.278-.038-.428-.076-.151-.681-1.636-.932-2.24-.246-.59-.496-.51-.681-.52-.177-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.034-1.058 2.518 0 1.484 1.084 2.92 1.235 3.12.151.202 2.116 3.224 5.127 4.524 1.965.848 2.704.899 3.484.75.78-.151 2.368-.968 2.704-1.902.336-.934.336-1.737.236-1.903-.101-.166-.378-.267-.68-.418z"/>
@@ -197,7 +146,10 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* WELCOME */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Your Sanctuary</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Your Sanctuary</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-4">We are honoured to host you.</h2>
           <p className="font-light leading-relaxed opacity-75 max-w-2xl">
             Our concierge team has meticulously prepared your accommodation so you can focus entirely on your spiritual journey. This guide covers everything from arrival to local essentials — all in one place.
@@ -209,23 +161,20 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* ARRIVAL & DEPARTURE */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Arrival & Departure</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Arrival & Departure</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-8">Check-in & Check-out</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 text-gold mb-2">
-                <IconClock />
-                <span className="text-xs font-semibold tracking-widest uppercase">Check-in</span>
-              </div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-2">Check-in</p>
               <p className="text-3xl font-medium font-playfair mb-1">3:00 PM</p>
               {checkIn && <p className="text-sm text-ink/50 notranslate" translate="no">{formatDate(checkIn)}</p>}
             </div>
             <div>
-              <div className="flex items-center gap-2 text-gold mb-2">
-                <IconClock />
-                <span className="text-xs font-semibold tracking-widest uppercase">Check-out</span>
-              </div>
+              <p className="text-xs font-semibold tracking-widest uppercase text-ink/40 mb-2">Check-out</p>
               <p className="text-3xl font-medium font-playfair mb-1">11:00 AM</p>
               {checkOut && <p className="text-sm text-ink/50 notranslate" translate="no">{formatDate(checkOut)}</p>}
             </div>
@@ -254,7 +203,10 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* HOUSE RULES */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">House Rules</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">House Rules</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-8">Property Guidelines</h2>
           <ul className="space-y-5">
             {[
@@ -264,7 +216,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
               { title: "Overnight Guests", body: "Only registered guests may stay overnight. Please inform us in advance of any visitors." },
             ].map(rule => (
               <li key={rule.title} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
-                <span className="text-gold mt-0.5 shrink-0"><IconStar /></span>
+                <span className="text-gold/50 mt-1 shrink-0 text-lg leading-none">—</span>
                 <div>
                   <strong className="block text-sm font-semibold mb-0.5">{rule.title}</strong>
                   <span className="text-sm font-light text-ink/70 leading-relaxed">{rule.body}</span>
@@ -278,7 +230,10 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* GETTING AROUND */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Getting Around</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 4v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Getting Around</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-3">Transport & Rides</h2>
           <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
             Our property is in Al-Aziziyyah. Al-Masjid an-Nabawi is approximately 10–15 minutes by car. These apps all work reliably in Madinah:
@@ -291,7 +246,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
               { name: "inDrive", body: "Negotiate fares directly with drivers — useful for longer trips or during surge pricing." },
             ].map(app => (
               <li key={app.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
-                <span className="text-gold mt-0.5 shrink-0"><IconCar /></span>
+                <span className="text-gold/50 mt-1 shrink-0 text-lg leading-none">—</span>
                 <div>
                   <strong className="block text-sm font-semibold mb-0.5">{app.name}</strong>
                   <span className="text-sm font-light text-ink/70 leading-relaxed">{app.body}</span>
@@ -300,13 +255,9 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
             ))}
           </ul>
 
-          <div className="flex items-start gap-3 text-sm text-ink/60 font-light mb-1">
-            <span className="text-gold shrink-0 mt-0.5"><IconMapPin /></span>
-            <span>Al-Masjid an-Nabawi — approx. 10–15 min by car</span>
-          </div>
-          <div className="flex items-start gap-3 text-sm text-ink/60 font-light mb-6">
-            <span className="text-gold shrink-0 mt-0.5"><IconMapPin /></span>
-            <span>Haramain High-Speed Rail Station — approx. 20 min by car</span>
+          <div className="space-y-1.5 mb-6 text-sm text-ink/60 font-light">
+            <p>Al-Masjid an-Nabawi — approx. 10–15 min by car</p>
+            <p>Haramain High-Speed Rail Station — approx. 20 min by car</p>
           </div>
 
           <a href="https://www.google.com/maps/place/24%C2%B028'02.9%22N+39%C2%B033'51.6%22E/@24.4692505,39.5621593,1395m"
@@ -320,7 +271,10 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* FOOD DELIVERY */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Food Delivery</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Food Delivery</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-3">Order to Your Door</h2>
           <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
             All major Saudi delivery platforms operate in Madinah with fast delivery times. Most support both Arabic and English:
@@ -333,7 +287,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
               { name: "Talabat", body: "Widely used across the GCC. Good for international brands, Arabic food, and late-night orders." },
             ].map(app => (
               <li key={app.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
-                <span className="text-gold mt-0.5 shrink-0"><IconFood /></span>
+                <span className="text-gold/50 mt-1 shrink-0 text-lg leading-none">—</span>
                 <div>
                   <strong className="block text-sm font-semibold mb-0.5">{app.name}</strong>
                   <span className="text-sm font-light text-ink/70 leading-relaxed">{app.body}</span>
@@ -347,7 +301,10 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* COFFEE */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Nearby Coffee</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Nearby Coffee</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-3">Cafés Close to You</h2>
           <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
             These cafés are all within walking distance of the property and are open from early morning through to late at night:
@@ -360,7 +317,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
               { name: "Local Arabic Qahwa", dist: "throughout the neighbourhood", body: "Cardamom-spiced coffee served with dates — a quintessential Madinah experience. Available from street-side stalls and small shops all around Al-Aziziyyah. Highly recommended." },
             ].map(c => (
               <li key={c.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
-                <span className="text-gold mt-0.5 shrink-0"><IconCoffee /></span>
+                <span className="text-gold/50 mt-1 shrink-0 text-lg leading-none">—</span>
                 <div>
                   <strong className="block text-sm font-semibold mb-0.5">{c.name}</strong>
                   <span className="block text-[11px] font-medium text-gold/80 tracking-wide uppercase mb-1">{c.dist}</span>
@@ -375,7 +332,10 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* LAUNDRY */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Laundry & Dry Cleaning</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><circle cx="12" cy="13" r="3"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Laundry & Dry Cleaning</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-3">Laundry Services Nearby</h2>
           <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
             Several laundry and dry cleaning shops are within walking distance in the Al-Aziziyyah neighbourhood:
@@ -386,7 +346,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
               { name: "Neighbourhood Laundries", dist: "throughout Al-Aziziyyah", body: "Several small dry cleaning shops are scattered throughout the neighbourhood within 5–10 minutes on foot. Your concierge can direct you to the closest one." },
             ].map(l => (
               <li key={l.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
-                <span className="text-gold mt-0.5 shrink-0"><IconWash /></span>
+                <span className="text-gold/50 mt-1 shrink-0 text-lg leading-none">—</span>
                 <div>
                   <strong className="block text-sm font-semibold mb-0.5">{l.name}</strong>
                   <span className="block text-[11px] font-medium text-gold/80 tracking-wide uppercase mb-1">{l.dist}</span>
@@ -401,20 +361,23 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* EMERGENCY CONTACTS */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Important Numbers</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.29 6.29l1.32-1.32a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Important Numbers</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-3">Emergency Contacts</h2>
           <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
             We hope you never need these. All Saudi emergency services operate 24 hours a day:
           </p>
           <ul className="space-y-5 mb-6">
             {[
-              { icon: <IconShield />, name: "Police / Ambulance", number: "911", note: "Single emergency number for all services in Saudi Arabia" },
-              { icon: <IconShield />, name: "Civil Defence (Fire)", number: "998", note: "Fire and structural emergencies" },
-              { icon: <IconHospital />, name: "King Fahad Hospital — Madinah", number: "+966 14 845 5555", note: "Nearest major public hospital", href: "tel:+966148455555" },
-              { icon: <IconPhone />, name: "Tourist Police", number: "920002814", note: "For tourist-related incidents or lost documents" },
+              { name: "Police / Ambulance", number: "911", note: "Single emergency number for all services in Saudi Arabia" },
+              { name: "Civil Defence (Fire)", number: "998", note: "Fire and structural emergencies" },
+              { name: "King Fahad Hospital — Madinah", number: "+966 14 845 5555", note: "Nearest major public hospital", href: "tel:+966148455555" },
+              { name: "Tourist Police", number: "920002814", note: "For tourist-related incidents or lost documents" },
             ].map(e => (
               <li key={e.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
-                <span className="text-gold mt-0.5 shrink-0">{e.icon}</span>
+                <span className="text-gold/50 mt-1 shrink-0 text-lg leading-none">—</span>
                 <div className="flex-1 flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <strong className="block text-sm font-semibold mb-0.5">{e.name}</strong>
@@ -437,7 +400,10 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
 
         {/* CONCIERGE */}
         <section>
-          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Need Help?</p>
+          <div className="flex items-center gap-2.5 text-gold mb-4">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <p className="text-xs font-semibold tracking-widest uppercase">Need Help?</p>
+          </div>
           <h2 className="font-playfair text-3xl font-medium mb-4">24/7 Concierge</h2>
           <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
             From extra towels to booking a private tour — our team is on hand around the clock. Message us on WhatsApp for the fastest response.

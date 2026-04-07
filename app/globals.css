@@ -1,5 +1,6 @@
 /* 1. MUST BE AT THE VERY TOP */
 @import "tailwindcss";
+@import "flag-icons/css/flag-icons.min.css";
 
 /* 2. THE NEW TERRACOTTA & DEEP EARTH THEME */
 @theme {

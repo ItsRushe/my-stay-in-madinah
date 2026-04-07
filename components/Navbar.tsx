@@ -12,9 +12,9 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
   const { currency, changeCurrency, mounted, RATES } = useCurrency();
 
   const languages =[
-    { code: "EN", name: "English", flag: "/flags/gb.svg" }, 
-    { code: "AR", name: "العربية", flag: "/flags/sa.svg" }, 
-    { code: "RU", name: "Русский", flag: "/flags/ru.svg" }
+    { code: "EN", name: "English", fi: "gb" }, 
+    { code: "AR", name: "العربية", fi: "sa" }, 
+    { code: "RU", name: "Русский", fi: "ru" }
   ];
   
   const currencies = ["GBP", "USD", "EUR", "SAR"];
@@ -150,7 +150,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           {/* LANGUAGE TOGGLE */}
           <div className="relative notranslate" translate="no">
             <button onClick={toggleLanguage} className="flex items-center gap-2 hover:text-gold transition-colors focus:outline-none font-medium">
-              <img src={activeLangObj.flag} alt={activeLangObj.name} width="22" height="16" className="rounded-[2px] object-cover shadow-sm" />
+              <span className={`fi fi-${activeLangObj.fi}`} style={{ width: '22px', height: '16px', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
               <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
             
@@ -162,7 +162,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
                     onClick={() => switchLanguage(lang.code)} 
                     className={`flex items-center gap-3 px-4 py-3 hover:bg-ivory hover:text-gold transition-colors ${currentLang === lang.code ? 'text-gold font-medium bg-ivory' : 'text-ink'}`}
                   >
-                    <img src={lang.flag} alt={lang.name} width="22" height="16" className="rounded-[2px] object-cover shadow-sm shrink-0" />
+                    <span className={`fi fi-${lang.fi} shrink-0`} style={{ width: '22px', height: '16px', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' }} />
                     <span className="text-sm">{lang.name}</span>
                   </button>
                 ))}
@@ -207,7 +207,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
                 onClick={() => switchLanguage(lang.code)} 
                 className={`transition-all duration-300 ${currentLang === lang.code ? 'opacity-100 scale-110 drop-shadow-md' : 'opacity-40 hover:opacity-100'}`}
               >
-                <img src={lang.flag} alt={lang.name} width="30" height="22" className="rounded-[2px] object-cover shadow-sm" />
+                <span className={`fi fi-${lang.fi}`} style={{ width: '30px', height: '22px', borderRadius: '2px', display: 'inline-block' }} />
               </button>
             ))}
           </div>
