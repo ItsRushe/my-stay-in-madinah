@@ -173,9 +173,9 @@ export async function POST(req: Request) {
           <!-- FOOTER -->
           <tr>
             <td style="background-color:#1B2420;padding:28px 40px;text-align:center;">
-              <p style="margin:0 0 8px;font-family:Arial,sans-serif;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#BA6A42;">My Stay in Madinah</p>
-              <p style="margin:0;font-family:Arial,sans-serif;font-size:12px;color:#ffffff;opacity:0.45;font-weight:300;">
-                Questions? Reply to this email or message us on WhatsApp.
+              <p style="margin:0 0 8px;font-family:'Jost',Arial,sans-serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#BA6A42;font-weight:500;">My Stay in Madinah</p>
+              <p style="margin:0;font-family:'Jost',Arial,sans-serif;font-size:12px;color:#ffffff;opacity:0.45;font-weight:300;">
+                Questions? Message us on WhatsApp and we will assist you.
               </p>
             </td>
           </tr>

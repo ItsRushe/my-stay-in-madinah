@@ -1,5 +1,4 @@
 // app/guestbook/page.tsx
-import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Stripe from "stripe";
@@ -7,11 +6,71 @@ import { createClient } from "../../lib/supabase/server";
 
 export const dynamic = 'force-dynamic';
 
+// ─── Inline SVG Icons ────────────────────────────────────────────────────────
+const IconClock = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+  </svg>
+);
+const IconMapPin = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+  </svg>
+);
+const IconCar = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M5 17H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2h-2"/><circle cx="7.5" cy="17.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>
+  </svg>
+);
+const IconCoffee = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+  </svg>
+);
+const IconPhone = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.29 6.29l1.32-1.32a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+  </svg>
+);
+const IconFood = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><rect x="2" y="7" width="13" height="13" rx="2"/><path d="M2 12h11"/>
+  </svg>
+);
+const IconShield = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </svg>
+);
+const IconHospital = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="2" width="18" height="20" rx="2"/><path d="M9 22V12h6v10"/><path d="M12 7v6"/><path d="M9 10h6"/>
+  </svg>
+);
+const IconStar = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </svg>
+);
+const IconWash = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+    <circle cx="12" cy="13" r="3"/>
+  </svg>
+);
+const IconWhatsApp = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12.031 0C5.385 0 .003 5.385.003 12.031c0 2.126.556 4.198 1.613 6.02L.03 24l6.105-1.602a11.968 11.968 0 0 0 5.896 1.542h.005c6.643 0 12.025-5.384 12.025-12.028C24.055 5.385 18.675 0 12.031 0zm-.005 21.954a9.982 9.982 0 0 1-5.09-1.39l-.365-.217-3.784.992.998-3.69-.237-.377a9.96 9.96 0 0 1-1.523-5.27C1.995 6.486 6.483 2 12.031 2c5.545 0 10.033 4.488 10.033 10.003 0 5.513-4.488 10-10.038 10h-.001zm5.505-7.519c-.302-.151-1.787-.882-2.064-.983-.277-.101-.48-.151-.681.151-.202.302-.78 1.034-.956 1.235-.177.202-.353.227-.655.076-1.574-.789-2.73-1.66-3.784-3.32-.177-.278.177-.278.756-1.41.076-.151.038-.278-.038-.428-.076-.151-.681-1.636-.932-2.24-.246-.59-.496-.51-.681-.52-.177-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.034-1.058 2.518 0 1.484 1.084 2.92 1.235 3.12.151.202 2.116 3.224 5.127 4.524 1.965.848 2.704.899 3.484.75.78-.151 2.368-.968 2.704-1.902.336-.934.336-1.737.236-1.903-.101-.166-.378-.267-.68-.418z"/>
+  </svg>
+);
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default async function GuestbookPage({ searchParams }: { searchParams: Promise<{ session_id?: string }> }) {
   const resolvedParams = await searchParams;
   const sessionId = resolvedParams.session_id;
 
   let guestFirstName = "";
+  let guestFullName = "";
   let roomName = "";
   let orderNumber = "";
   let checkIn = "";
@@ -24,6 +83,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
       });
       const session = await stripe.checkout.sessions.retrieve(sessionId);
       if (session.customer_details?.name) {
+        guestFullName = session.customer_details.name;
         guestFirstName = session.customer_details.name.split(' ')[0];
       }
 
@@ -47,7 +107,9 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
   }
 
   const greeting = guestFirstName ? `Welcome to Madinah, ${guestFirstName}` : "Welcome to Madinah";
-  const subGreeting = roomName ? `Your personalized guide for your stay at ${roomName}.` : "Everything you need for a seamless, peaceful stay in the Prophet's city.";
+  const subGreeting = roomName
+    ? `Your personalized guide for your stay at ${roomName}.`
+    : "Everything you need for a seamless, peaceful stay in the Prophet's city.";
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return "";
@@ -56,22 +118,34 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
     return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
   };
 
-  const whatsappMsg = orderNumber
-    ? `Hi, I am a current guest (Order #${orderNumber}) and need assistance.`
-    : `Hi, I am a current guest and need assistance.`;
-  const whatsappUrl = `https://wa.me/201067040337?text=${encodeURIComponent(whatsappMsg)}`;
+  // WhatsApp links
+  const whatsappBase = "https://wa.me/201067040337";
+  const conciergeMsg = orderNumber
+    ? `Hi, I am ${guestFullName || 'a guest'} (Order #${orderNumber}) and need assistance.`
+    : `Hi, I am a guest and need assistance.`;
+  const whatsappConcierge = `${whatsappBase}?text=${encodeURIComponent(conciergeMsg)}`;
+
+  const lateCheckoutMsg = orderNumber
+    ? `Hi, I am ${guestFullName || 'a guest'} (Order #${orderNumber}, checking out on ${formatDate(checkOut)}). I would like to request a late check-out. Is this possible?`
+    : `Hi, I would like to request a late check-out. Is this possible?`;
+  const whatsappLateCheckout = `${whatsappBase}?text=${encodeURIComponent(lateCheckoutMsg)}`;
+
+  const earlyCheckinMsg = orderNumber
+    ? `Hi, I am ${guestFullName || 'a guest'} (Order #${orderNumber}, checking in on ${formatDate(checkIn)}). I would like to request an early check-in. Is this possible?`
+    : `Hi, I would like to request an early check-in. Is this possible?`;
+  const whatsappEarlyCheckin = `${whatsappBase}?text=${encodeURIComponent(earlyCheckinMsg)}`;
 
   return (
     <main className="bg-ivory pt-20">
       <Navbar activePage="guestbook" />
 
-      {/* HERO HEADER */}
+      {/* HERO */}
       <header className="bg-ink py-24 md:py-32 px-6 border-b border-white/10 text-center">
         {orderNumber && (
           <div className="inline-flex items-center gap-4 mb-4">
-            <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
+            <span className="h-[1px] w-8 md:w-12 bg-gold" />
             <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs uppercase font-medium">Order #{orderNumber}</span>
-            <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
+            <span className="h-[1px] w-8 md:w-12 bg-gold" />
           </div>
         )}
         <h1 className="font-playfair text-4xl md:text-6xl text-white font-medium mb-6 notranslate" translate="no">
@@ -82,25 +156,25 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
         </p>
       </header>
 
-      {/* BOOKING SUMMARY CARD */}
+      {/* BOOKING SUMMARY BAR */}
       {(orderNumber || checkIn) && (
         <div className="bg-ink border-t border-white/5">
           <div className="max-w-4xl mx-auto px-6 md:px-12 py-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border border-white/10">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 border border-white/10">
               {orderNumber && (
-                <div className="px-6 py-5 border-r border-white/10">
+                <div className="px-6 py-5">
                   <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">Order</span>
                   <span className="text-white font-medium text-sm notranslate" translate="no">#{orderNumber}</span>
                 </div>
               )}
               {roomName && (
-                <div className="px-6 py-5 border-r border-white/10">
+                <div className="px-6 py-5">
                   <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">Room</span>
                   <span className="text-white font-medium text-sm notranslate" translate="no">{roomName}</span>
                 </div>
               )}
               {checkIn && (
-                <div className="px-6 py-5 border-r border-white/10">
+                <div className="px-6 py-5">
                   <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">Check-in</span>
                   <span className="text-white font-medium text-sm notranslate" translate="no">{formatDate(checkIn)}</span>
                   <span className="block text-white/40 text-xs mt-0.5">from 3:00 PM</span>
@@ -118,198 +192,264 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
         </div>
       )}
 
-      <section className="py-16 md:py-24 px-6 md:px-12 max-w-4xl mx-auto space-y-16 text-ink">
+      {/* MAIN CONTENT */}
+      <div className="max-w-4xl mx-auto px-6 md:px-12 py-16 md:py-24 space-y-20 text-ink">
 
         {/* WELCOME */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
-          <h2 className="font-playfair text-3xl font-medium mb-4">Your Sanctuary</h2>
-          <p className="font-light leading-relaxed opacity-80">
-            Alhamdulillah, we are honored to host you during your visit. Our concierge team has meticulously prepared your accommodation to ensure a serene and comfortable environment so you can focus entirely on your spiritual journey.
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Your Sanctuary</p>
+          <h2 className="font-playfair text-3xl font-medium mb-4">We are honoured to host you.</h2>
+          <p className="font-light leading-relaxed opacity-75 max-w-2xl">
+            Our concierge team has meticulously prepared your accommodation so you can focus entirely on your spiritual journey. This guide covers everything from arrival to local essentials — all in one place.
           </p>
-        </div>
+        </section>
 
-        {/* CHECK-IN / CHECK-OUT */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
-          <h2 className="font-playfair text-3xl font-medium mb-4">Arrival & Departure</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 font-light opacity-80">
-            <div className="bg-white p-6 border border-gray-100 shadow-sm">
-              <span className="block text-gold text-xs font-semibold tracking-widest uppercase mb-1">Check-in</span>
-              <span className="text-2xl font-medium text-ink">3:00 PM</span>
-              {checkIn && <span className="block text-sm text-ink/50 mt-1 notranslate" translate="no">{formatDate(checkIn)}</span>}
+        {/* DIVIDER */}
+        <div className="h-[1px] bg-ink/10" />
+
+        {/* ARRIVAL & DEPARTURE */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Arrival & Departure</p>
+          <h2 className="font-playfair text-3xl font-medium mb-8">Check-in & Check-out</h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 text-gold mb-2">
+                <IconClock />
+                <span className="text-xs font-semibold tracking-widest uppercase">Check-in</span>
+              </div>
+              <p className="text-3xl font-medium font-playfair mb-1">3:00 PM</p>
+              {checkIn && <p className="text-sm text-ink/50 notranslate" translate="no">{formatDate(checkIn)}</p>}
             </div>
-            <div className="bg-white p-6 border border-gray-100 shadow-sm">
-              <span className="block text-gold text-xs font-semibold tracking-widest uppercase mb-1">Check-out</span>
-              <span className="text-2xl font-medium text-ink">11:00 AM</span>
-              {checkOut && <span className="block text-sm text-ink/50 mt-1 notranslate" translate="no">{formatDate(checkOut)}</span>}
+            <div>
+              <div className="flex items-center gap-2 text-gold mb-2">
+                <IconClock />
+                <span className="text-xs font-semibold tracking-widest uppercase">Check-out</span>
+              </div>
+              <p className="text-3xl font-medium font-playfair mb-1">11:00 AM</p>
+              {checkOut && <p className="text-sm text-ink/50 notranslate" translate="no">{formatDate(checkOut)}</p>}
             </div>
           </div>
-          <p className="font-light text-sm mt-4 opacity-70">
-            Early check-in or late check-out is subject to availability. Contact us on WhatsApp to request.
-          </p>
-        </div>
 
-        {/* PROPERTY & HOUSE RULES */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
-          <h2 className="font-playfair text-3xl font-medium mb-4">House Rules</h2>
-          <ul className="space-y-4 font-light opacity-80 list-none">
-            <li className="flex items-start gap-3">
-              <span className="text-gold mt-1">✦</span>
-              <div><strong>Quiet Hours:</strong> Please observe quiet hours between 10:00 PM and 7:00 AM to respect fellow guests.</div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-gold mt-1">✦</span>
-              <div><strong>No Smoking:</strong> Smoking is strictly prohibited inside the rooms and all building premises.</div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-gold mt-1">✦</span>
-              <div><strong>Cleanliness:</strong> Daily housekeeping is provided. Please help us maintain the property's pristine condition.</div>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-gold mt-1">✦</span>
-              <div><strong>Guests:</strong> Only registered guests may stay overnight. Please inform us in advance of any visitors.</div>
-            </li>
-          </ul>
-        </div>
-
-        {/* TRANSPORT & RIDE APPS */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
-          <h2 className="font-playfair text-3xl font-medium mb-2">Getting Around</h2>
-          <p className="font-light leading-relaxed opacity-80 mb-6">
-            Our property is in the Al-Aziziyyah district — a short ride from Al-Masjid an-Nabawi and central Madinah. These apps work reliably in the city:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Uber</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">Widely available in Madinah. Download the Uber app and set pickup to your exact address.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Careem</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">Saudi Arabia's most popular ride app. Often cheaper than Uber for short trips. Available on iOS & Android.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">inDrive</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">Negotiate fares directly with drivers. A good option for longer trips or when surge pricing is active.</p>
+          <div className="border-l-2 border-gold/30 pl-5 space-y-3">
+            <p className="text-sm font-light text-ink/70">
+              Need an early check-in or late check-out? Contact us on WhatsApp and we will do our best to accommodate you subject to availability.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-1">
+              <a href={whatsappEarlyCheckin} target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-2 border border-ink/20 px-4 py-2 text-xs font-medium tracking-wide uppercase hover:border-gold hover:text-gold transition-colors notranslate" translate="no">
+                <IconWhatsApp />
+                Request Early Check-in
+              </a>
+              <a href={whatsappLateCheckout} target="_blank" rel="noreferrer"
+                className="inline-flex items-center gap-2 border border-ink/20 px-4 py-2 text-xs font-medium tracking-wide uppercase hover:border-gold hover:text-gold transition-colors notranslate" translate="no">
+                <IconWhatsApp />
+                Request Late Check-out
+              </a>
             </div>
           </div>
-          <ul className="space-y-2 font-light opacity-80 text-sm">
-            <li>🕌 &nbsp;<strong>Al-Masjid an-Nabawi:</strong> approx. 10–15 min by car</li>
-            <li>🚉 &nbsp;<strong>Haramain High-Speed Rail Station:</strong> approx. 20 min by car</li>
+        </section>
+
+        <div className="h-[1px] bg-ink/10" />
+
+        {/* HOUSE RULES */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">House Rules</p>
+          <h2 className="font-playfair text-3xl font-medium mb-8">Property Guidelines</h2>
+          <ul className="space-y-5">
+            {[
+              { title: "Quiet Hours", body: "10:00 PM – 7:00 AM. We kindly ask all guests to observe silence during these hours to respect fellow guests." },
+              { title: "No Smoking", body: "Smoking is strictly prohibited inside the rooms, corridors, and all building premises." },
+              { title: "Housekeeping", body: "Daily housekeeping is included. Please help us maintain the pristine condition of your room." },
+              { title: "Overnight Guests", body: "Only registered guests may stay overnight. Please inform us in advance of any visitors." },
+            ].map(rule => (
+              <li key={rule.title} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
+                <span className="text-gold mt-0.5 shrink-0"><IconStar /></span>
+                <div>
+                  <strong className="block text-sm font-semibold mb-0.5">{rule.title}</strong>
+                  <span className="text-sm font-light text-ink/70 leading-relaxed">{rule.body}</span>
+                </div>
+              </li>
+            ))}
           </ul>
-          <a href="https://www.google.com/maps/place/24%C2%B028'02.9%22N+39%C2%B033'51.6%22E/@24.4692505,39.5621593,1395m" target="_blank" rel="noreferrer" className="inline-block mt-6 border-b border-ink pb-1 font-medium hover:text-gold hover:border-gold transition-colors text-sm">
+        </section>
+
+        <div className="h-[1px] bg-ink/10" />
+
+        {/* GETTING AROUND */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Getting Around</p>
+          <h2 className="font-playfair text-3xl font-medium mb-3">Transport & Rides</h2>
+          <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
+            Our property is in Al-Aziziyyah. Al-Masjid an-Nabawi is approximately 10–15 minutes by car. These apps all work reliably in Madinah:
+          </p>
+
+          <ul className="space-y-5 mb-8">
+            {[
+              { name: "Uber", body: "Widely available. Set your pickup to the property address for accurate routing." },
+              { name: "Careem", body: "The most popular ride app in Saudi Arabia. Often cheaper than Uber for short trips. Available on iOS and Android." },
+              { name: "inDrive", body: "Negotiate fares directly with drivers — useful for longer trips or during surge pricing." },
+            ].map(app => (
+              <li key={app.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
+                <span className="text-gold mt-0.5 shrink-0"><IconCar /></span>
+                <div>
+                  <strong className="block text-sm font-semibold mb-0.5">{app.name}</strong>
+                  <span className="text-sm font-light text-ink/70 leading-relaxed">{app.body}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-start gap-3 text-sm text-ink/60 font-light mb-1">
+            <span className="text-gold shrink-0 mt-0.5"><IconMapPin /></span>
+            <span>Al-Masjid an-Nabawi — approx. 10–15 min by car</span>
+          </div>
+          <div className="flex items-start gap-3 text-sm text-ink/60 font-light mb-6">
+            <span className="text-gold shrink-0 mt-0.5"><IconMapPin /></span>
+            <span>Haramain High-Speed Rail Station — approx. 20 min by car</span>
+          </div>
+
+          <a href="https://www.google.com/maps/place/24%C2%B028'02.9%22N+39%C2%B033'51.6%22E/@24.4692505,39.5621593,1395m"
+            target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-medium border-b border-ink pb-0.5 hover:text-gold hover:border-gold transition-colors">
             Open Property Location in Google Maps &rarr;
           </a>
-        </div>
+        </section>
 
-        {/* FOOD ORDERING APPS */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
-          <h2 className="font-playfair text-3xl font-medium mb-2">Food Delivery</h2>
-          <p className="font-light leading-relaxed opacity-80 mb-6">
-            All major Saudi delivery platforms operate in Madinah with fast delivery times, especially in central areas. Most support Arabic and English:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">HungerStation</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">The most popular delivery app in Saudi Arabia. Huge restaurant selection including local Madinah cuisine, fast food, and more.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Jahez</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">A homegrown Saudi delivery service. Great for local restaurants, grills, and shawarma spots near the Masjid area.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Mrsool</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">On-demand delivery from any shop or restaurant — even places that aren't on other platforms. Very flexible.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Talabat</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">Widely used across the GCC. Good for international chains, Arabic food, and late-night delivery.</p>
-            </div>
-          </div>
-        </div>
+        <div className="h-[1px] bg-ink/10" />
 
-        {/* COFFEE SHOPS */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
-          <h2 className="font-playfair text-3xl font-medium mb-2">Coffee & Cafés Nearby</h2>
-          <p className="font-light leading-relaxed opacity-80 mb-6">
-            Several well-known cafés are within easy reach of the property. Most are open after Fajr and well past midnight:
+        {/* FOOD DELIVERY */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Food Delivery</p>
+          <h2 className="font-playfair text-3xl font-medium mb-3">Order to Your Door</h2>
+          <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
+            All major Saudi delivery platforms operate in Madinah with fast delivery times. Most support both Arabic and English:
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Dr. Café Coffee</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">A beloved Saudi specialty coffee chain. Excellent espresso, matcha, and fresh pastries. Multiple branches near the Haram area.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Starbucks</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">Several branches in central Madinah, including near Al-Masjid an-Nabawi. Familiar menu, reliable Wi-Fi, and comfortable seating.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Tim Hortons</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">A popular choice for guests who prefer a lighter, more casual coffee experience. Affordable and widely located.</p>
-            </div>
-            <div className="bg-white border border-gray-100 p-5 shadow-sm">
-              <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-2">Local Arabic Qahwa</span>
-              <p className="text-sm font-light opacity-80 leading-relaxed">Traditional Arabic coffee (cardamom-spiced, served with dates) is available from street-side vendors and small shops throughout the neighbourhood. A must-try.</p>
-            </div>
-          </div>
-        </div>
+          <ul className="space-y-5">
+            {[
+              { name: "HungerStation", body: "The most popular food delivery app in Saudi Arabia. Massive restaurant selection covering local Madinah cuisine, international chains, and fast food." },
+              { name: "Jahez", body: "A homegrown Saudi platform. Great for local grills, shawarma spots, and Madinah's traditional cuisine." },
+              { name: "Mrsool", body: "On-demand delivery from any shop or restaurant — including places not listed on other apps. Very flexible." },
+              { name: "Talabat", body: "Widely used across the GCC. Good for international brands, Arabic food, and late-night orders." },
+            ].map(app => (
+              <li key={app.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
+                <span className="text-gold mt-0.5 shrink-0"><IconFood /></span>
+                <div>
+                  <strong className="block text-sm font-semibold mb-0.5">{app.name}</strong>
+                  <span className="text-sm font-light text-ink/70 leading-relaxed">{app.body}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
 
-        {/* EMERGENCY NUMBERS */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
-          <h2 className="font-playfair text-3xl font-medium mb-2">Emergency Contacts</h2>
-          <p className="font-light leading-relaxed opacity-80 mb-6">
-            We hope you never need these — but it's good to have them saved. All Saudi emergency services operate 24/7:
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            <a href="tel:911" className="bg-white border border-gray-100 p-5 shadow-sm flex items-center gap-4 hover:border-gold transition-colors group">
-              <span className="text-2xl">🚨</span>
-              <div>
-                <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">Police / Ambulance / Fire</span>
-                <span className="text-2xl font-medium text-ink group-hover:text-gold transition-colors">911</span>
-                <span className="block text-xs text-ink/50 mt-0.5">All emergencies — single number in Saudi Arabia</span>
-              </div>
-            </a>
-            <a href="tel:998" className="bg-white border border-gray-100 p-5 shadow-sm flex items-center gap-4 hover:border-gold transition-colors group">
-              <span className="text-2xl">🔥</span>
-              <div>
-                <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">Civil Defence</span>
-                <span className="text-2xl font-medium text-ink group-hover:text-gold transition-colors">998</span>
-                <span className="block text-xs text-ink/50 mt-0.5">Fire and structural emergencies</span>
-              </div>
-            </a>
-            <a href="tel:+966148455555" className="bg-white border border-gray-100 p-5 shadow-sm flex items-center gap-4 hover:border-gold transition-colors group">
-              <span className="text-2xl">🏥</span>
-              <div>
-                <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">King Fahad Hospital — Madinah</span>
-                <span className="text-lg font-medium text-ink group-hover:text-gold transition-colors">+966 14 845 5555</span>
-                <span className="block text-xs text-ink/50 mt-0.5">Nearest major public hospital</span>
-              </div>
-            </a>
-            <a href="tel:920002814" className="bg-white border border-gray-100 p-5 shadow-sm flex items-center gap-4 hover:border-gold transition-colors group">
-              <span className="text-2xl">🛡️</span>
-              <div>
-                <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">Tourist Police</span>
-                <span className="text-2xl font-medium text-ink group-hover:text-gold transition-colors">920002814</span>
-                <span className="block text-xs text-ink/50 mt-0.5">For tourist-related incidents or lost documents</span>
-              </div>
-            </a>
-          </div>
-          <p className="text-sm font-light opacity-60">
-            For non-emergencies during your stay, always contact your concierge first via WhatsApp — we can coordinate on your behalf.
-          </p>
-        </div>
+        <div className="h-[1px] bg-ink/10" />
 
-        {/* CONCIERGE CONTACT */}
-        <div className="border-l-2 border-gold pl-6 md:pl-10">
+        {/* COFFEE */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Nearby Coffee</p>
+          <h2 className="font-playfair text-3xl font-medium mb-3">Cafés Close to You</h2>
+          <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
+            These cafés are all within walking distance of the property and are open from early morning through to late at night:
+          </p>
+          <ul className="space-y-5">
+            {[
+              { name: "Dr. Café Coffee", dist: "approx. 350 m · 5 min walk", body: "A beloved Saudi specialty coffee chain. Excellent espresso, matcha lattes, and fresh pastries. The closest quality café to the property." },
+              { name: "Dunkin'", dist: "approx. 500 m · 7 min walk", body: "Familiar menu with affordable coffee, donuts, and light bites. Open very early — ideal after Fajr." },
+              { name: "Tim Hortons", dist: "approx. 750 m · 10 min walk", body: "A relaxed café atmosphere with affordable coffee and a comfortable space to sit and unwind." },
+              { name: "Local Arabic Qahwa", dist: "throughout the neighbourhood", body: "Cardamom-spiced coffee served with dates — a quintessential Madinah experience. Available from street-side stalls and small shops all around Al-Aziziyyah. Highly recommended." },
+            ].map(c => (
+              <li key={c.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
+                <span className="text-gold mt-0.5 shrink-0"><IconCoffee /></span>
+                <div>
+                  <strong className="block text-sm font-semibold mb-0.5">{c.name}</strong>
+                  <span className="block text-[11px] font-medium text-gold/80 tracking-wide uppercase mb-1">{c.dist}</span>
+                  <span className="text-sm font-light text-ink/70 leading-relaxed">{c.body}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <div className="h-[1px] bg-ink/10" />
+
+        {/* LAUNDRY */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Laundry & Dry Cleaning</p>
+          <h2 className="font-playfair text-3xl font-medium mb-3">Laundry Services Nearby</h2>
+          <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
+            Several laundry and dry cleaning shops are within walking distance in the Al-Aziziyyah neighbourhood:
+          </p>
+          <ul className="space-y-5">
+            {[
+              { name: "Al-Aziziyyah Laundry", dist: "approx. 200 m · 3 min walk", body: "A local laundry and ironing service used regularly by residents in the area. Fast turnaround, usually same-day for drop-offs before 10:00 AM." },
+              { name: "Neighbourhood Laundries", dist: "throughout Al-Aziziyyah", body: "Several small dry cleaning shops are scattered throughout the neighbourhood within 5–10 minutes on foot. Your concierge can direct you to the closest one." },
+            ].map(l => (
+              <li key={l.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
+                <span className="text-gold mt-0.5 shrink-0"><IconWash /></span>
+                <div>
+                  <strong className="block text-sm font-semibold mb-0.5">{l.name}</strong>
+                  <span className="block text-[11px] font-medium text-gold/80 tracking-wide uppercase mb-1">{l.dist}</span>
+                  <span className="text-sm font-light text-ink/70 leading-relaxed">{l.body}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <div className="h-[1px] bg-ink/10" />
+
+        {/* EMERGENCY CONTACTS */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Important Numbers</p>
+          <h2 className="font-playfair text-3xl font-medium mb-3">Emergency Contacts</h2>
+          <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
+            We hope you never need these. All Saudi emergency services operate 24 hours a day:
+          </p>
+          <ul className="space-y-5 mb-6">
+            {[
+              { icon: <IconShield />, name: "Police / Ambulance", number: "911", note: "Single emergency number for all services in Saudi Arabia" },
+              { icon: <IconShield />, name: "Civil Defence (Fire)", number: "998", note: "Fire and structural emergencies" },
+              { icon: <IconHospital />, name: "King Fahad Hospital — Madinah", number: "+966 14 845 5555", note: "Nearest major public hospital", href: "tel:+966148455555" },
+              { icon: <IconPhone />, name: "Tourist Police", number: "920002814", note: "For tourist-related incidents or lost documents" },
+            ].map(e => (
+              <li key={e.name} className="flex items-start gap-4 border-b border-ink/8 pb-5 last:border-0">
+                <span className="text-gold mt-0.5 shrink-0">{e.icon}</span>
+                <div className="flex-1 flex flex-wrap items-start justify-between gap-2">
+                  <div>
+                    <strong className="block text-sm font-semibold mb-0.5">{e.name}</strong>
+                    <span className="text-xs font-light text-ink/50">{e.note}</span>
+                  </div>
+                  <a href={e.href || `tel:${e.number.replace(/\s/g, '')}`}
+                    className="text-xl font-medium font-playfair hover:text-gold transition-colors notranslate shrink-0" translate="no">
+                    {e.number}
+                  </a>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <p className="text-sm font-light text-ink/50">
+            For non-emergencies, always contact your concierge on WhatsApp first — we can coordinate on your behalf.
+          </p>
+        </section>
+
+        <div className="h-[1px] bg-ink/10" />
+
+        {/* CONCIERGE */}
+        <section>
+          <p className="text-xs font-semibold tracking-widest uppercase text-gold mb-4">Need Help?</p>
           <h2 className="font-playfair text-3xl font-medium mb-4">24/7 Concierge</h2>
-          <p className="font-light leading-relaxed opacity-80 mb-6">
+          <p className="font-light text-ink/70 leading-relaxed mb-8 max-w-2xl">
             From extra towels to booking a private tour — our team is on hand around the clock. Message us on WhatsApp for the fastest response.
           </p>
-          <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-3 bg-[#25D366] text-white px-8 py-4 font-medium hover:bg-[#1da851] transition-colors duration-300 shadow-xl rounded-none notranslate" translate="no">
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 .003 5.385.003 12.031c0 2.126.556 4.198 1.613 6.02L.03 24l6.105-1.602a11.968 11.968 0 0 0 5.896 1.542h.005c6.643 0 12.025-5.384 12.025-12.028C24.055 5.385 18.675 0 12.031 0zm-.005 21.954a9.982 9.982 0 0 1-5.09-1.39l-.365-.217-3.784.992.998-3.69-.237-.377a9.96 9.96 0 0 1-1.523-5.27C1.995 6.486 6.483 2 12.031 2c5.545 0 10.033 4.488 10.033 10.003 0 5.513-4.488 10-10.038 10h-.001zm5.505-7.519c-.302-.151-1.787-.882-2.064-.983-.277-.101-.48-.151-.681.151-.202.302-.78 1.034-.956 1.235-.177.202-.353.227-.655.076-1.574-.789-2.73-1.66-3.784-3.32-.177-.278.177-.278.756-1.41.076-.151.038-.278-.038-.428-.076-.151-.681-1.636-.932-2.24-.246-.59-.496-.51-.681-.52-.177-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.034-1.058 2.518 0 1.484 1.084 2.92 1.235 3.12.151.202 2.116 3.224 5.127 4.524 1.965.848 2.704.899 3.484.75.78-.151 2.368-.968 2.704-1.902.336-.934.336-1.737.236-1.903-.101-.166-.378-.267-.68-.418z"/></svg>
+          <a href={whatsappConcierge} target="_blank" rel="noreferrer"
+            className="inline-flex items-center gap-3 bg-[#25D366] text-white px-8 py-4 font-medium hover:bg-[#1da851] transition-colors duration-300 shadow-lg notranslate" translate="no">
+            <IconWhatsApp />
             Message Concierge on WhatsApp
           </a>
-        </div>
+        </section>
 
-      </section>
+      </div>
 
       <Footer />
     </main>
