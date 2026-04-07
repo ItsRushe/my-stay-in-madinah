@@ -74,6 +74,9 @@ export async function POST(req: Request) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Booking Confirmed</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap');
+  </style>
 </head>
 <body style="margin:0;padding:0;background-color:#EFEFEA;font-family:Georgia,'Times New Roman',serif;">
   <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#EFEFEA;padding:40px 16px;">
@@ -85,7 +88,7 @@ export async function POST(req: Request) {
           <tr>
             <td style="background-color:#1B2420;text-align:center;padding:36px 40px 28px;">
               <img src="${domain}/icon-logo.png" alt="My Stay in Madinah" width="48" style="display:block;margin:0 auto 16px;" />
-              <p style="margin:0;font-family:Georgia,serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#BA6A42;font-weight:normal;">My Stay in Madinah</p>
+              <p style="margin:0;font-family:'Jost',Arial,sans-serif;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#BA6A42;font-weight:500;">My Stay in Madinah</p>
             </td>
           </tr>
 
