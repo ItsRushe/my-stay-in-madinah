@@ -1,0 +1,37 @@
+for my supabase rooms table, i want to change it to 5 rooms with the discriptions here: use place holder images like previously:
+Room 1
+Name Option 1: The Classic King Room
+Name Option 2: The Comfort King Retreat
+Capacity & Price: 2 Guests | 100 Riyal / night
+Description: Sink into absolute comfort in this inviting and spacious room, featuring a plush king-size bed designed for a perfect night's sleep. Whether you are a solo traveler seeking extra space or a couple looking for a cozy getaway, this quiet sanctuary offers a warm, relaxing atmosphere to recharge after a busy day.
+Room 2
+Name Option 1: The Classic Twin Room
+Name Option 2: The Companion Twin Getaway
+Capacity & Price: 2 Guests | 100 Riyal / night
+Description: Perfect for friends, family members, or colleagues traveling together. This bright and welcoming room features two comfortable single beds, allowing you to share a space while maintaining your own personal sleeping area. It’s the ideal home base for your daily adventures.
+Room 3
+Name Option 1: The Garden Oasis King Suite
+Name Option 2: Premium King with Private Courtyard
+Capacity & Price: 2 Guests | 125 Riyal / night
+Description: Elevate your stay in this premium room that seamlessly blends indoor comfort with outdoor tranquility. Featuring a luxurious king-size bed and direct access to your very own private garden, this space is perfect for enjoying a quiet morning or winding down in the evening under the open sky.
+Room 4
+(Identical setup to Room 3, but with a unique description)
+Name Option 1: The Terrace King Room
+Name Option 2: King Retreat with Private Garden
+Capacity & Price: 2 Guests | 125 Riyal / night
+Description: Escape the ordinary in this beautiful king room, highlighted by an exclusive, enclosed private garden. It’s a wonderful choice for couples seeking a romantic touch or anyone who loves stepping out into the fresh air right from their bedroom. A true slice of peace and quiet.
+Room 5
+(Identical setup to Room 2, but with a unique description)
+Name Option 1: The Standard Twin Room
+Name Option 2: The Harmony Twin Room
+Capacity & Price: 2 Guests | 100 Riyal / night
+Description: Thoughtfully designed for travelers who are sharing their journey, this room offers two plush single beds in a beautifully appointed space. Enjoy a restful, fuss-free stay with plenty of room to unpack, relax, and plan your next day’s itinerary.
+Room Amenities
+Every room includes the following for your comfort and convenience:
+En-suite Private Bathroom
+Air Conditioning (AC)
+High-Speed Wi-Fi
+Mini-Fridge
+Microwave
+Electric Kettle
+Hairdryer

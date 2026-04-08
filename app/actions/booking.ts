@@ -12,7 +12,7 @@ const RATES: Record<string, number> = {
   GBP: 1,
   USD: 1.27,
   EUR: 1.17,
-  SAR: 4.76,
+  SAR: 5,
 };
 
 const rateLimitMap = new Map<string, { count: number, lastReset: number }>();

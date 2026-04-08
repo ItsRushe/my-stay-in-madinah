@@ -7,7 +7,7 @@ export const RATES: Record<Currency, { rate: number; symbol: string }> = {
   GBP: { rate: 1, symbol: "£" },
   USD: { rate: 1.27, symbol: "$" },
   EUR: { rate: 1.17, symbol: "€" },
-  SAR: { rate: 4.76, symbol: "SAR " },
+  SAR: { rate: 5, symbol: "SAR " },
 };
 
 const CurrencyContext = createContext<any>(null);
