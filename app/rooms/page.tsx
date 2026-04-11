@@ -4,7 +4,8 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import PriceDisplay from "../../components/PriceDisplay";
 import { createClient } from "../../lib/supabase/server";
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { roomTranslationsAr } from "../../lib/translations/rooms";
 
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +26,8 @@ export default async function RoomsPage() {
   const supabase = await createClient();
   const { data: rooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
   const t = await getTranslations('Rooms');
+  const locale = await getLocale();
+  const isAr = locale === 'ar';
 
   return (
     <main className="pt-20 bg-ivory">
@@ -40,33 +43,41 @@ export default async function RoomsPage() {
       </header>
 
       <section className="py-20 px-6 md:px-12 max-w-[90rem] mx-auto space-y-16 text-ink">
-        {rooms?.map((room: any, index: number) => (
-          <div key={room.id} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group">
-            <Link href={`/rooms/${room.id}`} className={`w-full h-[300px] md:h-[450px] rounded-none overflow-hidden relative block ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-              <img src={room.images[0]} alt={room.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors duration-500"></div>
-            </Link>
-            <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
-              <span className="text-gold text-xs font-semibold uppercase tracking-widest mb-2 block">{room.capacity}</span>
-              <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-4">{room.name}</h2>
-              <p className="text-xl text-gold font-medium mb-4" dir="ltr">
-                <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
-              </p>
-              <p className="font-light leading-relaxed mb-6 opacity-80 line-clamp-3">{room.description}</p>
-              <ul className="grid grid-cols-2 gap-4 mb-8 text-sm font-light opacity-80">
-                {room.amenities.slice(0, 4).map((amenity: string, i: number) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <svg className="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                    {amenity}
-                  </li>
-                ))}
-              </ul>
-              <Link href={`/rooms/${room.id}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
-                {t('view_details')}
+        {rooms?.map((room: any, index: number) => {
+          const arData = roomTranslationsAr[room.id];
+          const displayName = isAr && arData ? arData.name : room.name;
+          const displayDesc = isAr && arData ? arData.description : room.description;
+          const displayCapacity = isAr && arData ? arData.capacity : room.capacity;
+          const displayAmenities = isAr && arData ? arData.amenities : room.amenities;
+
+          return (
+            <div key={room.id} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group">
+              <Link href={`/rooms/${room.id}`} className={`w-full h-[300px] md:h-[450px] rounded-none overflow-hidden relative block ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                <img src={room.images[0]} alt={displayName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors duration-500"></div>
               </Link>
+              <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
+                <span className="text-gold text-xs font-semibold uppercase tracking-widest mb-2 block" dir="ltr">{displayCapacity}</span>
+                <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-4">{displayName}</h2>
+                <p className="text-xl text-gold font-medium mb-4" dir="ltr">
+                  <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
+                </p>
+                <p className="font-light leading-relaxed mb-6 opacity-80 line-clamp-3">{displayDesc}</p>
+                <ul className="grid grid-cols-2 gap-4 mb-8 text-sm font-light opacity-80">
+                  {displayAmenities.slice(0, 4).map((amenity: string, i: number) => (
+                    <li key={i} className="flex items-center gap-2">
+                      <svg className="w-4 h-4 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                      {amenity}
+                    </li>
+                  ))}
+                </ul>
+                <Link href={`/rooms/${room.id}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
+                  {t('view_details')}
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       <Footer />

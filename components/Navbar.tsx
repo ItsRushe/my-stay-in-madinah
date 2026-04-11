@@ -20,8 +20,8 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
 
   const currencies = ["GBP", "USD", "EUR", "SAR"];
 
-  const currentLang = locale.toUpperCase();
   const activeLangObj = languages.find(l => l.code === locale) || languages[0];
+  const isAr = locale === 'ar';
 
   const switchLanguage = (langCode: string) => {
     document.cookie = `NEXT_LOCALE=${langCode}; path=/; max-age=31536000; SameSite=Lax`;
@@ -60,7 +60,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
 
   return (
     <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
-      <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between gap-8">
+      <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between gap-8" dir="ltr">
 
         {/* LEFT: Logo */}
         <Link href="/" className="flex items-center gap-4 group shrink-0">
@@ -74,12 +74,12 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
         <div className="hidden lg:flex items-center gap-0">
 
           {/* Page Links */}
-          <div className="flex items-center gap-7 text-sm tracking-wide text-ink/75 pr-7">
-            <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>{t('home')}</Link>
-            <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>{t('about')}</Link>
-            <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>{t('rooms')}</Link>
-            <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>{t('tours')}</Link>
-            <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>{t('contact')}</Link>
+          <div className={`flex items-center gap-7 text-sm tracking-wide text-ink/75 ${isAr ? 'pl-9' : 'pr-7'}`}>
+            <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors whitespace-nowrap`}>{t('home')}</Link>
+            <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors whitespace-nowrap`}>{t('about')}</Link>
+            <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors whitespace-nowrap`}>{t('rooms')}</Link>
+            <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors whitespace-nowrap`}>{t('tours')}</Link>
+            <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors whitespace-nowrap`}>{t('contact')}</Link>
           </div>
 
           {/* Vertical divider */}

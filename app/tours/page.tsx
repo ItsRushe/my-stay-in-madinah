@@ -4,7 +4,8 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import PriceDisplay from "../../components/PriceDisplay";
 import { createClient } from "../../lib/supabase/server";
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { tourTranslationsAr } from "../../lib/translations/tours";
 
 export const dynamic = 'force-dynamic';
 
@@ -25,6 +26,8 @@ export default async function ToursPage() {
   const supabase = await createClient();
   const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
   const t = await getTranslations('Tours');
+  const locale = await getLocale();
+  const isAr = locale === 'ar';
 
   return (
     <main className="pt-20 bg-ivory">
@@ -40,54 +43,62 @@ export default async function ToursPage() {
       </header>
 
       <section className="py-20 px-6 md:px-12 max-w-[90rem] mx-auto text-ink">
-        {tours?.map((tour: any, index: number) => (
-          <div key={tour.id}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        {tours?.map((tour: any, index: number) => {
+          const arData = tourTranslationsAr[tour.id];
+          const displayName = isAr && arData ? arData.name : tour.name;
+          const displayDesc = isAr && arData ? arData.description : tour.description;
+          const displayDuration = isAr && arData ? arData.duration : tour.duration;
+          const displayGroupSize = isAr && arData ? arData.group_size : tour.group_size;
 
-              {/* IMAGE GRID */}
-              <div className={`grid grid-cols-3 gap-4 h-[350px] md:h-[500px] ${index % 2 !== 0 ? 'order-2 lg:order-2' : 'order-2 lg:order-1'}`}>
-                <div className="col-span-2 rounded-none overflow-hidden relative bg-gray-100">
-                  <img src={tour.images[0]} alt={tour.name} className="w-full h-full object-cover lightbox-trigger cursor-zoom-in hover:scale-105 transition-transform duration-700" />
+          return (
+            <div key={tour.id}>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+                {/* IMAGE GRID */}
+                <div className={`grid grid-cols-3 gap-4 h-[350px] md:h-[500px] ${index % 2 !== 0 ? 'order-2 lg:order-2' : 'order-2 lg:order-1'}`}>
+                  <div className="col-span-2 rounded-none overflow-hidden relative bg-gray-100">
+                    <img src={tour.images[0]} alt={displayName} className="w-full h-full object-cover lightbox-trigger cursor-zoom-in hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  <div className="grid grid-rows-2 gap-4">
+                    <div className="rounded-none overflow-hidden relative bg-gray-100">
+                      <img src={tour.images[1]} alt={displayName} className="w-full h-full object-cover lightbox-trigger cursor-zoom-in hover:scale-105 transition-transform duration-700" />
+                    </div>
+                    <div className="rounded-none overflow-hidden relative bg-gray-100">
+                      <img src={tour.images[2]} alt={displayName} className="w-full h-full object-cover lightbox-trigger cursor-zoom-in hover:scale-105 transition-transform duration-700" />
+                    </div>
+                  </div>
                 </div>
-                <div className="grid grid-rows-2 gap-4">
-                  <div className="rounded-none overflow-hidden relative bg-gray-100">
-                    <img src={tour.images[1]} alt={tour.name} className="w-full h-full object-cover lightbox-trigger cursor-zoom-in hover:scale-105 transition-transform duration-700" />
+
+                {/* TEXT DETAILS */}
+                <div className={`${index % 2 !== 0 ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}`}>
+                  <div className="flex flex-wrap items-center gap-4 mb-4">
+                    <span className="bg-gold/10 text-gold px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase">{displayDuration}</span>
+                    <span className="bg-ink/5 text-ink px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase">{displayGroupSize}</span>
                   </div>
-                  <div className="rounded-none overflow-hidden relative bg-gray-100">
-                    <img src={tour.images[2]} alt={tour.name} className="w-full h-full object-cover lightbox-trigger cursor-zoom-in hover:scale-105 transition-transform duration-700" />
+                  <h2 className="font-playfair text-3xl md:text-5xl font-medium mb-2">{displayName}</h2>
+                  <p className="text-3xl text-gold font-medium mb-6" dir="ltr">
+                    <PriceDisplay amountGBP={tour.price} />
+                    <span className="text-sm font-light opacity-50 uppercase tracking-wide ms-2">{t('per_group')}</span>
+                  </p>
+                  <div className="space-y-4 font-light leading-relaxed mb-8 text-lg opacity-80">
+                    <p>{displayDesc}</p>
                   </div>
+
+                  <div className="flex items-center gap-3 text-sm text-green-600 font-medium bg-green-50 p-4 rounded-none mb-8 border border-green-100">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    {t('cancellation')}
+                  </div>
+
+                  <a href={`https://wa.me/966508151408?text=${encodeURIComponent(tour.whatsapp_text)}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center bg-ink text-white px-10 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-xl w-full sm:w-auto rounded-none">
+                    {t('whatsapp')}
+                  </a>
                 </div>
               </div>
 
-              {/* TEXT DETAILS */}
-              <div className={`${index % 2 !== 0 ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}`}>
-                <div className="flex flex-wrap items-center gap-4 mb-4">
-                  <span className="bg-gold/10 text-gold px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase">{tour.duration}</span>
-                  <span className="bg-ink/5 text-ink px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase">{tour.group_size}</span>
-                </div>
-                <h2 className="font-playfair text-3xl md:text-5xl font-medium mb-2">{tour.name}</h2>
-                <p className="text-3xl text-gold font-medium mb-6" dir="ltr">
-                  <PriceDisplay amountGBP={tour.price} />
-                  <span className="text-sm font-light opacity-50 uppercase tracking-wide ml-2">{t('per_group')}</span>
-                </p>
-                <div className="space-y-4 font-light leading-relaxed mb-8 text-lg opacity-80">
-                  <p>{tour.description}</p>
-                </div>
-
-                <div className="flex items-center gap-3 text-sm text-green-600 font-medium bg-green-50 p-4 rounded-none mb-8 border border-green-100">
-                  <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  {t('cancellation')}
-                </div>
-
-                <a href={`https://wa.me/966508151408?text=${encodeURIComponent(tour.whatsapp_text)}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center bg-ink text-white px-10 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-xl w-full sm:w-auto rounded-none">
-                  {t('whatsapp')}
-                </a>
-              </div>
+              {index !== tours.length - 1 && <hr className="border-gray-200 my-24" />}
             </div>
-
-            {index !== tours.length - 1 && <hr className="border-gray-200 my-24" />}
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       {/* FULLSCREEN IMAGE LIGHTBOX MODAL */}
@@ -95,7 +106,7 @@ export default async function ToursPage() {
         <button id="close-lightbox" className="absolute top-6 right-6 text-white hover:text-gold transition-colors focus:outline-none p-2">
           <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
-        <img id="lightbox-img" src="" alt="Full Screen Tour View" className="max-w-[95vw] max-h-[90vh] object-contain shadow-2xl rounded-none" />
+        <img id="lightbox-img" alt="Full Screen Tour View" className="max-w-[95vw] max-h-[90vh] object-contain shadow-2xl rounded-none" />
       </div>
 
       <script dangerouslySetInnerHTML={{

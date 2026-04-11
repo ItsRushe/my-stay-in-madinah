@@ -44,11 +44,13 @@ A Next.js boutique accommodation booking site for Madinah, Saudi Arabia.
 
 ## Key Files
 - `app/layout.tsx` — root layout, NextIntlClientProvider, fonts
-- `app/globals.css` — Tailwind, theme tokens, RTL/Arabic overrides
-- `components/Navbar.tsx` — nav + language switcher + currency toggle
+- `app/globals.css` — Tailwind, theme tokens, RTL/Arabic overrides + RTL layout fixes
+- `components/Navbar.tsx` — nav + language switcher + currency toggle (dir="ltr" wrapper for stability)
 - `components/Footer.tsx` — footer with translated links
 - `components/BookingWidget.tsx` — booking date picker + Stripe checkout
 - `components/CurrencyProvider.tsx` — global currency state
 - `i18n/request.ts` — next-intl locale resolution from cookie
 - `messages/en.json` + `messages/ar.json` — all UI string translations
+- `lib/translations/rooms.ts` — Arabic translations for dynamic room data (name, desc, capacity, amenities)
+- `lib/translations/tours.ts` — Arabic translations for dynamic tour data (name, desc, duration, group_size)
 - `app/actions/booking.ts` — Stripe checkout session creation
