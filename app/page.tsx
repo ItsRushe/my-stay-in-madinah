@@ -160,7 +160,9 @@ export default async function Home() {
             <div className="flex flex-col items-center text-center px-8 md:px-12 py-10 md:py-0 group">
               <div className="w-16 h-16 rounded-full border border-gold/40 flex items-center justify-center mb-6 group-hover:border-gold transition-colors duration-300">
                 <svg className="w-7 h-7 text-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 21v-3.75a3.75 3.75 0 0 0-3.75-3.75h-1.5A3.75 3.75 0 0 0 6 17.25V21M3 16.5v.75A2.25 2.25 0 0 0 5.25 19.5h13.5A2.25 2.25 0 0 0 21 17.25v-.75" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 2v2m4-2v2m4-2v2" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 6h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V6z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 9h1.5a1.5 1.5 0 010 3H17" />
                 </svg>
               </div>
               <h3 className="font-playfair text-xl md:text-2xl text-white font-medium mb-3">{t('amenity1_title')}</h3>
@@ -170,7 +172,7 @@ export default async function Home() {
             <div className="flex flex-col items-center text-center px-8 md:px-12 py-10 md:py-0 group">
               <div className="w-16 h-16 rounded-full border border-gold/40 flex items-center justify-center mb-6 group-hover:border-gold transition-colors duration-300">
                 <svg className="w-7 h-7 text-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.57a1 1 0 00.99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.57a2 2 0 00-1.34-2.23z" />
                 </svg>
               </div>
               <h3 className="font-playfair text-xl md:text-2xl text-white font-medium mb-3">{t('amenity2_title')}</h3>
@@ -180,7 +182,8 @@ export default async function Home() {
             <div className="flex flex-col items-center text-center px-8 md:px-12 py-10 md:py-0 group">
               <div className="w-16 h-16 rounded-full border border-gold/40 flex items-center justify-center mb-6 group-hover:border-gold transition-colors duration-300">
                 <svg className="w-7 h-7 text-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 1-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 12h16M9 7h.01M15 7h.01M8 18l-2 4m10-4l2 4M9 18h6" />
                 </svg>
               </div>
               <h3 className="font-playfair text-xl md:text-2xl text-white font-medium mb-3">{t('amenity3_title')}</h3>
