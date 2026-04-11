@@ -101,80 +101,83 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
 
   return (
     <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
-      <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center relative z-20">
-        
-        {/* LEFT: Brand Logos */}
-        <div className="flex-1 flex justify-start">
-          <Link href="/" translate="no" className="flex items-center gap-4 group notranslate">
-            <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-8 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-            <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden xl:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap">
-              My Stay In Madinah
-            </span>
-          </Link>
-        </div>
-        
-        {/* CENTER: Page Links */}
-        <div className="hidden lg:flex flex-1 justify-center items-center gap-8 text-sm tracking-wide text-ink/80 absolute left-1/2 transform -translate-x-1/2">
-          <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Home</Link>
-          <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>About Us</Link>
-          <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Rooms</Link>
-          <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Tours</Link>
-          <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
-        </div>
-        
-        {/* RIGHT: Utilities */}
-        <div className="hidden lg:flex flex-1 justify-end items-center gap-6 text-sm tracking-wide text-ink/80">
-          
-          {/* CURRENCY TOGGLE */}
-          <div className="relative notranslate" translate="no">
-            <button onClick={toggleCurrency} className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none font-medium text-base">
-              {renderTopButtonDisplay()}
-              <svg className={`w-4 h-4 transition-transform duration-300 ${isCurrOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            
-            {isCurrOpen && (
-              <div className="absolute top-full right-0 mt-4 w-32 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-center">
-                {currencies.map((curr) => (
-                  <button 
-                    key={curr} 
-                    onClick={() => { changeCurrency(curr as any); setIsCurrOpen(false); }} 
-                    className={`flex items-center justify-center w-full px-4 py-3 hover:bg-ivory hover:text-gold transition-colors text-sm font-medium ${currency === curr ? 'text-gold bg-ivory' : 'text-ink'}`}
-                  >
-                    {renderCurrencyDisplay(curr)}
-                  </button>
-                ))}
-              </div>
-            )}
+      <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between gap-8">
+
+        {/* LEFT: Logo */}
+        <Link href="/" translate="no" className="flex items-center gap-4 group notranslate shrink-0">
+          <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-8 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
+          <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden xl:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap">
+            My Stay In Madinah
+          </span>
+        </Link>
+
+        {/* RIGHT: Nav links + divider + utilities */}
+        <div className="hidden lg:flex items-center gap-0">
+
+          {/* Page Links */}
+          <div className="flex items-center gap-7 text-sm tracking-wide text-ink/75 pr-7">
+            <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Home</Link>
+            <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>About Us</Link>
+            <Link href="/rooms" className={`${activePage === 'rooms' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Rooms</Link>
+            <Link href="/tours" className={`${activePage === 'tours' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Tours</Link>
+            <Link href="/contact" className={`${activePage === 'contact' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors`}>Contact</Link>
           </div>
 
-          {/* LANGUAGE TOGGLE */}
-          <div className="relative notranslate" translate="no">
-            <button onClick={toggleLanguage} className="flex items-center gap-2 hover:text-gold transition-colors focus:outline-none font-medium">
-              <span className={`fi fi-${activeLangObj.fi}`} style={{ width: '22px', height: '16px', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-              <svg className={`w-4 h-4 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
-            </button>
-            
-            {isLangOpen && (
-              <div className="absolute top-full right-0 mt-4 w-36 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-left">
-                {languages.map((lang) => (
-                  <button 
-                    key={lang.code} 
-                    onClick={() => switchLanguage(lang.code)} 
-                    className={`flex items-center gap-3 px-4 py-3 hover:bg-ivory hover:text-gold transition-colors ${currentLang === lang.code ? 'text-gold font-medium bg-ivory' : 'text-ink'}`}
-                  >
-                    <span className={`fi fi-${lang.fi} shrink-0`} style={{ width: '22px', height: '16px', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' }} />
-                    <span className="text-sm">{lang.name}</span>
-                  </button>
-                ))}
-              </div>
-            )}
+          {/* Vertical divider */}
+          <div className="w-px h-5 bg-ink/15 shrink-0" />
+
+          {/* Utility controls */}
+          <div className="flex items-center gap-5 pl-7 text-sm text-ink/75">
+
+            {/* CURRENCY TOGGLE */}
+            <div className="relative notranslate" translate="no">
+              <button onClick={toggleCurrency} className="flex items-center gap-1 hover:text-gold transition-colors focus:outline-none font-medium text-sm tracking-wide">
+                {renderTopButtonDisplay()}
+                <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${isCurrOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {isCurrOpen && (
+                <div className="absolute top-full right-0 mt-4 w-32 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-center">
+                  {currencies.map((curr) => (
+                    <button
+                      key={curr}
+                      onClick={() => { changeCurrency(curr as any); setIsCurrOpen(false); }}
+                      className={`flex items-center justify-center w-full px-4 py-3 hover:bg-ivory hover:text-gold transition-colors text-sm font-medium ${currency === curr ? 'text-gold bg-ivory' : 'text-ink'}`}
+                    >
+                      {renderCurrencyDisplay(curr)}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* LANGUAGE TOGGLE */}
+            <div className="relative notranslate" translate="no">
+              <button onClick={toggleLanguage} className="flex items-center gap-2 hover:text-gold transition-colors focus:outline-none">
+                <span className={`fi fi-${activeLangObj.fi}`} style={{ width: '22px', height: '16px', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                <svg className={`w-3.5 h-3.5 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+              </button>
+              {isLangOpen && (
+                <div className="absolute top-full right-0 mt-4 w-36 bg-white border border-gray-100 shadow-xl flex flex-col py-2 z-50 text-left">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => switchLanguage(lang.code)}
+                      className={`flex items-center gap-3 px-4 py-3 hover:bg-ivory hover:text-gold transition-colors ${currentLang === lang.code ? 'text-gold font-medium bg-ivory' : 'text-ink'}`}
+                    >
+                      <span className={`fi fi-${lang.fi} shrink-0`} style={{ width: '22px', height: '16px', borderRadius: '2px', boxShadow: '0 1px 3px rgba(0,0,0,0.15)' }} />
+                      <span className="text-sm">{lang.name}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        
-        {/* Mobile Hamburger Button */}
+
+        {/* Mobile Hamburger */}
         <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden text-ink hover:text-gold focus:outline-none ml-auto">
           <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}></path>
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
           </svg>
         </button>
       </div>
