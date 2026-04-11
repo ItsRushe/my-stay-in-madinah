@@ -115,37 +115,40 @@ export default async function Home() {
           <Link href="/rooms" className="text-ink hover:text-gold transition-colors font-medium border-b border-ink hover:border-gold pb-1">{t('rooms_view_all')}</Link>
         </div>
 
-        <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 px-6 md:px-12 pb-10 w-full max-w-[100rem] mx-auto">
-          {rooms?.map((room: any) => {
-            const arData = roomTranslationsAr[room.id];
-            const displayName = isAr && arData ? arData.name : room.name;
-            const displayDesc = isAr && arData ? arData.description : room.description;
-            const displayCapacity = isAr && arData ? arData.capacity : room.capacity;
+        <div className="relative w-full max-w-[100rem] mx-auto">
+          <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-5 px-6 md:px-12 pb-10">
+            {rooms?.map((room: any) => {
+              const arData = roomTranslationsAr[room.id];
+              const displayName = isAr && arData ? arData.name : room.name;
+              const displayDesc = isAr && arData ? arData.description : room.description;
+              const displayCapacity = isAr && arData ? arData.capacity : room.capacity;
 
-            return (
-              <div key={room.id} className="snap-start shrink-0 w-[85vw] sm:w-[400px] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none">
-                <div className="h-64 w-full overflow-hidden relative">
-                  <img src={room.images[0]} alt={displayName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-                  <div className="absolute top-4 end-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm rounded-none" dir="ltr">{displayCapacity}</div>
+              return (
+                <div key={room.id} className="snap-start shrink-0 w-[82vw] sm:w-[360px] xl:w-[420px] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none">
+                  <div className="h-56 sm:h-64 w-full overflow-hidden relative">
+                    <img src={room.images[0]} alt={displayName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                    <div className="absolute top-4 end-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm rounded-none" dir="ltr">{displayCapacity}</div>
+                  </div>
+                  <div className="p-6 md:p-8 flex flex-col flex-grow">
+                    <h3 className="font-playfair text-xl md:text-2xl text-ink font-medium mb-2">{displayName}</h3>
+                    <p className="text-lg md:text-xl font-medium text-gold mb-3" dir="ltr">
+                      <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
+                    </p>
+                    <p className="text-ink/70 font-light text-sm line-clamp-2 mb-6 flex-grow">{displayDesc}</p>
+                    <Link href={`/rooms/${room.id}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none text-sm tracking-wide">{t('rooms_view')}</Link>
+                  </div>
                 </div>
-                <div className="p-8 flex flex-col flex-grow">
-                  <h3 className="font-playfair text-2xl text-ink font-medium mb-2">{displayName}</h3>
-                  <p className="text-xl font-medium text-gold mb-4" dir="ltr">
-                    <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
-                  </p>
-                  <p className="text-ink/70 font-light text-sm line-clamp-2 mb-8 flex-grow">{displayDesc}</p>
-                  <Link href={`/rooms/${room.id}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">{t('rooms_view')}</Link>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-36 bg-gradient-to-l from-white via-white/70 to-transparent z-10" />
         </div>
       </section>
 
-      <section className="py-20 md:py-32 px-6 md:px-12 bg-ivory overflow-hidden">
-        <div className="max-w-[90rem] mx-auto mb-16">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      <section className="py-20 md:py-28 px-6 md:px-12 bg-ivory">
+        <div className="max-w-[90rem] mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 md:mb-14">
             <div>
               <div className="inline-flex items-center gap-4 mb-4">
                 <span className="h-[1px] w-8 bg-gold"></span>
@@ -157,22 +160,22 @@ export default async function Home() {
               {t('things_desc')}
             </p>
           </div>
-        </div>
 
-        <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 px-6 md:px-12 pb-10 w-full max-w-[100rem] mx-auto">
-          {thingsToDo?.map((item: any) => (
-            <div key={item.id} className="snap-start shrink-0 w-[85vw] sm:w-[400px] group relative h-64 md:h-[320px] overflow-hidden rounded-none shadow-xl cursor-pointer border border-white/10">
-              <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100"></div>
-              <div className="absolute top-4 end-4 bg-gold text-white px-3 py-1 text-xs uppercase tracking-widest font-medium shadow-sm z-10 rounded-none">
-                {item.tag}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {thingsToDo?.slice(0, 3).map((item: any) => (
+              <div key={item.id} className="group relative h-[260px] md:h-[320px] overflow-hidden rounded-none shadow-lg cursor-pointer">
+                <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent"></div>
+                <div className="absolute top-4 end-4 bg-gold text-white px-3 py-1 text-xs uppercase tracking-widest font-medium z-10 rounded-none">
+                  {item.tag}
+                </div>
+                <div className="absolute inset-0 p-6 flex flex-col justify-end z-10">
+                  <h3 className="font-playfair text-xl md:text-2xl font-medium text-white mb-1">{item.title}</h3>
+                  <p className="text-gold text-xs font-medium uppercase tracking-wider opacity-90">{item.distance}</p>
+                </div>
               </div>
-              <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-10 pointer-events-none">
-                <h3 className="font-playfair text-2xl font-medium text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">{item.title}</h3>
-                <p className="text-gold text-xs font-medium uppercase tracking-wider transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-75">{item.distance}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
