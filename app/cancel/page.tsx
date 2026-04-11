@@ -34,7 +34,7 @@ export default async function CancelPage({ searchParams }: { searchParams: Promi
             <Link href="/rooms" className="w-full sm:w-auto inline-block bg-ink text-white px-10 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-xl">
               View Rooms
             </Link>
-            <a href="https://wa.me/201067040337" target="_blank" rel="noreferrer" className="w-full sm:w-auto inline-block border-2 border-ink text-ink px-10 py-4 font-medium hover:bg-ink hover:text-white transition-colors duration-300">
+            <a href="https://wa.me/966508151408" target="_blank" rel="noreferrer" className="w-full sm:w-auto inline-block border-2 border-ink text-ink px-10 py-4 font-medium hover:bg-ink hover:text-white transition-colors duration-300">
               Need Help?
             </a>
           </div>

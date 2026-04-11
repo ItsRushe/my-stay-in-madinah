@@ -52,7 +52,7 @@ export default async function SuccessPage({ searchParams }: { searchParams: Prom
   }
 
   // Format the Custom WhatsApp Message with Line Breaks (\n)
-  const phoneNumber = "201067040337";
+  const phoneNumber = "966508151408";
   const whatsappMessage = `Hi, I have a special request for my booking.\n\nName: ${guestName}\nOrder: #${orderNumber}\nRoom: ${roomName}`;
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(whatsappMessage)}`;
 

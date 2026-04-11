@@ -68,7 +68,7 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
   };
 
   // WhatsApp links
-  const whatsappBase = "https://wa.me/201067040337";
+  const whatsappBase = "https://wa.me/966508151408";
   const conciergeMsg = orderNumber
     ? `Hi, I am ${guestFullName || 'a guest'} (Order #${orderNumber}) and need assistance.`
     : `Hi, I am a guest and need assistance.`;
