@@ -75,34 +75,28 @@ html[lang="ar"] .font-jost {
 
 /* 5. RTL LAYOUT FIXES */
 
-/* Fix explicit text-left classes that don't flip in RTL — override them to text-start */
-html[lang="ar"] .text-left { text-align: right !important; }
+/*
+ * Tailwind uses physical text-left/right which don't flip with dir="rtl".
+ * In Arabic, any element using text-left should render right-aligned.
+ */
+html[lang="ar"] .text-left  { text-align: right !important; }
 html[lang="ar"] .sm\:text-left { text-align: right !important; }
 html[lang="ar"] .md\:text-left { text-align: right !important; }
 html[lang="ar"] .lg\:text-left { text-align: right !important; }
 
-/* Fix items-start used in flex column containers (pillar alignment) */
-html[lang="ar"] .sm\:items-start { align-items: flex-end !important; }
-
-/* Fix justify-start used in button rows */
-html[lang="ar"] .lg\:justify-start { justify-content: flex-end !important; }
-
-/* Fix border-l (left border) in pillar cards — swap to right border in RTL */
-html[lang="ar"] .sm\:border-l {
-  border-left: none !important;
-  border-right-width: 1px;
-  border-right-style: solid;
+/*
+ * Tailwind's items-start uses align-items: flex-start which is PHYSICAL (always left
+ * in a flex-col cross axis). In Arabic flex-col we want icons/content on the right.
+ * Use align-items: flex-end to force physical right alignment.
+ */
+html[lang="ar"] .sm\:items-start {
+  align-items: flex-end !important;
 }
 
-/* Fix pl-6 padding on pillar cards (was left padding for border-l visual gap) */
-html[lang="ar"] .sm\:pl-6 {
-  padding-left: 0 !important;
-  padding-right: 1.5rem !important;
-}
-
-/* Fix md:border-r (divider between platform vs direct comparison columns) */
-html[lang="ar"] .md\:border-r {
-  border-right: none !important;
-  border-left-width: 1px;
-  border-left-style: solid;
+/*
+ * Hero CTA buttons: lg:justify-start is physically left-aligned.
+ * In RTL the hero text is on the right, so buttons should hug the right too.
+ */
+html[lang="ar"] .lg\:justify-start {
+  justify-content: flex-end !important;
 }
