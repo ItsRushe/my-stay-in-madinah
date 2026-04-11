@@ -52,15 +52,18 @@ html[dir="rtl"] p:not(.notranslate),
 html[dir="rtl"] span:not(.notranslate), 
 html[dir="rtl"] div:not(.notranslate), 
 html[dir="rtl"] a:not(.notranslate) {
-  font-family: 'Cairo', sans-serif !important;
+  font-family: 'Tajawal', sans-serif !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
 }
 
 html[dir="rtl"] h1:not(.notranslate), 
 html[dir="rtl"] h2:not(.notranslate), 
 html[dir="rtl"] h3:not(.notranslate), 
 html[dir="rtl"] h4:not(.notranslate) {
-  font-family: 'Cairo', sans-serif !important;
-  font-weight: 600 !important;
+  font-family: 'Tajawal', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
 }
 
 /* ABSOLUTE PROTECTION FOR LOGO & PRICING */
