@@ -59,12 +59,12 @@ export default async function ToursPage() {
               
               {/* TEXT DETAILS */}
               <div className={`${index % 2 !== 0 ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}`}>
-                <div className="flex flex-wrap items-center gap-4 mb-4">
-                  <span className="bg-gold/10 text-gold px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase">{tour.duration}</span>
-                  <span className="bg-ink/5 text-ink px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase">{tour.group_size}</span>
+                <div className="flex flex-wrap items-center gap-4 mb-4" translate="no">
+                  <span className="bg-gold/10 text-gold px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase notranslate">{tour.duration}</span>
+                  <span className="bg-ink/5 text-ink px-3 py-1 rounded-none text-xs font-semibold tracking-wider uppercase notranslate">{tour.group_size}</span>
                 </div>
                 <h2 className="font-playfair text-3xl md:text-5xl font-medium mb-2">{tour.name}</h2>
-                <p className="text-3xl text-gold font-medium mb-6">
+                <p className="text-3xl text-gold font-medium mb-6 notranslate" translate="no" dir="ltr">
                   <PriceDisplay amountGBP={tour.price} />
                   <span className="text-sm font-light opacity-50 uppercase tracking-wide ml-2">Per Group</span>
                 </p>

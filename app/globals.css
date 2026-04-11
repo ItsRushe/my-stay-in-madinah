@@ -66,16 +66,34 @@ html[dir="rtl"] h4:not(.notranslate) {
   letter-spacing: 0 !important;
 }
 
-/* ABSOLUTE PROTECTION FOR LOGO & PRICING */
-html[dir="rtl"] .notranslate, 
+/* ABSOLUTE PROTECTION FOR LOGO, PRICES & BRAND TEXT */
+html[dir="rtl"] .notranslate,
 html[dir="rtl"] .notranslate span,
-html[dir="rtl"] .notranslate div {
+html[dir="rtl"] .notranslate div,
+html[dir="rtl"] .notranslate a {
   font-family: 'Jost', sans-serif !important;
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
 }
 
+/* Keep Jost weight on logo brand text */
+html[dir="rtl"] .font-jost {
+  font-family: 'Jost', sans-serif !important;
+  font-weight: inherit !important;
+}
+
+/* Prevent Google Translate <font> tags from messing up weight/family */
+html[dir="rtl"] font {
+  font-family: inherit !important;
+  font-weight: inherit !important;
+}
+
+/* Keep numbers, prices, and bracket-wrapped content LTR */
+html[dir="rtl"] [translate="no"],
 html[dir="rtl"] .notranslate {
-  display: inline-flex;
-  unicode-bidi: isolate;
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  text-align: left !important;
 }
 
 /* Force text alignments to flip in Arabic */

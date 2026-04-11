@@ -100,7 +100,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
   }
 
   return (
-    <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
+    <nav dir="ltr" className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between gap-8">
 
         {/* LEFT: Logo */}
