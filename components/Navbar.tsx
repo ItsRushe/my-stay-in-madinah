@@ -68,7 +68,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
           </span>
         </Link>
 
-        <div className="hidden lg:flex items-center gap-0" dir="ltr">
+        <div className="hidden lg:flex items-center gap-0">
           <div className="flex items-center gap-7 text-sm tracking-wide text-ink/75 pe-7">
             <Link href="/" className={`${activePage === 'home' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors whitespace-nowrap`}>{t('home')}</Link>
             <Link href="/about" className={`${activePage === 'about' ? 'text-gold font-medium' : 'hover:text-gold'} transition-colors whitespace-nowrap`}>{t('about')}</Link>

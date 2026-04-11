@@ -73,27 +73,31 @@ export default async function Home() {
 
       <section className="py-12 md:py-20 px-6 md:px-12 bg-ivory">
         <div className="max-w-[90rem] mx-auto border-t border-b border-gray-200 py-12 md:py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 lg:gap-12 text-center sm:text-left">
-            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
-              <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar1_title')}</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar1_desc')}</p>
-            </div>
-            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
-              <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar2_title')}</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar2_desc')}</p>
-            </div>
-            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
-              <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar3_title')}</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar3_desc')}</p>
-            </div>
-            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
-              <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar4_title')}</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar4_desc')}</p>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 lg:gap-12">
+            {[
+              {
+                svg: <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>,
+                title: t('pillar1_title'), desc: t('pillar1_desc'),
+              },
+              {
+                svg: <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>,
+                title: t('pillar2_title'), desc: t('pillar2_desc'),
+              },
+              {
+                svg: <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>,
+                title: t('pillar3_title'), desc: t('pillar3_desc'),
+              },
+              {
+                svg: <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>,
+                title: t('pillar4_title'), desc: t('pillar4_desc'),
+              },
+            ].map((pillar, i) => (
+              <div key={i} className={`flex flex-col sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default ${isAr ? 'items-end text-right' : 'items-center sm:items-start text-center sm:text-left'}`}>
+                {pillar.svg}
+                <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{pillar.title}</h3>
+                <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{pillar.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
