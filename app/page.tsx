@@ -31,12 +31,10 @@ export default async function Home() {
     <main className="bg-ivory">
       <Navbar activePage="home" />
 
-      {/* STICKY WHATSAPP WIDGET */}
       <a href="https://wa.me/966508151408?text=As-salamu%20alaykum,%20I%20would%20like%20to%20inquire%20about%20booking%20a%20room." target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-50 bg-[#25D366] text-white p-3 md:p-4 rounded-none shadow-[0_10px_40px_rgba(37,211,102,0.4)] hover:scale-105 transition-transform duration-300 flex items-center justify-center group">
         <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 .003 5.385.003 12.031c0 2.126.556 4.198 1.613 6.02L.03 24l6.105-1.602a11.968 11.968 0 0 0 5.896 1.542h.005c6.643 0 12.025-5.384 12.025-12.028C24.055 5.385 18.675 0 12.031 0zm-.005 21.954a9.982 9.982 0 0 1-5.09-1.39l-.365-.217-3.784.992.998-3.69-.237-.377a9.96 9.96 0 0 1-1.523-5.27C1.995 6.486 6.483 2 12.031 2c5.545 0 10.033 4.488 10.033 10.003 0 5.513-4.488 10-10.038 10h-.001zm5.505-7.519c-.302-.151-1.787-.882-2.064-.983-.277-.101-.48-.151-.681.151-.202.302-.78 1.034-.956 1.235-.177.202-.353.227-.655.076-1.574-.789-2.73-1.66-3.784-3.32-.177-.278.177-.278.756-1.41.076-.151.038-.278-.038-.428-.076-.151-.681-1.636-.932-2.24-.246-.59-.496-.51-.681-.52-.177-.01-.378-.01-.58-.01-.202 0-.529.076-.806.378-.277.302-1.058 1.034-1.058 2.518 0 1.484 1.084 2.92 1.235 3.12.151.202 2.116 3.224 5.127 4.524 1.965.848 2.704.899 3.484.75.78-.151 2.368-.968 2.704-1.902.336-.934.336-1.737.236-1.903-.101-.166-.378-.267-.68-.418z"/></svg>
       </a>
 
-      {/* HERO SECTION */}
       <header className="relative min-h-screen w-full bg-ivory flex flex-col justify-center overflow-hidden pt-32 lg:pt-24 pb-16">
         <div className="max-w-[90rem] mx-auto w-full px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 items-center relative z-10">
           <div className="lg:col-span-6 flex flex-col justify-center order-1 lg:order-1 text-center lg:text-start">
@@ -46,7 +44,9 @@ export default async function Home() {
               <span className="h-[1px] w-8 md:w-12 bg-gold lg:hidden"></span>
             </div>
             <h1 className="font-playfair text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] text-ink font-medium tracking-tight md:leading-[1.05] mb-6 md:mb-8">
-              {t('hero_title')}<br /><span className="text-gold italic font-normal">{t('hero_title_italic')}</span>
+              <span className="block">{t('hero_title_first')}</span>
+              <span className="block">{t('hero_title_second')}</span>
+              <span className="block text-gold italic font-normal">{t('hero_title_italic')}</span>
             </h1>
             <p className="text-base md:text-lg text-ink/70 font-light max-w-xl mx-auto lg:mx-0 mb-10 md:mb-12 leading-relaxed">
               {t('hero_subtitle')}
@@ -71,26 +71,25 @@ export default async function Home() {
         </div>
       </header>
 
-      {/* TRUST PILLARS */}
       <section className="py-12 md:py-20 px-6 md:px-12 bg-ivory">
         <div className="max-w-[90rem] mx-auto border-t border-b border-gray-200 py-12 md:py-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 lg:gap-12">
-            <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 lg:gap-12 text-center sm:text-left">
+            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar1_title')}</h3>
               <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar1_desc')}</p>
             </div>
-            <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
+            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
               <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar2_title')}</h3>
               <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar2_desc')}</p>
             </div>
-            <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
+            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
               <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar3_title')}</h3>
               <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar3_desc')}</p>
             </div>
-            <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
+            <div className="flex flex-col items-center sm:items-start sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
               <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar4_title')}</h3>
               <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar4_desc')}</p>
@@ -99,7 +98,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ROOM PREVIEW SLIDER */}
+      {/* rest unchanged */}
       <section className="py-20 md:py-24 bg-white overflow-hidden">
         <div className="max-w-[90rem] mx-auto px-6 md:px-12 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div>
@@ -140,7 +139,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* THINGS TO DO SLIDER */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ivory overflow-hidden">
         <div className="max-w-[90rem] mx-auto mb-16">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
@@ -174,7 +172,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* THE SMARTER ALTERNATIVE */}
       <section className="py-16 md:py-24 px-6 md:px-12 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 md:mb-16">
@@ -202,7 +199,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* TOURS SECTION */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
