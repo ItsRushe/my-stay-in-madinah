@@ -106,7 +106,7 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
         {/* LEFT: Logo */}
         <Link href="/" translate="no" className="flex items-center gap-4 group notranslate shrink-0">
           <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-8 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-          <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden xl:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap notranslate" translate="no">
+          <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden xl:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap">
             My Stay In Madinah
           </span>
         </Link>

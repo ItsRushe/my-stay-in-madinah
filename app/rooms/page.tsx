@@ -45,9 +45,9 @@ export default async function RoomsPage() {
               <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors duration-500"></div>
             </Link>
             <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
-              <span className="text-gold text-xs font-semibold uppercase tracking-widest mb-2 block notranslate" translate="no">{room.capacity}</span>
+              <span className="text-gold text-xs font-semibold uppercase tracking-widest mb-2 block">{room.capacity}</span>
               <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-4">{room.name}</h2>
-              <p className="text-xl text-gold font-medium mb-4 notranslate" translate="no" dir="ltr">
+              <p className="text-xl text-gold font-medium mb-4">
                 <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">/ Night</span>
               </p>
               <p className="font-light leading-relaxed mb-6 opacity-80 line-clamp-3">{room.description}</p>
