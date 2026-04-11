@@ -92,7 +92,7 @@ export default async function Home() {
                 title: t('pillar4_title'), desc: t('pillar4_desc'),
               },
             ].map((pillar, i) => (
-              <div key={i} className={`flex flex-col sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default ${isAr ? 'items-end text-right' : 'items-center sm:items-start text-center sm:text-left'}`}>
+              <div key={i} className={`flex flex-col sm:border-s border-ink/10 sm:ps-6 hover:border-gold transition-colors duration-500 cursor-default ${isAr ? 'items-start text-right' : 'items-center sm:items-start text-center sm:text-left'}`}>
                 {pillar.svg}
                 <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{pillar.title}</h3>
                 <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{pillar.desc}</p>
