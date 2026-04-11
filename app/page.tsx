@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PriceDisplay from "../components/PriceDisplay";
 import { createClient } from "../lib/supabase/server";
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,9 +21,10 @@ export default async function Home() {
   const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
   const { data: thingsToDo } = await supabase.from('things_to_do').select('*').order('created_at', { ascending: true });
 
+  const t = await getTranslations('Home');
+
   return (
     <main className="bg-ivory">
-      {/* GLOBAL NAVIGATION */}
       <Navbar activePage="home" />
 
       {/* STICKY WHATSAPP WIDGET */}
@@ -36,18 +38,18 @@ export default async function Home() {
           <div className="lg:col-span-6 flex flex-col justify-center order-1 lg:order-1 text-center lg:text-left">
             <div className="inline-flex items-center justify-center lg:justify-start gap-4 mb-6 md:mb-8">
               <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
-              <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs lg:text-sm uppercase font-medium">Boutique Stays in Madinah</span>
+              <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs lg:text-sm uppercase font-medium">{t('boutique_label')}</span>
               <span className="h-[1px] w-8 md:w-12 bg-gold lg:hidden"></span>
             </div>
             <h1 className="font-playfair text-5xl sm:text-6xl lg:text-7xl xl:text-[5.5rem] text-ink font-medium tracking-tight md:leading-[1.05] mb-6 md:mb-8">
-              Stay More.<br/>Pay Less.<br/><span className="text-gold italic font-normal">Guaranteed.</span>
+              {t('hero_title')}<br /><span className="text-gold italic font-normal">{t('hero_title_italic')}</span>
             </h1>
             <p className="text-base md:text-lg text-ink/70 font-light max-w-xl mx-auto lg:mx-0 mb-10 md:mb-12 leading-relaxed">
-              Elevate your visit with premium, direct-booking accommodation in the heart of Madinah. Experience impeccable comfort without the hidden platform fees of Airbnb.
+              {t('hero_subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 w-full sm:w-auto justify-center lg:justify-start">
-              <Link href="/rooms" className="bg-ink hover:bg-gold text-white px-8 py-4 text-center transition-all duration-500 font-medium tracking-wide w-full sm:w-auto shadow-xl rounded-none">Reserve Your Room</Link>
-              <Link href="/contact" className="border border-ink/20 hover:border-ink text-ink px-8 py-4 text-center transition-all duration-500 font-medium flex items-center justify-center gap-3 w-full sm:w-auto rounded-none">Chat Direct</Link>
+              <Link href="/rooms" className="bg-ink hover:bg-gold text-white px-8 py-4 text-center transition-all duration-500 font-medium tracking-wide w-full sm:w-auto shadow-xl rounded-none">{t('cta_reserve')}</Link>
+              <Link href="/contact" className="border border-ink/20 hover:border-ink text-ink px-8 py-4 text-center transition-all duration-500 font-medium flex items-center justify-center gap-3 w-full sm:w-auto rounded-none">{t('cta_chat')}</Link>
             </div>
           </div>
           <div className="lg:col-span-6 relative order-2 lg:order-2 flex justify-center lg:justify-end mt-4 lg:mt-0">
@@ -57,8 +59,8 @@ export default async function Home() {
             <div className="absolute -bottom-6 -left-2 md:bottom-10 md:-left-8 bg-white/95 backdrop-blur-md p-5 shadow-xl border border-gray-100 flex items-center gap-4 rounded-none">
               <div className="w-12 h-12 bg-gold/10 flex items-center justify-center text-gold text-2xl rounded-none">★</div>
               <div>
-                <p className="text-ink font-playfair font-medium text-lg leading-tight">Top Rated</p>
-                <p className="text-ink/50 text-[10px] uppercase tracking-wider font-semibold">By Our Guests</p>
+                <p className="text-ink font-playfair font-medium text-lg leading-tight">{t('top_rated')}</p>
+                <p className="text-ink/50 text-[10px] uppercase tracking-wider font-semibold">{t('top_rated_sub')}</p>
               </div>
             </div>
           </div>
@@ -71,39 +73,39 @@ export default async function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 lg:gap-12">
             <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-l border-ink/10 sm:pl-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">The Rate Guarantee</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">Always cheaper than equivalent platforms. No markups, just honest and transparent value.</p>
+              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar1_title')}</h3>
+              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar1_desc')}</p>
             </div>
             <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-l border-ink/10 sm:pl-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">Central Location</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">Strategically located in Madinah offering seamless, short transit to the Prophet’s Mosque.</p>
+              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar2_title')}</h3>
+              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar2_desc')}</p>
             </div>
             <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-l border-ink/10 sm:pl-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">Verified Excellence</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">Hotel-grade cleanliness and pristine comfort, vetted rigorously for the discerning traveler.</p>
+              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar3_title')}</h3>
+              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar3_desc')}</p>
             </div>
             <div className="flex flex-col items-center sm:items-start text-center sm:text-left sm:border-l border-ink/10 sm:pl-6 hover:border-gold transition-colors duration-500 cursor-default">
               <svg className="w-7 h-7 text-gold mb-4 md:mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">Frictionless Booking</h3>
-              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">Zero platform fees. Instant direct confirmation for ultimate peace of mind.</p>
+              <h3 className="font-playfair text-xl text-ink font-medium mb-2 md:mb-3">{t('pillar4_title')}</h3>
+              <p className="text-ink/60 font-light text-sm leading-relaxed max-w-xs">{t('pillar4_desc')}</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* DYNAMIC ROOM PREVIEW SLIDER */}
+      {/* ROOM PREVIEW SLIDER */}
       <section className="py-20 md:py-24 bg-white overflow-hidden">
         <div className="max-w-[90rem] mx-auto px-6 md:px-12 mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
           <div>
             <div className="inline-flex items-center gap-4 mb-4">
               <span className="h-[1px] w-8 bg-gold"></span>
-              <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">Our Selection</span>
+              <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">{t('rooms_label')}</span>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Rooms & Suites</h2>
+            <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">{t('rooms_title')}</h2>
           </div>
-          <Link href="/rooms" className="text-ink hover:text-gold transition-colors font-medium border-b border-ink hover:border-gold pb-1">View All Rooms &rarr;</Link>
+          <Link href="/rooms" className="text-ink hover:text-gold transition-colors font-medium border-b border-ink hover:border-gold pb-1">{t('rooms_view_all')}</Link>
         </div>
 
         <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 px-6 md:px-12 pb-10 w-full max-w-[100rem] mx-auto">
@@ -116,52 +118,45 @@ export default async function Home() {
               </div>
               <div className="p-8 flex flex-col flex-grow">
                 <h3 className="font-playfair text-2xl text-ink font-medium mb-2">{room.name}</h3>
-                <p className="text-xl font-medium text-gold mb-4">
-                  <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">/ Night</span>
+                <p className="text-xl font-medium text-gold mb-4" dir="ltr">
+                  <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
                 </p>
                 <p className="text-ink/70 font-light text-sm line-clamp-2 mb-8 flex-grow">{room.description}</p>
-                <Link href={`/rooms/${room.id}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">View Room</Link>
+                <Link href={`/rooms/${room.id}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none">{t('rooms_view')}</Link>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* DYNAMIC "THINGS TO DO" SLIDER (Premium Dark Cards, Shorter Height) */}
+      {/* THINGS TO DO SLIDER */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ivory overflow-hidden">
         <div className="max-w-[90rem] mx-auto mb-16">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
             <div>
               <div className="inline-flex items-center gap-4 mb-4">
                 <span className="h-[1px] w-8 bg-gold"></span>
-                <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">Local Guide</span>
+                <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">{t('things_label')}</span>
               </div>
-              <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">Things To Do Nearby</h2>
+              <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">{t('things_title')}</h2>
             </div>
             <p className="text-ink/60 font-light text-base md:text-lg max-w-md leading-relaxed">
-              Curated experiences, sacred sites, and local favorites just steps away from your premium accommodation.
+              {t('things_desc')}
             </p>
           </div>
         </div>
 
         <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 px-6 md:px-12 pb-10 w-full max-w-[100rem] mx-auto">
-          {thingsToDo?.map((item: any, index: number) => (
+          {thingsToDo?.map((item: any) => (
             <div key={item.id} className="snap-start shrink-0 w-[85vw] sm:w-[400px] group relative h-64 md:h-[320px] overflow-hidden rounded-none shadow-xl cursor-pointer border border-white/10">
-              {/* Image */}
               <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" />
-              
-              {/* Premium Dark Gradient Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-transparent opacity-90 transition-opacity duration-500 group-hover:opacity-100"></div>
-
-              {/* Top Right Tag */}
               <div className="absolute top-4 right-4 bg-gold text-white px-3 py-1 text-xs uppercase tracking-widest font-medium shadow-sm z-10 rounded-none">
-                 {item.tag}
+                {item.tag}
               </div>
-
-              {/* Bottom Text Details */}
               <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end z-10 pointer-events-none">
-                 <h3 className="font-playfair text-2xl font-medium text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">{item.title}</h3>
-                 <p className="text-gold text-xs font-medium uppercase tracking-wider transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-75">{item.distance}</p>
+                <h3 className="font-playfair text-2xl font-medium text-white mb-1 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-out">{item.title}</h3>
+                <p className="text-gold text-xs font-medium uppercase tracking-wider transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out delay-75">{item.distance}</p>
               </div>
             </div>
           ))}
@@ -172,83 +167,72 @@ export default async function Home() {
       <section className="py-16 md:py-24 px-6 md:px-12 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 md:mb-16">
-            <h2 className="font-playfair text-3xl md:text-4xl text-ink font-semibold mb-4">The Smarter Alternative</h2>
-            <p className="text-ink/60 font-light text-base md:text-lg max-w-xl mx-auto">Why paying a middleman doesn't make sense for your trip.</p>
+            <h2 className="font-playfair text-3xl md:text-4xl text-ink font-semibold mb-4">{t('compare_title')}</h2>
+            <p className="text-ink/60 font-light text-base md:text-lg max-w-xl mx-auto">{t('compare_sub')}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-200 overflow-hidden shadow-xl md:shadow-2xl rounded-none">
             <div className="bg-ivory p-8 sm:p-10 md:p-14 border-b md:border-b-0 md:border-r border-gray-200">
-              <h3 className="font-playfair text-xl md:text-2xl text-ink/50 mb-6 md:mb-8 border-b border-gray-200 pb-4">The Platform Way</h3>
+              <h3 className="font-playfair text-xl md:text-2xl text-ink/50 mb-6 md:mb-8 border-b border-gray-200 pb-4">{t('platform_way')}</h3>
               <ul className="space-y-6">
-                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">Hidden Service Fees</strong><span className="text-xs md:text-sm font-light">Up to 20% added to your final bill at checkout.</span></div></li>
-                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">Inconsistent Standards</strong><span className="text-xs md:text-sm font-light">Varying hosts mean unpredictable hygiene and comfort.</span></div></li>
-                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">Inflated Seasonal Pricing</strong><span className="text-xs md:text-sm font-light">Algorithms double the price during peak seasons.</span></div></li>
+                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">{t('platform1_title')}</strong><span className="text-xs md:text-sm font-light">{t('platform1_desc')}</span></div></li>
+                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">{t('platform2_title')}</strong><span className="text-xs md:text-sm font-light">{t('platform2_desc')}</span></div></li>
+                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">{t('platform3_title')}</strong><span className="text-xs md:text-sm font-light">{t('platform3_desc')}</span></div></li>
               </ul>
             </div>
             <div className="bg-ink p-8 sm:p-10 md:p-14">
-              <h3 className="font-playfair text-xl md:text-2xl text-gold mb-6 md:mb-8 border-b border-ink/50 pb-4">The Direct Way</h3>
+              <h3 className="font-playfair text-xl md:text-2xl text-gold mb-6 md:mb-8 border-b border-ink/50 pb-4">{t('direct_way')}</h3>
               <ul className="space-y-6">
-                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">Transparent Pricing</strong><span className="text-xs md:text-sm font-light text-ivory/70">What you see is exactly what you pay. Zero fees.</span></div></li>
-                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">Guaranteed Premium Standards</strong><span className="text-xs md:text-sm font-light text-ivory/70">Professionally managed to luxury boutique levels.</span></div></li>
-                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">Seamless Hospitality</strong><span className="text-xs md:text-sm font-light text-ivory/70">A dedicated concierge team, not a remote host.</span></div></li>
+                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">{t('direct1_title')}</strong><span className="text-xs md:text-sm font-light text-ivory/70">{t('direct1_desc')}</span></div></li>
+                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">{t('direct2_title')}</strong><span className="text-xs md:text-sm font-light text-ivory/70">{t('direct2_desc')}</span></div></li>
+                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">{t('direct3_title')}</strong><span className="text-xs md:text-sm font-light text-ivory/70">{t('direct3_desc')}</span></div></li>
               </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TOURS BANNER SECTION (Restored Premium Full-Height Dark Cards) */}
+      {/* TOURS SECTION */}
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
             <div className="inline-flex items-center gap-4 mb-6">
               <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
-              <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs uppercase font-medium">Beyond The Accommodation</span>
+              <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs uppercase font-medium">{t('tours_label')}</span>
               <span className="h-[1px] w-8 md:w-12 bg-gold"></span>
             </div>
-            <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 leading-tight text-white">Curated Madinah Experiences</h2>
-            <p className="text-ivory/60 font-light text-lg md:text-xl leading-relaxed">
-              Your spiritual journey doesn't end at your room. Journey through the Prophet's city with our deeply knowledgeable local guides for an unforgettable experience.
-            </p>
+            <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 leading-tight text-white">{t('tours_title')}</h2>
+            <p className="text-ivory/60 font-light text-lg md:text-xl leading-relaxed">{t('tours_desc')}</p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-            {/* LIMITED TO 2 TOURS USING .slice(0, 2) WITH PREMIUM DARK OVERLAY */}
             {tours?.slice(0, 2).map((tour: any) => (
               <div key={tour.id} className="group relative h-[500px] md:h-[600px] w-full overflow-hidden rounded-none cursor-pointer border border-white/10 shadow-2xl">
                 <img src={tour.images[0]} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt={tour.name} />
-                
-                {/* Gradient overlay to make text readable */}
                 <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-transparent opacity-90 transition-opacity duration-500"></div>
-                
-                {/* Top Badge */}
                 <div className="absolute top-6 right-6 bg-gold text-white px-4 py-2 text-xs uppercase tracking-widest font-medium shadow-sm rounded-none">
                   {tour.duration}
                 </div>
-
                 <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-end z-10">
                   <div className="flex justify-between items-end mb-4">
                     <h3 className="font-playfair text-3xl md:text-4xl text-white font-medium">{tour.name}</h3>
                   </div>
-                  
                   <div className="flex items-center gap-3 mb-4">
-                     <span className="text-2xl font-medium text-gold"><PriceDisplay amountGBP={tour.price} /></span>
-                     <span className="text-white/50 text-xs tracking-wider uppercase font-semibold">Per group ({tour.group_size})</span>
+                    <span className="text-2xl font-medium text-gold" dir="ltr"><PriceDisplay amountGBP={tour.price} /></span>
+                    <span className="text-white/50 text-xs tracking-wider uppercase font-semibold">{t('per_group')} ({tour.group_size})</span>
                   </div>
-                  
                   <p className="text-white/70 font-light mb-8 text-base md:text-lg leading-relaxed line-clamp-3">{tour.description}</p>
-                  
                   <Link href="/tours" className="w-full sm:w-max text-center border border-white/30 text-white py-4 px-10 font-medium hover:bg-gold hover:border-gold transition-colors duration-300 rounded-none backdrop-blur-sm">
-                    View Details
+                    {t('view_details')}
                   </Link>
                 </div>
               </div>
             ))}
           </div>
-          
+
           <div className="mt-16 text-center">
-             <Link href="/tours" className="inline-flex items-center gap-2 text-gold hover:text-white transition-colors font-medium border-b border-gold hover:border-white pb-1">
-                 View all tour packages &rarr;
-             </Link>
+            <Link href="/tours" className="inline-flex items-center gap-2 text-gold hover:text-white transition-colors font-medium border-b border-gold hover:border-white pb-1">
+              {t('view_all_tours')}
+            </Link>
           </div>
         </div>
       </section>

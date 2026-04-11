@@ -6,6 +6,7 @@ import ImageGallery from '../../../components/ImageGallery';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import { createClient } from '../../../lib/supabase/server';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,7 +35,9 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
   const supabase = await createClient();
   const { data: room, error } = await supabase.from('rooms').select('*').eq('id', resolvedParams.id).single();
 
-  if (error || !room) notFound(); 
+  if (error || !room) notFound();
+
+  const t = await getTranslations('RoomDetail');
 
   return (
     <main className="pt-20 bg-ivory">
@@ -46,12 +49,12 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
 
       <section className="pt-16 md:pt-24 pb-12 px-6 md:px-12 max-w-[90rem] mx-auto text-ink">
         <Link href="/rooms" className="inline-flex items-center gap-2 opacity-50 hover:text-gold transition-colors mb-6 text-sm font-medium uppercase tracking-wider">
-          &larr; Back to Rooms
+          {t('back')}
         </Link>
         <h1 className="font-playfair text-4xl md:text-6xl font-medium mb-4">{room.name}</h1>
         <div className="flex items-center gap-4 opacity-60">
           <span className="flex items-center gap-1">
-            <svg className="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> 
+            <svg className="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
             {room.capacity}
           </span>
         </div>
@@ -61,51 +64,50 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
 
       <section className="px-6 md:px-12 max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-16 mb-24">
         <div className="lg:col-span-2 text-ink">
-          
-          <h2 className="font-playfair text-3xl font-medium mb-6">About this space</h2>
+
+          <h2 className="font-playfair text-3xl font-medium mb-6">{t('about_space')}</h2>
           <p className="font-light leading-relaxed mb-10 text-lg opacity-80">{room.description}</p>
 
-          <h3 className="font-playfair text-2xl font-medium mb-6 border-b border-gray-200 pb-4">Room Amenities</h3>
+          <h3 className="font-playfair text-2xl font-medium mb-6 border-b border-gray-200 pb-4">{t('amenities')}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
             {room.amenities.map((amenity: string, index: number) => (
               <div key={index} className="flex items-center gap-3 font-light opacity-80">
-                <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 13l4 4L19 7"></path></svg> 
+                <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 13l4 4L19 7"></path></svg>
                 {amenity}
               </div>
             ))}
           </div>
 
-          <h3 className="font-playfair text-2xl font-medium mb-6 border-b border-gray-200 pb-4 mt-12">Location & Connectivity</h3>
+          <h3 className="font-playfair text-2xl font-medium mb-6 border-b border-gray-200 pb-4 mt-12">{t('location')}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8 mb-8">
             <div className="flex items-center gap-3 font-light opacity-80">
-                <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                Central Madinah Location
+              <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+              {t('location1')}
             </div>
             <div className="flex items-center gap-3 font-light opacity-80">
-                <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                Short transit to Al-Masjid an-Nabawi
+              <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              {t('location2')}
             </div>
             <div className="flex items-center gap-3 font-light opacity-80">
-                <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                Access to Sacred Sites
+              <svg className="w-5 h-5 text-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+              {t('location3')}
             </div>
           </div>
-          
-          {/* UPDATED: EXACT GOOGLE MAPS LINK PROVIDED */}
-          <a 
-            href="https://www.google.com/maps/place/24%C2%B028'02.9%22N+39%C2%B033'51.6%22E/@24.4692505,39.5621593,1395m/data=!3m1!1e3!4m4!3m3!8m2!3d24.4674664!4d39.5643387?hl=en&entry=ttu&g_ep=EgoyMDI2MDMyMy4xIKXMDSoASAFQAw%3D%3D" 
-            target="_blank" 
-            rel="noreferrer" 
+
+          <a
+            href="https://www.google.com/maps/place/24%C2%B028'02.9%22N+39%C2%B033'51.6%22E/@24.4692505,39.5621593,1395m/data=!3m1!1e3!4m4!3m3!8m2!3d24.4674664!4d39.5643387?hl=en&entry=ttu&g_ep=EgoyMDI2MDMyMy4xIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center justify-center gap-2 border border-ink text-ink px-8 py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none shadow-sm"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-            View on Google Maps
+            {t('map')}
           </a>
 
         </div>
 
         <div className="relative">
-          <BookingWidget room={{...room, pricePerNight: room.price_per_night}} />
+          <BookingWidget room={{ ...room, pricePerNight: room.price_per_night }} />
         </div>
       </section>
 

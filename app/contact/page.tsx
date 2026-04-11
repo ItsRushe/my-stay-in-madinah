@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: "Contact & Book Direct — Madinah Accommodation",
@@ -15,7 +16,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const t = await getTranslations('Contact');
+
   return (
     <main className="bg-ivory min-h-screen">
       <Navbar activePage="contact" />
@@ -35,12 +38,12 @@ export default function ContactPage() {
 
       {/* HERO */}
       <section className="bg-ink text-ivory pt-36 pb-24 px-6 md:px-12 text-center">
-        <p className="text-gold text-xs tracking-[0.25em] uppercase font-medium mb-4">Book Direct &amp; Save</p>
+        <p className="text-gold text-xs tracking-[0.25em] uppercase font-medium mb-4">{t('hero_label')}</p>
         <h1 className="font-playfair text-5xl md:text-7xl font-medium leading-tight max-w-3xl mx-auto">
-          Let&apos;s Plan<br />Your Stay
+          {t('hero_title')}
         </h1>
         <p className="mt-6 text-ivory/60 font-light text-lg max-w-xl mx-auto leading-relaxed">
-          Reach out directly and skip platform fees entirely. Our concierge team responds promptly — usually within the hour.
+          {t('hero_sub')}
         </p>
       </section>
 
@@ -54,8 +57,8 @@ export default function ContactPage() {
         <div className="lg:col-span-2 space-y-6 lg:sticky lg:top-28">
 
           <div>
-            <h2 className="font-playfair text-3xl font-medium text-ink mb-2">Get in Touch</h2>
-            <p className="text-ink/50 font-light text-sm leading-relaxed">Choose the channel that suits you best. All inquiries receive a personal response.</p>
+            <h2 className="font-playfair text-3xl font-medium text-ink mb-2">{t('get_in_touch')}</h2>
+            <p className="text-ink/50 font-light text-sm leading-relaxed">{t('get_in_touch_sub')}</p>
           </div>
 
           {/* WhatsApp Card */}
@@ -72,11 +75,11 @@ export default function ContactPage() {
             </div>
             <div className="min-w-0">
               <div className="flex items-center justify-between">
-                <h3 className="font-medium text-ink text-sm tracking-wide uppercase">WhatsApp</h3>
-                <span className="text-[#25D366] text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">Message Now →</span>
+                <h3 className="font-medium text-ink text-sm tracking-wide uppercase">{t('whatsapp_title')}</h3>
+                <span className="text-[#25D366] text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">{t('whatsapp_cta')}</span>
               </div>
-              <p className="text-ink/60 font-light text-sm mt-1">+966 50 815 1408</p>
-              <p className="text-ink/40 text-xs mt-1">Fastest response · Usually within 1 hour</p>
+              <p className="text-ink/60 font-light text-sm mt-1" dir="ltr">{t('whatsapp_phone')}</p>
+              <p className="text-ink/40 text-xs mt-1">{t('whatsapp_sub')}</p>
             </div>
           </a>
 
@@ -86,7 +89,6 @@ export default function ContactPage() {
             className="group flex items-start gap-5 bg-white border border-gray-100 p-6 shadow-sm hover:shadow-md hover:border-gold/30 transition-all duration-300"
           >
             <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center flex-shrink-0 text-gold group-hover:bg-gold/20 transition-colors">
-              {/* Concierge bell icon */}
               <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
                 <path d="M13.73 21a2 2 0 0 1-3.46 0" />
@@ -94,11 +96,11 @@ export default function ContactPage() {
             </div>
             <div className="min-w-0">
               <div className="flex items-center justify-between">
-                <h3 className="font-medium text-ink text-sm tracking-wide uppercase">Email Concierge</h3>
-                <span className="text-gold text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">Send Email →</span>
+                <h3 className="font-medium text-ink text-sm tracking-wide uppercase">{t('email_title')}</h3>
+                <span className="text-gold text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">{t('email_cta')}</span>
               </div>
-              <p className="text-ink/60 font-light text-sm mt-1 break-all">info@mystayinmadinah.com</p>
-              <p className="text-ink/40 text-xs mt-1">For detailed inquiries &amp; special requests</p>
+              <p className="text-ink/60 font-light text-sm mt-1 break-all" dir="ltr">{t('email_address')}</p>
+              <p className="text-ink/40 text-xs mt-1">{t('email_sub')}</p>
             </div>
           </a>
 
@@ -111,25 +113,23 @@ export default function ContactPage() {
               </svg>
             </div>
             <div>
-              <h3 className="font-medium text-ink text-sm tracking-wide uppercase">Location</h3>
-              <p className="text-ink/60 font-light text-sm mt-1">Al-Aziziyyah District</p>
-              <p className="text-ink/40 text-xs mt-1">Madinah, Saudi Arabia</p>
+              <h3 className="font-medium text-ink text-sm tracking-wide uppercase">{t('location_title')}</h3>
+              <p className="text-ink/60 font-light text-sm mt-1">{t('location_district')}</p>
+              <p className="text-ink/40 text-xs mt-1">{t('location_city')}</p>
             </div>
           </div>
 
           {/* Guarantee badge */}
           <div className="border-l-2 border-gold pl-5 py-1">
-            <p className="text-ink/70 text-sm font-light leading-relaxed">
-              Book direct and we guarantee the <span className="text-gold font-medium">lowest available rate</span> — no platform surcharges, no hidden fees.
-            </p>
+            <p className="text-ink/70 text-sm font-light leading-relaxed">{t('guarantee')}</p>
           </div>
         </div>
 
         {/* RIGHT — INQUIRY FORM */}
         <div className="lg:col-span-3 bg-white border border-gray-100 shadow-sm p-8 md:p-12">
           <div className="mb-10">
-            <h2 className="font-playfair text-3xl font-medium text-ink">Send an Inquiry</h2>
-            <p className="text-ink/50 font-light text-sm mt-2">Fill in the form below and we&apos;ll come back to you with a personalised quote.</p>
+            <h2 className="font-playfair text-3xl font-medium text-ink">{t('form_title')}</h2>
+            <p className="text-ink/50 font-light text-sm mt-2">{t('form_sub')}</p>
           </div>
 
           <form action="https://api.web3forms.com/submit" method="POST" className="space-y-8">
@@ -138,55 +138,58 @@ export default function ContactPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div className="group">
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">Full Name</label>
+                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_name')}</label>
                 <input
                   type="text"
                   name="name"
                   required
-                  placeholder="e.g. Omar Abdullah"
+                  placeholder={t('form_name_placeholder')}
                   className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light placeholder-gray-300 text-ink text-sm"
                 />
               </div>
               <div className="group">
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">Email Address</label>
+                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_email')}</label>
                 <input
                   type="email"
                   name="email"
                   required
-                  placeholder="you@example.com"
+                  placeholder={t('form_email_placeholder')}
                   className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light placeholder-gray-300 text-ink text-sm"
+                  dir="ltr"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               <div>
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">Check-in</label>
+                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_checkin')}</label>
                 <input
                   type="date"
                   name="check_in"
                   required
                   className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light text-ink/60 text-sm"
+                  dir="ltr"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">Check-out</label>
+                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_checkout')}</label>
                 <input
                   type="date"
                   name="check_out"
                   required
                   className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light text-ink/60 text-sm"
+                  dir="ltr"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">Message or Special Requests</label>
+              <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_message')}</label>
               <textarea
                 name="message"
                 rows={4}
                 required
-                placeholder="Let us know how we can make your visit perfect..."
+                placeholder={t('form_message_placeholder')}
                 className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light placeholder-gray-300 text-ink text-sm resize-none"
               />
             </div>
@@ -197,7 +200,7 @@ export default function ContactPage() {
               type="submit"
               className="w-full bg-ink text-ivory py-4 text-sm font-medium tracking-widest uppercase hover:bg-gold transition-colors duration-300"
             >
-              Request Best Direct Rate
+              {t('form_submit')}
             </button>
           </form>
         </div>

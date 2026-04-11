@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import Script from "next/script";
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getMessages } from 'next-intl/server';
 import { CurrencyProvider } from "../components/CurrencyProvider";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://mystayinmadinah.com";
@@ -92,18 +93,22 @@ const organizationSchema = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+  const isArabic = locale === 'ar';
+
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang={locale} dir={isArabic ? 'rtl' : 'ltr'} className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
           rel="stylesheet"
         />
         <script
@@ -113,24 +118,11 @@ export default function RootLayout({
       </head>
 
       <body suppressHydrationWarning className="font-jost bg-ivory text-ink antialiased selection:bg-gold selection:text-white">
-        <div id="google_translate_element"></div>
-        <Script id="google-translate-init" strategy="beforeInteractive">
-          {`
-            function googleTranslateElementInit() {
-              new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,ar,ru',
-                autoDisplay: false
-              }, 'google_translate_element');
-            }
-          `}
-        </Script>
-        <Script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" strategy="afterInteractive" />
-
-        <CurrencyProvider>
-          {children}
-        </CurrencyProvider>
-
+        <NextIntlClientProvider messages={messages}>
+          <CurrencyProvider>
+            {children}
+          </CurrencyProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
