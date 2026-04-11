@@ -21,7 +21,6 @@ export default async function Home() {
   const supabase = await createClient();
   const { data: rooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
   const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
-  const { data: thingsToDo } = await supabase.from('things_to_do').select('*').order('created_at', { ascending: true });
 
   const t = await getTranslations('Home');
   const locale = await getLocale();
@@ -124,7 +123,7 @@ export default async function Home() {
               const displayCapacity = isAr && arData ? arData.capacity : room.capacity;
 
               return (
-                <div key={room.id} className="snap-start shrink-0 w-[82vw] sm:w-[360px] xl:w-[420px] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none">
+                <div key={room.id} className="snap-start shrink-0 w-[82vw] sm:w-[44vw] lg:w-[30.5vw] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none">
                   <div className="h-56 sm:h-64 w-full overflow-hidden relative">
                     <img src={room.images[0]} alt={displayName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
@@ -146,35 +145,47 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28 px-6 md:px-12 bg-ivory">
+      <section className="py-20 md:py-28 px-6 md:px-12 bg-ink">
         <div className="max-w-[90rem] mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12 md:mb-14">
-            <div>
-              <div className="inline-flex items-center gap-4 mb-4">
-                <span className="h-[1px] w-8 bg-gold"></span>
-                <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">{t('things_label')}</span>
-              </div>
-              <h2 className="font-playfair text-4xl md:text-5xl text-ink font-semibold">{t('things_title')}</h2>
+          <div className="text-center mb-14 md:mb-20">
+            <div className="inline-flex items-center gap-4 mb-5">
+              <span className="h-[1px] w-8 bg-gold"></span>
+              <span className="text-gold tracking-[0.2em] text-xs uppercase font-medium">{t('things_label')}</span>
+              <span className="h-[1px] w-8 bg-gold"></span>
             </div>
-            <p className="text-ink/60 font-light text-base md:text-lg max-w-md leading-relaxed">
-              {t('things_desc')}
-            </p>
+            <h2 className="font-playfair text-4xl md:text-5xl text-white font-semibold">{t('things_title')}</h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {thingsToDo?.slice(0, 3).map((item: any) => (
-              <div key={item.id} className="group relative h-[260px] md:h-[320px] overflow-hidden rounded-none shadow-lg cursor-pointer">
-                <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/40 to-transparent"></div>
-                <div className="absolute top-4 end-4 bg-gold text-white px-3 py-1 text-xs uppercase tracking-widest font-medium z-10 rounded-none">
-                  {item.tag}
-                </div>
-                <div className="absolute inset-0 p-6 flex flex-col justify-end z-10">
-                  <h3 className="font-playfair text-xl md:text-2xl font-medium text-white mb-1">{item.title}</h3>
-                  <p className="text-gold text-xs font-medium uppercase tracking-wider opacity-90">{item.distance}</p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/10">
+            <div className="flex flex-col items-center text-center px-8 md:px-12 py-10 md:py-0 group">
+              <div className="w-16 h-16 rounded-full border border-gold/40 flex items-center justify-center mb-6 group-hover:border-gold transition-colors duration-300">
+                <svg className="w-7 h-7 text-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 21v-3.75a3.75 3.75 0 0 0-3.75-3.75h-1.5A3.75 3.75 0 0 0 6 17.25V21M3 16.5v.75A2.25 2.25 0 0 0 5.25 19.5h13.5A2.25 2.25 0 0 0 21 17.25v-.75" />
+                </svg>
               </div>
-            ))}
+              <h3 className="font-playfair text-xl md:text-2xl text-white font-medium mb-3">{t('amenity1_title')}</h3>
+              <p className="text-ivory/50 font-light text-sm md:text-base leading-relaxed">{t('amenity1_desc')}</p>
+            </div>
+
+            <div className="flex flex-col items-center text-center px-8 md:px-12 py-10 md:py-0 group">
+              <div className="w-16 h-16 rounded-full border border-gold/40 flex items-center justify-center mb-6 group-hover:border-gold transition-colors duration-300">
+                <svg className="w-7 h-7 text-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
+                </svg>
+              </div>
+              <h3 className="font-playfair text-xl md:text-2xl text-white font-medium mb-3">{t('amenity2_title')}</h3>
+              <p className="text-ivory/50 font-light text-sm md:text-base leading-relaxed">{t('amenity2_desc')}</p>
+            </div>
+
+            <div className="flex flex-col items-center text-center px-8 md:px-12 py-10 md:py-0 group">
+              <div className="w-16 h-16 rounded-full border border-gold/40 flex items-center justify-center mb-6 group-hover:border-gold transition-colors duration-300">
+                <svg className="w-7 h-7 text-gold" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 1-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+                </svg>
+              </div>
+              <h3 className="font-playfair text-xl md:text-2xl text-white font-medium mb-3">{t('amenity3_title')}</h3>
+              <p className="text-ivory/50 font-light text-sm md:text-base leading-relaxed">{t('amenity3_desc')}</p>
+            </div>
           </div>
         </div>
       </section>
