@@ -100,13 +100,13 @@ export default function Navbar({ activePage = "home" }: { activePage?: string })
   }
 
   return (
-    <nav dir="ltr" className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
+    <nav className="fixed top-0 w-full z-[100] bg-ivory/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
       <div className="max-w-[90rem] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between gap-8">
 
         {/* LEFT: Logo */}
         <Link href="/" translate="no" className="flex items-center gap-4 group notranslate shrink-0">
           <img src="/icon-logo.png" alt="My Stay in Madinah Key Icon" className="h-8 md:h-11 w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-          <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden xl:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap">
+          <span className="text-gold font-jost text-lg md:text-xl font-medium tracking-[0.15em] uppercase hidden xl:block transition-opacity duration-500 group-hover:opacity-80 whitespace-nowrap notranslate" translate="no">
             My Stay In Madinah
           </span>
         </Link>

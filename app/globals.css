@@ -72,28 +72,31 @@ html[dir="rtl"] .notranslate span,
 html[dir="rtl"] .notranslate div,
 html[dir="rtl"] .notranslate a {
   font-family: 'Jost', sans-serif !important;
+  font-weight: inherit !important;
   direction: ltr !important;
   unicode-bidi: isolate !important;
 }
 
-/* Keep Jost weight on logo brand text */
+/* Keep Jost weight on logo brand text — catches the font-medium class directly */
 html[dir="rtl"] .font-jost {
   font-family: 'Jost', sans-serif !important;
-  font-weight: inherit !important;
+  font-weight: 500 !important;
+  letter-spacing: inherit !important;
 }
 
-/* Prevent Google Translate <font> tags from messing up weight/family */
+/* Prevent Google Translate <font> tags from altering weight/family
+   AND stop the bidi algorithm from reversing brackets inside translated text */
 html[dir="rtl"] font {
   font-family: inherit !important;
   font-weight: inherit !important;
+  unicode-bidi: plaintext !important;
 }
 
-/* Keep numbers, prices, and bracket-wrapped content LTR */
+/* Keep prices and explicitly protected content LTR */
 html[dir="rtl"] [translate="no"],
 html[dir="rtl"] .notranslate {
   direction: ltr !important;
   unicode-bidi: isolate !important;
-  text-align: left !important;
 }
 
 /* Force text alignments to flip in Arabic */
