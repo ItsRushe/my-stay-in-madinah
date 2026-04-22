@@ -127,7 +127,7 @@ export default async function Home() {
 
               return (
                 <div key={room.id} className={`snap-start shrink-0 w-[82vw] sm:w-[44vw] lg:w-[30.5vw] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none ${!bookable ? 'opacity-70' : ''}`}>
-                  <div className="h-56 sm:h-64 w-full overflow-hidden relative">
+                  <Link href={`/rooms/${room.id}`} className="block h-56 sm:h-64 w-full overflow-hidden relative cursor-pointer">
                     <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${bookable ? 'group-hover:scale-105' : 'grayscale'}`} />
                     <div className="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     <div className="absolute top-4 end-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm rounded-none" dir="ltr">{displayCapacity}</div>
@@ -136,7 +136,7 @@ export default async function Home() {
                         Coming Soon
                       </div>
                     )}
-                  </div>
+                  </Link>
                   <div className="p-6 md:p-8 flex flex-col flex-grow">
                     <h3 className="font-playfair text-xl md:text-2xl text-ink font-medium mb-2">{displayName}</h3>
                     <p className={`text-lg md:text-xl font-medium mb-3 ${bookable ? 'text-gold' : 'text-ink/30'}`} dir="ltr">
