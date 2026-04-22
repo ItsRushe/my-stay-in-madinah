@@ -95,6 +95,8 @@ export async function startBookingCheckout(formData: {
   
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
+    billing_address_collection: 'required',
+    phone_number_collection: { enabled: true },
     line_items:[
       {
         price_data: {
