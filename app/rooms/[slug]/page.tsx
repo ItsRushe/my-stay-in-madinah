@@ -8,11 +8,13 @@ import Footer from '../../../components/Footer';
 import { createClient } from '../../../lib/supabase/server';
 import { getTranslations } from 'next-intl/server';
 import { isRoomBookable } from '../../../lib/bookable';
+import { roomSlugToId } from '../../../lib/roomSlug';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
-  const { id } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const id = roomSlugToId(slug);
   const supabase = await createClient();
   const { data: room } = await supabase.from('rooms').select('name, description, images').eq('id', id).single();
 
@@ -21,20 +23,21 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: `${room.name} — Book Direct in Madinah`,
     description: `${room.description?.slice(0, 140)} Book directly with no platform fees and get the guaranteed best rate.`,
-    alternates: { canonical: `/rooms/${id}` },
+    alternates: { canonical: `/rooms/${slug}` },
     openGraph: {
       title: `${room.name} | My Stay in Madinah`,
       description: room.description?.slice(0, 160),
-      url: `/rooms/${id}`,
+      url: `/rooms/${slug}`,
       images: room.images?.[0] ? [{ url: room.images[0], alt: room.name }] : [],
     },
   };
 }
 
-export default async function RoomPage({ params }: { params: Promise<{ id: string }> }) {
-  const resolvedParams = await params;
+export default async function RoomPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const id = roomSlugToId(slug);
   const supabase = await createClient();
-  const { data: room, error } = await supabase.from('rooms').select('*').eq('id', resolvedParams.id).single();
+  const { data: room, error } = await supabase.from('rooms').select('*').eq('id', id).single();
 
   if (error || !room) notFound();
 

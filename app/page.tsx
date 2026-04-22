@@ -8,6 +8,7 @@ import { getTranslations, getLocale } from 'next-intl/server';
 import { roomTranslationsAr } from "../lib/translations/rooms";
 import { tourTranslationsAr } from "../lib/translations/tours";
 import { isRoomBookable } from "../lib/bookable";
+import { roomIdToSlug } from "../lib/roomSlug";
 
 export const dynamic = 'force-dynamic';
 
@@ -127,7 +128,7 @@ export default async function Home() {
 
               return (
                 <div key={room.id} className={`snap-start shrink-0 w-[82vw] sm:w-[44vw] lg:w-[30.5vw] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none ${!bookable ? 'opacity-70' : ''}`}>
-                  <Link href={`/rooms/${room.id}`} className="block h-56 sm:h-64 w-full overflow-hidden relative cursor-pointer">
+                  <Link href={`/rooms/${roomIdToSlug(room.id)}`} className="block h-56 sm:h-64 w-full overflow-hidden relative cursor-pointer">
                     <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${bookable ? 'group-hover:scale-105' : 'grayscale'}`} />
                     <div className="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     <div className="absolute top-4 end-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm rounded-none" dir="ltr">{displayCapacity}</div>
@@ -144,7 +145,7 @@ export default async function Home() {
                     </p>
                     <p className="text-ink/70 font-light text-sm line-clamp-2 mb-6 flex-grow">{displayDesc}</p>
                     {bookable ? (
-                      <Link href={`/rooms/${room.id}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none text-sm tracking-wide">{t('rooms_view')}</Link>
+                      <Link href={`/rooms/${roomIdToSlug(room.id)}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none text-sm tracking-wide">{t('rooms_view')}</Link>
                     ) : (
                       <div className="w-full flex items-center justify-center gap-2 border border-gray-200 bg-gray-50 text-gray-400 py-3 rounded-none text-sm cursor-default select-none">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>

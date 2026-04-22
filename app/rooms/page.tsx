@@ -7,6 +7,7 @@ import { createClient } from "../../lib/supabase/server";
 import { getTranslations, getLocale } from 'next-intl/server';
 import { roomTranslationsAr } from "../../lib/translations/rooms";
 import { isRoomBookable } from "../../lib/bookable";
+import { roomIdToSlug } from "../../lib/roomSlug";
 
 export const dynamic = 'force-dynamic';
 
@@ -56,7 +57,7 @@ export default async function RoomsPage() {
 
           return (
             <div key={room.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group ${!bookable ? 'opacity-70' : ''}`}>
-              <Link href={`/rooms/${room.id}`} className={`w-full h-[300px] md:h-[450px] rounded-none overflow-hidden relative block ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
+              <Link href={`/rooms/${roomIdToSlug(room.id)}`} className={`w-full h-[300px] md:h-[450px] rounded-none overflow-hidden relative block ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
                 <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${bookable ? 'group-hover:scale-105' : 'grayscale'}`} />
                 <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors duration-500"></div>
                 {!bookable && (
@@ -81,7 +82,7 @@ export default async function RoomsPage() {
                   ))}
                 </ul>
                 {bookable ? (
-                  <Link href={`/rooms/${room.id}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
+                  <Link href={`/rooms/${roomIdToSlug(room.id)}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
                     {t('view_details')}
                   </Link>
                 ) : (

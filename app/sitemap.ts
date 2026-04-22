@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { createClient } from "../lib/supabase/server";
+import { roomIdToSlug } from "../lib/roomSlug";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://mystayinmadinah.com";
 
@@ -10,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: tours } = await supabase.from("tours").select("id, updated_at");
 
   const roomUrls: MetadataRoute.Sitemap = (rooms ?? []).map((room) => ({
-    url: `${BASE_URL}/rooms/${room.id}`,
+    url: `${BASE_URL}/rooms/${roomIdToSlug(room.id)}`,
     lastModified: room.updated_at ? new Date(room.updated_at) : new Date(),
     changeFrequency: "weekly",
     priority: 0.8,
