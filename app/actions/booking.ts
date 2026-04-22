@@ -1,12 +1,32 @@
 "use server";
 
 import { createClient } from "../../lib/supabase/server";
+import { createClient as createAdminClient } from "@supabase/supabase-js";
 import Stripe from "stripe";
 import { headers } from "next/headers";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-02-25.clover", 
 });
+
+const PENDING_BOOKING_TTL_MINUTES = 30;
+
+async function expireStalePendingBookings() {
+  try {
+    const admin = createAdminClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+    const cutoff = new Date(Date.now() - PENDING_BOOKING_TTL_MINUTES * 60 * 1000).toISOString();
+    await admin
+      .from('bookings')
+      .update({ status: 'cancelled' })
+      .eq('status', 'pending')
+      .lt('created_at', cutoff);
+  } catch (err) {
+    console.error('Failed to expire stale pending bookings:', err);
+  }
+}
 
 const RATES: Record<string, number> = {
   GBP: 1,
@@ -48,6 +68,8 @@ export async function startBookingCheckout(formData: {
   if (typeof formData.nights !== 'number' || formData.nights <= 0 || formData.nights > 60) {
     return { error: "Invalid booking duration." };
   }
+
+  await expireStalePendingBookings();
 
   const supabase = await createClient();
 
