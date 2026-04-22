@@ -67,6 +67,20 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
     return date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' });
   };
 
+  const formatDateShort = (dateStr: string, withYear = false) => {
+    if (!dateStr) return "";
+    const [year, month, day] = dateStr.split('-');
+    const date = new Date(Number(year), Number(month) - 1, Number(day));
+    return date.toLocaleDateString('en-GB', withYear
+      ? { day: 'numeric', month: 'long', year: 'numeric' }
+      : { day: 'numeric', month: 'long' });
+  };
+
+  const sameYear = checkIn && checkOut && checkIn.slice(0, 4) === checkOut.slice(0, 4);
+  const stayRange = checkIn && checkOut
+    ? `${formatDateShort(checkIn, !sameYear)} — ${formatDateShort(checkOut, true)}`
+    : "";
+
   // WhatsApp links
   const whatsappBase = "https://wa.me/966508151408";
   const conciergeMsg = orderNumber
@@ -97,9 +111,14 @@ export default async function GuestbookPage({ searchParams }: { searchParams: Pr
             <span className="h-[1px] w-8 md:w-12 bg-gold" />
           </div>
         )}
-        <h1 className="font-playfair text-4xl md:text-6xl text-white font-medium mb-6 notranslate" translate="no">
+        <h1 className="font-playfair text-4xl md:text-6xl text-white font-medium mb-4 notranslate" translate="no">
           {greeting}
         </h1>
+        {stayRange && (
+          <p className="text-gold tracking-[0.15em] text-xs md:text-sm uppercase font-medium mb-6 notranslate" translate="no">
+            {stayRange}
+          </p>
+        )}
         <p className="text-ivory/60 font-light text-lg max-w-2xl mx-auto notranslate" translate="no">
           {subGreeting}
         </p>
