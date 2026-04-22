@@ -25,7 +25,8 @@ export const metadata: Metadata = {
 
 export default async function RoomsPage() {
   const supabase = await createClient();
-  const { data: rooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
+  const { data: rawRooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
+  const rooms = rawRooms?.sort((a, b) => (isRoomBookable(b.id) ? 1 : 0) - (isRoomBookable(a.id) ? 1 : 0));
   const t = await getTranslations('Rooms');
   const locale = await getLocale();
   const isAr = locale === 'ar';

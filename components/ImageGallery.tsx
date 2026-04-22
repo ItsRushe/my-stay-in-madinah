@@ -31,17 +31,26 @@ export default function ImageGallery({ images }: { images: string[] }) {
 
   if (!images || images.length === 0) return null;
 
-  const topImages = images.slice(0, 3);
-  const bottomImages = images.slice(3);
+  // Layout strategy that always feels balanced:
+  //  count <= 3 → top section only (hero + up to 2 stacked right)
+  //  count == 4 → top: hero + 1 right (full height), bottom: 2 cols
+  //  count >= 5 → top: hero + 2 stacked right, bottom: rest in equal cols
+  const count = images.length;
+  const stackedRight = count >= 5 ? 2 : count >= 3 && count !== 4 ? 2 : count >= 2 ? 1 : 0;
+  const topCount = 1 + stackedRight;
+  const bottomImages = images.slice(topCount);
+  const bottomCols = bottomImages.length === 1 ? 'grid-cols-1' :
+                     bottomImages.length === 2 ? 'grid-cols-2' :
+                     'grid-cols-2 sm:grid-cols-3';
 
   return (
     <>
       <section className="px-6 md:px-12 max-w-[90rem] mx-auto mb-20">
 
-        {/* Top row: hero + 2 stacked */}
+        {/* Top row: hero + stacked right column */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:h-[520px]">
           <div
-            className="md:col-span-2 overflow-hidden h-[260px] md:h-full cursor-zoom-in group"
+            className={`${stackedRight === 0 ? 'md:col-span-3' : 'md:col-span-2'} overflow-hidden h-[260px] md:h-full cursor-zoom-in group`}
             onClick={() => setLightboxIndex(0)}
           >
             <img
@@ -51,48 +60,33 @@ export default function ImageGallery({ images }: { images: string[] }) {
             />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-1 gap-3 md:h-full">
-            {topImages[1] && (
-              <div
-                className="overflow-hidden h-[160px] md:h-full cursor-zoom-in group"
-                onClick={() => setLightboxIndex(1)}
-              >
-                <img
-                  src={images[1]}
-                  alt="Room view"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                />
-              </div>
-            )}
-            {topImages[2] && (
-              <div
-                className="overflow-hidden h-[160px] md:h-full cursor-zoom-in group"
-                onClick={() => setLightboxIndex(2)}
-              >
-                <img
-                  src={images[2]}
-                  alt="Room view"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                />
-              </div>
-            )}
-          </div>
+          {stackedRight > 0 && (
+            <div className={`grid ${stackedRight === 2 ? 'grid-cols-2 md:grid-cols-1' : 'grid-cols-1'} gap-3 md:h-full`}>
+              {Array.from({ length: stackedRight }).map((_, i) => (
+                <div
+                  key={i}
+                  className={`overflow-hidden ${stackedRight === 2 ? 'h-[160px] md:h-full' : 'h-[260px] md:h-full'} cursor-zoom-in group`}
+                  onClick={() => setLightboxIndex(i + 1)}
+                >
+                  <img
+                    src={images[i + 1]}
+                    alt="Room view"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Bottom row: all remaining images in equal columns */}
+        {/* Bottom row: remaining images in equal columns */}
         {bottomImages.length > 0 && (
-          <div
-            className={`mt-3 grid gap-3 ${
-              bottomImages.length === 1 ? 'grid-cols-1' :
-              bottomImages.length === 2 ? 'grid-cols-2' :
-              'grid-cols-2 sm:grid-cols-3'
-            }`}
-          >
+          <div className={`mt-3 grid gap-3 ${bottomCols}`}>
             {bottomImages.map((img, i) => (
               <div
                 key={i}
                 className="overflow-hidden h-[200px] md:h-[280px] cursor-zoom-in group"
-                onClick={() => setLightboxIndex(i + 3)}
+                onClick={() => setLightboxIndex(i + topCount)}
               >
                 <img
                   src={img}
