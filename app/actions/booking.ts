@@ -35,7 +35,7 @@ export async function startBookingCheckout(formData: {
   const userLimit = rateLimitMap.get(ip);
   if (userLimit && now - userLimit.lastReset < RATE_LIMIT_WINDOW) {
     if (userLimit.count >= RATE_LIMIT_MAX) {
-      throw new Error("Too many booking attempts. Please wait a minute and try again.");
+      return { error: "Too many booking attempts. Please wait a minute and try again." };
     }
     userLimit.count++;
   } else {
@@ -43,10 +43,10 @@ export async function startBookingCheckout(formData: {
   }
 
   if (!formData.roomId || !formData.checkIn || !formData.checkOut || !formData.currency) {
-    throw new Error("Missing required booking details.");
+    return { error: "Missing required booking details." };
   }
   if (typeof formData.nights !== 'number' || formData.nights <= 0 || formData.nights > 60) {
-    throw new Error("Invalid booking duration.");
+    return { error: "Invalid booking duration." };
   }
 
   const supabase = await createClient();
@@ -57,7 +57,7 @@ export async function startBookingCheckout(formData: {
     .eq('id', formData.roomId)
     .single();
 
-  if (roomError || !realRoom) throw new Error("Room not found or no longer available.");
+  if (roomError || !realRoom) return { error: "Room not found or no longer available." };
 
   const activeRate = RATES[formData.currency.toUpperCase()] || 1;
   const securePricePerNight = Math.round(realRoom.price_per_night * activeRate);
@@ -66,17 +66,17 @@ export async function startBookingCheckout(formData: {
   let { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     const { data: authData, error: authError } = await supabase.auth.signInAnonymously();
-    if (authError) throw new Error("Could not create guest session.");
+    if (authError) return { error: "Could not create guest session." };
     user = authData.user;
   }
 
   const { data: availableRooms, error: checkError } = await supabase
     .rpc('available_rooms', { req_check_in: formData.checkIn, req_check_out: formData.checkOut });
 
-  if (checkError) throw new Error("Error checking room availability.");
+  if (checkError) return { error: "Error checking room availability." };
   
   const isAvailable = availableRooms.some((r: any) => r.id === formData.roomId);
-  if (!isAvailable) throw new Error("Sorry, these dates were just booked by someone else.");
+  if (!isAvailable) return { error: "Sorry, these dates are no longer available. Please choose different dates." };
 
   const { data: booking, error: insertError } = await supabase
     .from('bookings')
@@ -89,7 +89,7 @@ export async function startBookingCheckout(formData: {
       status: 'pending'
     }).select().single();
 
-  if (insertError || !booking) throw new Error("Could not reserve room.");
+  if (insertError || !booking) return { error: "Could not reserve room." };
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mystayinmadinah.com';
   

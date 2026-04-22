@@ -46,11 +46,20 @@ export default function BookingWidget({ room, bookable = true }: { room: any; bo
         nights: nights
       });
 
-      if (response.url) {
+      if (response?.error) {
+        setError(response.error);
+        setLoading(false);
+        return;
+      }
+
+      if (response?.url) {
         window.location.href = response.url;
+      } else {
+        setError("Something went wrong. Please try again.");
+        setLoading(false);
       }
     } catch (err: any) {
-      setError(err.message || "An error occurred during checkout.");
+      setError("Something went wrong. Please try again or contact us on WhatsApp.");
       setLoading(false);
     }
   };
