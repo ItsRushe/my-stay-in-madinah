@@ -6,6 +6,7 @@ import PriceDisplay from "../../components/PriceDisplay";
 import { createClient } from "../../lib/supabase/server";
 import { getTranslations, getLocale } from 'next-intl/server';
 import { roomTranslationsAr } from "../../lib/translations/rooms";
+import { isRoomBookable } from "../../lib/bookable";
 
 export const dynamic = 'force-dynamic';
 
@@ -50,11 +51,18 @@ export default async function RoomsPage() {
           const displayCapacity = isAr && arData ? arData.capacity : room.capacity;
           const displayAmenities = isAr && arData ? arData.amenities : room.amenities;
 
+          const bookable = isRoomBookable(room.id);
+
           return (
-            <div key={room.id} className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group">
+            <div key={room.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group ${!bookable ? 'opacity-70' : ''}`}>
               <Link href={`/rooms/${room.id}`} className={`w-full h-[300px] md:h-[450px] rounded-none overflow-hidden relative block ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                <img src={room.images[0]} alt={displayName} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${bookable ? 'group-hover:scale-105' : 'grayscale'}`} />
                 <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                {!bookable && (
+                  <div className="absolute top-4 left-4 bg-white/90 text-ink/60 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 border border-gray-200">
+                    Coming Soon
+                  </div>
+                )}
               </Link>
               <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
                 <span className="text-gold text-xs font-semibold uppercase tracking-widest mb-2 block" dir="ltr">{displayCapacity}</span>
@@ -71,9 +79,16 @@ export default async function RoomsPage() {
                     </li>
                   ))}
                 </ul>
-                <Link href={`/rooms/${room.id}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
-                  {t('view_details')}
-                </Link>
+                {bookable ? (
+                  <Link href={`/rooms/${room.id}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
+                    {t('view_details')}
+                  </Link>
+                ) : (
+                  <div className="inline-flex items-center gap-3 border border-gray-200 bg-gray-50 text-gray-400 px-8 py-4 rounded-none cursor-default select-none">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span className="text-sm font-medium uppercase tracking-widest">Coming Soon</span>
+                  </div>
+                )}
               </div>
             </div>
           );

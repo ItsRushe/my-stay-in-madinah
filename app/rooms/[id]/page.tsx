@@ -7,6 +7,7 @@ import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import { createClient } from '../../../lib/supabase/server';
 import { getTranslations } from 'next-intl/server';
+import { isRoomBookable } from '../../../lib/bookable';
 
 export const dynamic = 'force-dynamic';
 
@@ -107,7 +108,7 @@ export default async function RoomPage({ params }: { params: Promise<{ id: strin
         </div>
 
         <div className="relative">
-          <BookingWidget room={{ ...room, pricePerNight: room.price_per_night }} />
+          <BookingWidget room={{ ...room, pricePerNight: room.price_per_night }} bookable={isRoomBookable(room.id)} />
         </div>
       </section>
 
