@@ -6,7 +6,6 @@ import PriceDisplay from "../../components/PriceDisplay";
 import { createClient } from "../../lib/supabase/server";
 import { getTranslations, getLocale } from 'next-intl/server';
 import { roomTranslationsAr } from "../../lib/translations/rooms";
-import { isRoomBookable } from "../../lib/bookable";
 import { roomIdToSlug } from "../../lib/roomSlug";
 
 export const dynamic = 'force-dynamic';
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
 export default async function RoomsPage() {
   const supabase = await createClient();
   const { data: rawRooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
-  const rooms = rawRooms?.sort((a, b) => (isRoomBookable(b.id) ? 1 : 0) - (isRoomBookable(a.id) ? 1 : 0));
+  const rooms = rawRooms?.sort((a, b) => ((b.is_available !== false) ? 1 : 0) - ((a.is_available !== false) ? 1 : 0));
   const t = await getTranslations('Rooms');
   const locale = await getLocale();
   const isAr = locale === 'ar';
@@ -53,14 +52,14 @@ export default async function RoomsPage() {
           const displayCapacity = isAr && arData ? arData.capacity : room.capacity;
           const displayAmenities = isAr && arData ? arData.amenities : room.amenities;
 
-          const bookable = isRoomBookable(room.id);
-          const maintenance = bookable && room.is_available === false;
-          const dimmed = !bookable || maintenance;
+          const available = room.is_available !== false;
+          const maintenance = !available;
+          const dimmed = !available;
 
           return (
             <div key={room.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group ${dimmed ? 'opacity-70' : ''}`}>
               <Link href={`/rooms/${roomIdToSlug(room.id)}`} className={`w-full h-[300px] md:h-[450px] rounded-none overflow-hidden relative block ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${!dimmed ? 'group-hover:scale-105' : 'grayscale'}`} />
+                <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${available ? 'group-hover:scale-105' : 'grayscale'}`} />
                 <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors duration-500"></div>
                 {room.room_number && (
                   <div className="absolute bottom-4 right-4 bg-ink/80 text-white text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1">
@@ -98,7 +97,7 @@ export default async function RoomsPage() {
                     </li>
                   ))}
                 </ul>
-                {bookable && !maintenance ? (
+                {available ? (
                   <Link href={`/rooms/${roomIdToSlug(room.id)}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
                     {t('view_details')}
                   </Link>
@@ -106,11 +105,6 @@ export default async function RoomsPage() {
                   <div className="inline-flex items-center gap-3 border border-amber-200 bg-amber-50 text-amber-700 px-8 py-4 rounded-none cursor-default select-none">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     <span className="text-sm font-medium uppercase tracking-widest">Under Maintenance</span>
-                  </div>
-                ) : (
-                  <div className="inline-flex items-center gap-3 border border-gray-200 bg-gray-50 text-gray-400 px-8 py-4 rounded-none cursor-default select-none">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span className="text-sm font-medium uppercase tracking-widest">Coming Soon</span>
                   </div>
                 )}
               </div>

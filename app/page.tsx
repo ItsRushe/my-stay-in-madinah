@@ -7,7 +7,6 @@ import { createClient } from "../lib/supabase/server";
 import { getTranslations, getLocale } from 'next-intl/server';
 import { roomTranslationsAr } from "../lib/translations/rooms";
 import { tourTranslationsAr } from "../lib/translations/tours";
-import { isRoomBookable } from "../lib/bookable";
 import { roomIdToSlug } from "../lib/roomSlug";
 
 export const dynamic = 'force-dynamic';
@@ -22,7 +21,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   const supabase = await createClient();
   const { data: rawRooms } = await supabase.from('rooms').select('*').order('price_per_night', { ascending: true });
-  const rooms = rawRooms?.sort((a, b) => (isRoomBookable(b.id) ? 1 : 0) - (isRoomBookable(a.id) ? 1 : 0));
+  const rooms = rawRooms?.sort((a, b) => ((b.is_available !== false) ? 1 : 0) - ((a.is_available !== false) ? 1 : 0));
   const { data: tours } = await supabase.from('tours').select('*').order('created_at', { ascending: true });
 
   const t = await getTranslations('Home');
@@ -124,32 +123,32 @@ export default async function Home() {
               const displayName = isAr && arData ? arData.name : room.name;
               const displayDesc = isAr && arData ? arData.description : room.description;
               const displayCapacity = isAr && arData ? arData.capacity : room.capacity;
-              const bookable = isRoomBookable(room.id);
+              const available = room.is_available !== false;
 
               return (
-                <div key={room.id} className={`snap-start shrink-0 w-[82vw] sm:w-[44vw] lg:w-[30.5vw] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none ${!bookable ? 'opacity-70' : ''}`}>
+                <div key={room.id} className={`snap-start shrink-0 w-[82vw] sm:w-[44vw] lg:w-[30.5vw] bg-ivory border border-gray-100 overflow-hidden shadow-lg group flex flex-col rounded-none ${!available ? 'opacity-70' : ''}`}>
                   <Link href={`/rooms/${roomIdToSlug(room.id)}`} className="block h-56 sm:h-64 w-full overflow-hidden relative cursor-pointer">
-                    <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${bookable ? 'group-hover:scale-105' : 'grayscale'}`} />
+                    <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${available ? 'group-hover:scale-105' : 'grayscale'}`} />
                     <div className="absolute inset-0 bg-ink/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                     <div className="absolute top-4 end-4 bg-white/90 backdrop-blur px-3 py-1 text-xs font-semibold text-ink shadow-sm rounded-none" dir="ltr">{displayCapacity}</div>
-                    {!bookable && (
-                      <div className="absolute top-4 start-4 bg-white/90 text-ink/60 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 border border-gray-200 rounded-none">
-                        Coming Soon
+                    {!available && (
+                      <div className="absolute top-4 start-4 bg-amber-50 text-amber-700 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 border border-amber-200 rounded-none">
+                        Under Maintenance
                       </div>
                     )}
                   </Link>
                   <div className="p-6 md:p-8 flex flex-col flex-grow">
                     <h3 className="font-playfair text-xl md:text-2xl text-ink font-medium mb-2">{displayName}</h3>
-                    <p className={`text-lg md:text-xl font-medium mb-3 ${bookable ? 'text-gold' : 'text-ink/30'}`} dir="ltr">
+                    <p className={`text-lg md:text-xl font-medium mb-3 ${available ? 'text-gold' : 'text-ink/30'}`} dir="ltr">
                       <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
                     </p>
                     <p className="text-ink/70 font-light text-sm line-clamp-2 mb-6 flex-grow">{displayDesc}</p>
-                    {bookable ? (
+                    {available ? (
                       <Link href={`/rooms/${roomIdToSlug(room.id)}`} className="w-full block text-center border border-ink text-ink py-3 font-medium hover:bg-ink hover:text-white transition-colors duration-300 rounded-none text-sm tracking-wide">{t('rooms_view')}</Link>
                     ) : (
-                      <div className="w-full flex items-center justify-center gap-2 border border-gray-200 bg-gray-50 text-gray-400 py-3 rounded-none text-sm cursor-default select-none">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        <span className="font-medium uppercase tracking-widest">Coming Soon</span>
+                      <div className="w-full flex items-center justify-center gap-2 border border-amber-200 bg-amber-50 text-amber-700 py-3 rounded-none text-sm cursor-default select-none">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        <span className="font-medium uppercase tracking-widest">Under Maintenance</span>
                       </div>
                     )}
                   </div>
