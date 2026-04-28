@@ -55,6 +55,14 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
         <Link href="/rooms" className="inline-flex items-center gap-2 opacity-50 hover:text-gold transition-colors mb-6 text-sm font-medium uppercase tracking-wider">
           {t('back')}
         </Link>
+        <div className="flex items-center gap-3 mb-2">
+          {room.room_number && (
+            <span className="text-ink/30 text-xs font-semibold uppercase tracking-widest">Room {room.room_number}</span>
+          )}
+          {room.is_available === false && (
+            <span className="text-amber-600 text-xs font-semibold uppercase tracking-widest border border-amber-200 bg-amber-50 px-2 py-0.5">Under Maintenance</span>
+          )}
+        </div>
         <h1 className="font-playfair text-4xl md:text-6xl font-medium mb-4">{room.name}</h1>
         <div className="flex items-center gap-4 opacity-60">
           <span className="flex items-center gap-1">
@@ -111,7 +119,11 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
         </div>
 
         <div className="relative">
-          <BookingWidget room={{ ...room, pricePerNight: room.price_per_night }} bookable={isRoomBookable(room.id)} />
+          <BookingWidget
+            room={{ ...room, pricePerNight: room.price_per_night }}
+            bookable={isRoomBookable(room.id)}
+            maintenance={isRoomBookable(room.id) && room.is_available === false}
+          />
         </div>
       </section>
 

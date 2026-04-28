@@ -80,6 +80,7 @@ export async function startBookingCheckout(formData: {
     .single();
 
   if (roomError || !realRoom) return { error: "Room not found or no longer available." };
+  if (realRoom.is_available === false) return { error: "This room is currently under maintenance and cannot be booked. Please contact us on WhatsApp." };
 
   const activeRate = RATES[formData.currency.toUpperCase()] || 1;
   const securePricePerNight = Math.round(realRoom.price_per_night * activeRate);

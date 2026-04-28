@@ -54,12 +54,24 @@ export default async function RoomsPage() {
           const displayAmenities = isAr && arData ? arData.amenities : room.amenities;
 
           const bookable = isRoomBookable(room.id);
+          const maintenance = bookable && room.is_available === false;
+          const dimmed = !bookable || maintenance;
 
           return (
-            <div key={room.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group ${!bookable ? 'opacity-70' : ''}`}>
+            <div key={room.id} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-white p-6 md:p-10 rounded-none shadow-xl border border-gray-100 group ${dimmed ? 'opacity-70' : ''}`}>
               <Link href={`/rooms/${roomIdToSlug(room.id)}`} className={`w-full h-[300px] md:h-[450px] rounded-none overflow-hidden relative block ${index % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${bookable ? 'group-hover:scale-105' : 'grayscale'}`} />
+                <img src={room.images[0]} alt={displayName} className={`w-full h-full object-cover transition-transform duration-700 ${!dimmed ? 'group-hover:scale-105' : 'grayscale'}`} />
                 <div className="absolute inset-0 bg-ink/10 group-hover:bg-transparent transition-colors duration-500"></div>
+                {room.room_number && (
+                  <div className="absolute bottom-4 right-4 bg-ink/80 text-white text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1">
+                    Room {room.room_number}
+                  </div>
+                )}
+                {maintenance && (
+                  <div className="absolute top-4 left-4 bg-amber-50 text-amber-700 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 border border-amber-200">
+                    Under Maintenance
+                  </div>
+                )}
                 {!bookable && (
                   <div className="absolute top-4 left-4 bg-white/90 text-ink/60 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 border border-gray-200">
                     Coming Soon
@@ -67,7 +79,12 @@ export default async function RoomsPage() {
                 )}
               </Link>
               <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
-                <span className="text-gold text-xs font-semibold uppercase tracking-widest mb-2 block" dir="ltr">{displayCapacity}</span>
+                <div className="flex items-center gap-3 mb-2">
+                  {room.room_number && (
+                    <span className="text-ink/30 text-xs font-semibold uppercase tracking-widest" dir="ltr">Room {room.room_number}</span>
+                  )}
+                  <span className="text-gold text-xs font-semibold uppercase tracking-widest" dir="ltr">{displayCapacity}</span>
+                </div>
                 <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-4">{displayName}</h2>
                 <p className="text-xl text-gold font-medium mb-4" dir="ltr">
                   <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
@@ -81,10 +98,15 @@ export default async function RoomsPage() {
                     </li>
                   ))}
                 </ul>
-                {bookable ? (
+                {bookable && !maintenance ? (
                   <Link href={`/rooms/${roomIdToSlug(room.id)}`} className="inline-block bg-ink text-white px-8 py-4 font-medium hover:bg-gold transition-colors duration-300 shadow-md rounded-none">
                     {t('view_details')}
                   </Link>
+                ) : maintenance ? (
+                  <div className="inline-flex items-center gap-3 border border-amber-200 bg-amber-50 text-amber-700 px-8 py-4 rounded-none cursor-default select-none">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span className="text-sm font-medium uppercase tracking-widest">Under Maintenance</span>
+                  </div>
                 ) : (
                   <div className="inline-flex items-center gap-3 border border-gray-200 bg-gray-50 text-gray-400 px-8 py-4 rounded-none cursor-default select-none">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
