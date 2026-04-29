@@ -58,8 +58,11 @@ export async function POST(req: Request) {
       const roomName = bookingData?.rooms?.name || "Premium Room";
       const checkIn = bookingData?.check_in || "";
       const checkOut = bookingData?.check_out || "";
+      const roomId = bookingData?.room_id || "";
       const orderNumber = bookingId.split('-')[0].toUpperCase();
       const domain = process.env.NEXT_PUBLIC_BASE_URL || "https://mystayinmadinah.com";
+
+      const checkinGuideUrl = roomId === 'executive-king' ? `${domain}/checkin/room-3.html` : null;
 
       // 3. SEND THE LUXURY CONFIRMATION EMAIL
       if (guestEmail) {
@@ -156,12 +159,24 @@ export async function POST(req: Request) {
           <tr>
             <td style="background-color:#F9F8F4;padding:0 40px 48px;text-align:center;">
               <p style="margin:0 0 24px;font-family:Arial,sans-serif;font-size:14px;color:#5a5a52;font-weight:300;line-height:1.7;">
-                We have prepared your <strong style="color:#1B2420;">Digital Guestbook</strong> with everything you need for arrival — property address, house rules, Wi-Fi details, and your dedicated concierge contact.
+                We have prepared your <strong style="color:#1B2420;">Digital Guestbook</strong> with everything you need for arrival — property address, house rules, Wi-Fi details, and your dedicated concierge contact.${checkinGuideUrl ? ` Your <strong style="color:#1B2420;">Check-In Guide</strong> walks you through arrival step by step.` : ''}
               </p>
-              <a href="${domain}/guestbook?session_id=${session.id}"
-                style="display:inline-block;background-color:#1B2420;color:#ffffff;padding:16px 40px;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;">
-                View Your Guestbook
-              </a>
+              <table cellpadding="0" cellspacing="0" align="center" style="margin:0 auto;">
+                <tr>
+                  <td style="padding:0 6px;">
+                    <a href="${domain}/guestbook?session_id=${session.id}"
+                      style="display:inline-block;background-color:#1B2420;color:#ffffff;padding:16px 32px;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;">
+                      View Your Guestbook
+                    </a>
+                  </td>
+                  ${checkinGuideUrl ? `<td style="padding:0 6px;">
+                    <a href="${checkinGuideUrl}"
+                      style="display:inline-block;background-color:#BA6A42;color:#ffffff;padding:16px 32px;text-decoration:none;font-family:Arial,sans-serif;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;font-weight:600;">
+                      Check-In Guide
+                    </a>
+                  </td>` : ''}
+                </tr>
+              </table>
             </td>
           </tr>
 
