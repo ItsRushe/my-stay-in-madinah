@@ -67,7 +67,10 @@ export default async function CheckinRoom3Page({ searchParams }: { searchParams:
     : `Hi, I need help accessing Room 3.`;
   const whatsappHelp = `${whatsappBase}?text=${encodeURIComponent(helpMsg)}`;
 
-  const mapsUrl = "https://www.google.com/maps/dir/Haramain+High+Speed+Railway+Madinah+Station/%D8%B9%D8%A8%D9%8A%D8%AF+%D8%A7%D9%84%D8%B9%D9%8A%D8%AF%D9%8A,+Al+Jamawat,+Madinah+42371,+Saudi+Arabia";
+  const destinationParam = encodeURIComponent("عبيد العيدي, Al Jamawat, Madinah 42371, Saudi Arabia");
+  const originParam = encodeURIComponent("Prince Mohammad Bin Abdulaziz International Airport, Madinah");
+  const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originParam}&destination=${destinationParam}&travelmode=driving`;
+  const mapsEmbedUrl = `https://maps.google.com/maps?saddr=${originParam}&daddr=${destinationParam}&output=embed`;
 
   const steps = [
     {
@@ -198,9 +201,10 @@ export default async function CheckinRoom3Page({ searchParams }: { searchParams:
               <span className="text-white font-medium text-sm">11:00 AM</span>
               {checkOut && <span className="block text-white/40 text-xs mt-0.5 notranslate" translate="no">{formatDate(checkOut)}</span>}
             </div>
-            <div className="px-6 py-5">
+            <div className="px-6 py-5 col-span-2 md:col-span-1">
               <span className="block text-gold text-[10px] font-semibold tracking-widest uppercase mb-1">Address</span>
-              <span className="text-white font-medium text-sm" dir="rtl">عبيد العيدي, Al Jamawat</span>
+              <span className="block text-white font-medium text-sm leading-snug" dir="rtl">عبيد العيدي, Al Jamawat</span>
+              <span className="block text-white/60 font-light text-xs leading-snug mt-0.5">Madinah 42371, Saudi Arabia</span>
             </div>
           </div>
         </div>
@@ -214,16 +218,25 @@ export default async function CheckinRoom3Page({ searchParams }: { searchParams:
         </div>
         <h2 className="font-playfair text-3xl md:text-4xl font-medium text-ink mb-6">Getting to the Property</h2>
 
-        <div className="border border-ink/10 bg-white overflow-hidden">
-          <a href={mapsUrl} target="_blank" rel="noreferrer" className="block group relative">
-            <img src="/checkin/photos/map.jpg" alt="Route from Haramain Train Station to My Stay in Madinah" className="w-full h-64 md:h-80 object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
-            <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-2.5 shadow-md flex items-center gap-3 text-xs">
-              <span className="text-ink font-semibold">Haramain Train Station</span>
+        <div className="border border-ink/10 bg-white overflow-hidden shadow-lg">
+          <div className="relative">
+            <iframe
+              src={mapsEmbedUrl}
+              width="100%"
+              height="380"
+              style={{ border: 0, display: 'block' }}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Driving route from Madinah Airport to My Stay in Madinah"
+              className="w-full h-[320px] md:h-[420px]"
+            />
+            <div className="absolute top-4 left-4 right-4 md:right-auto bg-white/95 backdrop-blur px-4 py-2.5 shadow-md flex flex-wrap items-center gap-x-3 gap-y-1 text-xs pointer-events-none">
+              <span className="text-ink font-semibold">Madinah Airport</span>
               <span className="text-gold">→</span>
               <span className="text-ink font-semibold">Property</span>
-              <span className="ml-1 text-[10px] text-gold font-bold uppercase tracking-wider border border-gold/30 bg-gold/5 px-2 py-0.5">~20 min</span>
+              <span className="ml-1 text-[10px] text-gold font-bold uppercase tracking-wider border border-gold/30 bg-gold/5 px-2 py-0.5">~25 min drive</span>
             </div>
-          </a>
+          </div>
           <div className="p-6 md:p-7 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10">
             <div>
               <p className="font-semibold text-ink mb-1">My Stay in Madinah</p>
@@ -245,34 +258,40 @@ export default async function CheckinRoom3Page({ searchParams }: { searchParams:
         </div>
         <h2 className="font-playfair text-3xl md:text-4xl font-medium text-ink mb-12">How to Access Your Room</h2>
 
-        <div className="space-y-16 md:space-y-20">
+        <div className="space-y-20 md:space-y-24">
           {steps.map((step, idx) => {
             const reverse = idx % 2 === 1;
             const num = String(idx + 1).padStart(2, '0');
+            const PhotoLabel = ({ children }: { children: React.ReactNode }) => (
+              <span className="absolute top-3 left-3 bg-ivory/95 backdrop-blur text-ink text-[10px] font-semibold tracking-[0.2em] uppercase px-2.5 py-1 border border-gold/40 inline-flex items-center gap-1.5 shadow-sm">
+                <span className="w-1 h-1 bg-gold rounded-full" />
+                {children}
+              </span>
+            );
             return (
-              <div key={idx} className={`grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-center pt-12 border-t border-ink/10 ${idx === 0 ? 'border-t-0 pt-0' : ''}`}>
-                <div className={reverse ? 'md:order-2' : ''}>
+              <div key={idx} className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-center pt-16 border-t border-ink/10 ${idx === 0 ? 'border-t-0 pt-0' : ''}`}>
+                <div className={`md:col-span-5 ${reverse ? 'md:order-2' : ''}`}>
                   <p className="font-playfair text-5xl md:text-6xl text-ink/15 font-medium leading-none mb-3 notranslate" translate="no">{num}</p>
                   <p className="text-xs font-semibold tracking-[0.28em] uppercase text-gold mb-3">{step.tag}</p>
                   <h3 className="font-playfair text-2xl md:text-3xl text-ink font-medium mb-5 leading-tight">{step.title}</h3>
                   {step.body}
                 </div>
-                <div className={reverse ? 'md:order-1' : ''}>
+                <div className={`md:col-span-7 ${reverse ? 'md:order-1' : ''}`}>
                   {step.secondaryPhoto ? (
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="relative overflow-hidden shadow-xl">
-                        <img src={step.photo} alt={step.photoLabel} className="w-full h-56 md:h-64 object-cover" />
-                        <span className="absolute bottom-2 left-3 text-[10px] tracking-[0.24em] uppercase text-white/90 font-medium drop-shadow">{step.photoLabel}</span>
+                    <div className="grid grid-cols-2 gap-3 md:gap-4">
+                      <div className="relative overflow-hidden shadow-xl bg-ink/5 aspect-[3/4]">
+                        <img src={step.photo} alt={step.photoLabel} className="w-full h-full object-cover" />
+                        <PhotoLabel>{step.photoLabel}</PhotoLabel>
                       </div>
-                      <div className="relative overflow-hidden shadow-xl">
-                        <img src={step.secondaryPhoto} alt={step.secondaryLabel} className="w-full h-56 md:h-64 object-cover" />
-                        <span className="absolute bottom-2 left-3 text-[10px] tracking-[0.24em] uppercase text-white/90 font-medium drop-shadow">{step.secondaryLabel}</span>
+                      <div className="relative overflow-hidden shadow-xl bg-ink/5 aspect-[3/4]">
+                        <img src={step.secondaryPhoto} alt={step.secondaryLabel} className="w-full h-full object-cover" />
+                        <PhotoLabel>{step.secondaryLabel}</PhotoLabel>
                       </div>
                     </div>
                   ) : (
-                    <div className="relative overflow-hidden shadow-xl">
-                      <img src={step.photo} alt={step.photoLabel} className="w-full h-72 md:h-96 object-cover" />
-                      <span className="absolute bottom-3 left-4 text-[10px] tracking-[0.24em] uppercase text-white/90 font-medium drop-shadow">{step.photoLabel}</span>
+                    <div className="relative overflow-hidden shadow-xl bg-ink/5 aspect-[4/3]">
+                      <img src={step.photo} alt={step.photoLabel} className="w-full h-full object-cover" />
+                      <PhotoLabel>{step.photoLabel}</PhotoLabel>
                     </div>
                   )}
                 </div>
