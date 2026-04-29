@@ -59,7 +59,10 @@ export default async function RoomPage({ params }: { params: Promise<{ slug: str
             <span className="text-ink/30 text-xs font-semibold uppercase tracking-widest">Room {room.room_number}</span>
           )}
           {room.is_available === false && (
-            <span className="text-amber-600 text-xs font-semibold uppercase tracking-widest border border-amber-200 bg-amber-50 px-2 py-0.5">Under Maintenance</span>
+            <span className="text-ink text-xs font-semibold uppercase tracking-widest border border-gold/40 bg-ivory/95 px-2 py-0.5 inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-gold rounded-full" />
+              Coming Soon
+            </span>
           )}
         </div>
         <h1 className="font-playfair text-4xl md:text-6xl font-medium mb-4">{room.name}</h1>

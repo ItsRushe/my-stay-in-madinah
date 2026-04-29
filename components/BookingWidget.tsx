@@ -73,12 +73,12 @@ export default function BookingWidget({ room, bookable = true, maintenance = fal
           {mounted ? formatPrice(room.pricePerNight) : `£${room.pricePerNight}`} <span className="text-sm font-light uppercase">{t('per_night')}</span>
         </p>
 
-        <div className="w-full border border-dashed border-amber-200 bg-amber-50 py-8 px-6 text-center mb-6">
-          <svg className="w-8 h-8 text-amber-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+        <div className="w-full border border-dashed border-ink/15 bg-ink/[0.03] py-8 px-6 text-center mb-6">
+          <svg className="w-8 h-8 text-gold/70 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
           </svg>
-          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700 mb-1">Under Maintenance</p>
-          <p className="text-sm text-amber-600 font-light">This room is temporarily unavailable. Please check back soon or contact us on WhatsApp.</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-ink/80 mb-1">Coming Soon</p>
+          <p className="text-sm text-ink/60 font-light">This room is being prepared and will be available to book shortly. Message us on WhatsApp to be notified.</p>
         </div>
 
         <a href={`https://wa.me/966508151408?text=Hi,%20I'm%20interested%20in%20${encodeURIComponent(room.name)}%20—%20when%20will%20it%20be%20available?`} target="_blank" rel="noreferrer" className="w-full bg-[#25D366] text-white py-4 font-medium hover:opacity-90 transition-opacity duration-300 flex items-center justify-center gap-2 rounded-none shadow-lg">

@@ -65,8 +65,9 @@ export default async function RoomsPage() {
                   </div>
                 )}
                 {!available && (
-                  <div className="absolute top-4 left-4 bg-amber-50 text-amber-700 text-xs font-semibold uppercase tracking-widest px-3 py-1.5 border border-amber-200">
-                    Under Maintenance
+                  <div className="absolute top-4 left-4 bg-ivory/95 text-ink text-xs font-semibold uppercase tracking-widest px-3 py-1.5 border border-gold/40 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-gold rounded-full" />
+                    Coming Soon
                   </div>
                 )}
               </Link>
@@ -95,9 +96,9 @@ export default async function RoomsPage() {
                     {t('view_details')}
                   </Link>
                 ) : (
-                  <div className="inline-flex items-center gap-3 border border-amber-200 bg-amber-50 text-amber-700 px-8 py-4 rounded-none cursor-default select-none">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    <span className="text-sm font-medium uppercase tracking-widest">Under Maintenance</span>
+                  <div className="inline-flex items-center gap-3 border border-ink/15 bg-ink/[0.03] text-ink/70 px-8 py-4 rounded-none cursor-default select-none">
+                    <svg className="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span className="text-sm font-medium uppercase tracking-widest">Coming Soon</span>
                   </div>
                 )}
               </div>
