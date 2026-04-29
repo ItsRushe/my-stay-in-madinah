@@ -62,7 +62,7 @@ export async function POST(req: Request) {
       const orderNumber = bookingId.split('-')[0].toUpperCase();
       const domain = process.env.NEXT_PUBLIC_BASE_URL || "https://mystayinmadinah.com";
 
-      const checkinGuideUrl = roomId === 'executive-king' ? `${domain}/checkin/room-3.html` : null;
+      const checkinGuideUrl = roomId === 'executive-king' ? `${domain}/checkin/room-3?session_id=${session.id}` : null;
 
       // 3. SEND THE LUXURY CONFIRMATION EMAIL
       if (guestEmail) {
