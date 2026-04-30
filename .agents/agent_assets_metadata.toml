@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "MLdZVJxtaGBl9WpDCryb-"
+uri = "file://My-Stay-in-Madinah-Brand-Guide.pdf"
+type = "pdf"
+title = "My Stay in Madinah — Brand Guidelines (Edition 01, 2026)"
