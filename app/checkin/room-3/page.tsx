@@ -67,10 +67,8 @@ export default async function CheckinRoom3Page({ searchParams }: { searchParams:
     : `Hi, I need help accessing Room 3.`;
   const whatsappHelp = `${whatsappBase}?text=${encodeURIComponent(helpMsg)}`;
 
-  const destinationParam = encodeURIComponent("عبيد العيدي, Al Jamawat, Madinah 42371, Saudi Arabia");
-  const originParam = encodeURIComponent("Prince Mohammad Bin Abdulaziz International Airport, Madinah");
-  const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originParam}&destination=${destinationParam}&travelmode=driving`;
-  const mapsEmbedUrl = `https://maps.google.com/maps?saddr=${originParam}&daddr=${destinationParam}&output=embed`;
+  const mapsUrl = "https://maps.app.goo.gl/XgBjYkPWxYMZVNCp8";
+  const mapsEmbedUrl = "https://maps.google.com/maps?q=24.4674506,39.5644021&z=17&output=embed";
 
   const steps = [
     {
@@ -230,11 +228,9 @@ export default async function CheckinRoom3Page({ searchParams }: { searchParams:
               title="Driving route from Madinah Airport to My Stay in Madinah"
               className="w-full h-[320px] md:h-[420px]"
             />
-            <div className="absolute top-4 left-4 right-4 md:right-auto bg-white/95 backdrop-blur px-4 py-2.5 shadow-md flex flex-wrap items-center gap-x-3 gap-y-1 text-xs pointer-events-none">
-              <span className="text-ink font-semibold">Madinah Airport</span>
-              <span className="text-gold">→</span>
-              <span className="text-ink font-semibold">Property</span>
-              <span className="ml-1 text-[10px] text-gold font-bold uppercase tracking-wider border border-gold/30 bg-gold/5 px-2 py-0.5">~25 min drive</span>
+            <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-4 py-2.5 shadow-md flex items-center gap-2.5 text-xs pointer-events-none">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#BA6A42" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span className="text-ink font-semibold">My Stay in Madinah</span>
             </div>
           </div>
           <div className="p-6 md:p-7 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10">
