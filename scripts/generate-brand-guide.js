@@ -88,12 +88,13 @@ const iconH = (500 / 1315) * iconW;
 const iconY = 160;
 doc.image(iconLogoPath, (PAGE_W - iconW) / 2, iconY, { width: iconW });
 
-const textLogoW = 360;
-const textLogoH = (500 / 6638) * textLogoW;
-const textLogoY = iconY + iconH + 28;
-doc.image(textLogoPath, (PAGE_W - textLogoW) / 2, textLogoY, { width: textLogoW });
+const wordmarkY = iconY + iconH + 36;
+const wordmarkSize = 22;
+const wordmarkH = wordmarkSize * 1.1;
+doc.font('BodyMed').fontSize(wordmarkSize).fillColor(C.ink)
+  .text('MY STAY IN MADINAH', 0, wordmarkY, { align: 'center', width: PAGE_W, characterSpacing: 4, lineBreak: false });
 
-const taglineY = textLogoY + textLogoH + 36;
+const taglineY = wordmarkY + wordmarkH + 32;
 doc.font('Display').fontSize(28).fillColor(C.ink)
   .text('Brand Guidelines', 0, taglineY, { align: 'center', width: PAGE_W, characterSpacing: 0.4, lineBreak: false });
 
@@ -216,13 +217,15 @@ doc.font('BodySemi').fontSize(7.5).fillColor(C.inkMuted)
 
 y3 += lockupH + 36;
 
-doc.save().rect(M, y3, PAGE_W - 2 * M, 90).fill(C.white)
-  .rect(M, y3, PAGE_W - 2 * M, 90).lineWidth(0.5).strokeColor(C.divider).stroke().restore();
-const wordW = 300;
-const wordH = (500 / 6638) * wordW;
-doc.image(textLogoPath, M + (PAGE_W - 2 * M - wordW) / 2, y3 + (90 - wordH) / 2, { width: wordW });
+const wmBoxH = 90;
+doc.save().rect(M, y3, PAGE_W - 2 * M, wmBoxH).fill(C.white)
+  .rect(M, y3, PAGE_W - 2 * M, wmBoxH).lineWidth(0.5).strokeColor(C.divider).stroke().restore();
+const wmSize = 22;
+const wmTextY = y3 + (wmBoxH - wmSize) / 2 - 2;
+doc.font('BodyMed').fontSize(wmSize).fillColor(C.ink)
+  .text('MY STAY IN MADINAH', M, wmTextY, { width: PAGE_W - 2 * M, align: 'center', characterSpacing: 4, lineBreak: false });
 doc.font('BodySemi').fontSize(7.5).fillColor(C.inkMuted)
-  .text('WORDMARK  ·  USE WITH OR WITHOUT THE ICON', M, y3 + 100, { width: PAGE_W - 2 * M, align: 'center', characterSpacing: 1.8, lineBreak: false });
+  .text('WORDMARK  ·  JOST MEDIUM  ·  TRACKED +400', M, y3 + wmBoxH + 10, { width: PAGE_W - 2 * M, align: 'center', characterSpacing: 1.8, lineBreak: false });
 
 y3 += 134;
 
