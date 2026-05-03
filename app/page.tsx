@@ -74,8 +74,8 @@ export default async function Home() {
 
       {/* Book Direct · Save More */}
       <section id="book-direct" className="py-16 md:py-24 px-6 md:px-12 bg-ivory">
-        <div className="max-w-[90rem] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
 
             {/* Left — copy */}
             <div className={isAr ? 'text-right' : ''}>
