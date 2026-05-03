@@ -280,33 +280,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-16 md:py-24 px-6 md:px-12 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 md:mb-16">
-            <h2 className="font-playfair text-3xl md:text-4xl text-ink font-semibold mb-4">{t('compare_title')}</h2>
-            <p className="text-ink/60 font-light text-base md:text-lg max-w-xl mx-auto">{t('compare_sub')}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-200 overflow-hidden shadow-xl md:shadow-2xl rounded-none">
-            <div className="bg-ivory p-8 sm:p-10 md:p-14 border-b md:border-b-0 md:border-e border-gray-200">
-              <h3 className="font-playfair text-xl md:text-2xl text-ink/50 mb-6 md:mb-8 border-b border-gray-200 pb-4">{t('platform_way')}</h3>
-              <ul className="space-y-6">
-                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">{t('platform1_title')}</strong><span className="text-xs md:text-sm font-light">{t('platform1_desc')}</span></div></li>
-                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">{t('platform2_title')}</strong><span className="text-xs md:text-sm font-light">{t('platform2_desc')}</span></div></li>
-                <li className="flex items-start gap-4 text-ink/70"><span className="text-red-400 font-bold mt-1">✕</span><div><strong className="block text-ink font-medium text-sm md:text-base">{t('platform3_title')}</strong><span className="text-xs md:text-sm font-light">{t('platform3_desc')}</span></div></li>
-              </ul>
-            </div>
-            <div className="bg-ink p-8 sm:p-10 md:p-14">
-              <h3 className="font-playfair text-xl md:text-2xl text-gold mb-6 md:mb-8 border-b border-ink/50 pb-4">{t('direct_way')}</h3>
-              <ul className="space-y-6">
-                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">{t('direct1_title')}</strong><span className="text-xs md:text-sm font-light text-ivory/70">{t('direct1_desc')}</span></div></li>
-                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">{t('direct2_title')}</strong><span className="text-xs md:text-sm font-light text-ivory/70">{t('direct2_desc')}</span></div></li>
-                <li className="flex items-start gap-4 text-ivory"><svg className="w-5 h-5 text-gold mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg><div><strong className="block font-medium text-sm md:text-base">{t('direct3_title')}</strong><span className="text-xs md:text-sm font-light text-ivory/70">{t('direct3_desc')}</span></div></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="py-20 md:py-32 px-6 md:px-12 bg-ink text-ivory relative overflow-hidden">
         <div className="max-w-[90rem] mx-auto relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
