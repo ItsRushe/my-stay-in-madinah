@@ -36,12 +36,15 @@ export async function POST(req: Request) {
     const bookingId = session.metadata?.booking_id; 
 
     if (bookingId) {
-      // 1. Confirm in Database
+      // 1. Confirm in Database (guest_name / guest_email require those columns — add via Supabase SQL editor if missing)
       await supabaseAdmin
         .from('bookings')
         .update({ 
           status: 'confirmed',
-          stripe_payment_intent: session.payment_intent as string 
+          stripe_payment_intent: session.payment_intent as string,
+          guest_name: session.customer_details?.name || null,
+          guest_email: session.customer_details?.email || null,
+          amount_paid: session.amount_total ? session.amount_total / 100 : null,
         })
         .eq('id', bookingId);
 
