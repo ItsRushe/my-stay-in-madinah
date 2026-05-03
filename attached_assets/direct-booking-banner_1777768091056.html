@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Direct & Save — My Stay in Madinah</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --ink:#1B2420;
+    --gold:#BA6A42;
+    --gold-hover:#A05835;
+    --ivory:#F9F8F4;
+    --ivory-warm:#F3F0E8;
+    --gold-light:rgba(186,106,66,.08);
+    --gold-mid:rgba(186,106,66,.15);
+  }
+
+  body{
+    background:var(--ivory);
+    font-family:'Jost',sans-serif;
+    color:var(--ink);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:24px;
+  }
+
+  .banner{
+    width:100%;
+    max-width:960px;
+    background:var(--ivory);
+    border:1px solid rgba(186,106,66,.2);
+    border-radius:2px;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* top gold accent line */
+  .banner::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;
+    height:3px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+
+  .banner-inner{
+    padding:48px 56px;
+    display:flex;
+    gap:48px;
+    align-items:center;
+  }
+
+  /* LEFT — messaging */
+  .banner-left{
+    flex:1;
+    min-width:0;
+  }
+
+  .kicker{
+    font-family:'Jost',sans-serif;
+    font-weight:500;
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:16px;
+  }
+
+  .headline{
+    font-family:'Playfair Display',serif;
+    font-weight:500;
+    font-size:32px;
+    line-height:1.25;
+    color:var(--ink);
+    margin-bottom:12px;
+  }
+
+  .headline em{
+    font-style:italic;
+    color:var(--gold);
+  }
+
+  .subtext{
+    font-family:'Jost',sans-serif;
+    font-weight:300;
+    font-size:15px;
+    line-height:1.6;
+    color:rgba(27,36,32,.6);
+    max-width:380px;
+    margin-bottom:28px;
+  }
+
+  .cta-btn{
+    display:inline-block;
+    font-family:'Jost',sans-serif;
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--ivory);
+    background:var(--gold);
+    border:none;
+    padding:14px 36px;
+    cursor:pointer;
+    text-decoration:none;
+    transition:background .3s ease;
+  }
+
+  .cta-btn:hover{
+    background:var(--gold-hover);
+  }
+
+  /* divider line */
+  .divider{
+    width:1px;
+    align-self:stretch;
+    background:linear-gradient(180deg,transparent,rgba(186,106,66,.25),transparent);
+    flex-shrink:0;
+  }
+
+  /* RIGHT — price comparison */
+  .banner-right{
+    flex:0 0 340px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  .comparison-label{
+    font-family:'Jost',sans-serif;
+    font-weight:500;
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:rgba(27,36,32,.4);
+    text-align:center;
+    margin-bottom:4px;
+  }
+
+  .price-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:20px 24px;
+    border-radius:2px;
+    position:relative;
+  }
+
+  .price-row.airbnb{
+    background:rgba(27,36,32,.03);
+    border:1px solid rgba(27,36,32,.06);
+  }
+
+  .price-row.direct{
+    background:var(--gold-light);
+    border:1px solid rgba(186,106,66,.18);
+  }
+
+  .price-row .platform-label{
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    font-size:13px;
+    color:rgba(27,36,32,.5);
+    width:80px;
+    flex-shrink:0;
+  }
+
+  .price-row.direct .platform-label{
+    color:var(--gold);
+    font-weight:500;
+  }
+
+  .price-row .amount{
+    font-family:'Jost',sans-serif;
+    font-weight:600;
+    font-size:28px;
+    color:var(--ink);
+    flex:1;
+    text-align:right;
+  }
+
+  .price-row.airbnb .amount{
+    color:rgba(27,36,32,.35);
+    text-decoration:line-through;
+    text-decoration-color:rgba(186,106,66,.4);
+    text-decoration-thickness:1.5px;
+  }
+
+  .price-row.direct .amount{
+    color:var(--gold-hover);
+  }
+
+  /* breakdown */
+  .breakdown{
+    display:flex;
+    justify-content:space-between;
+    padding:0 24px;
+  }
+
+  .breakdown-item{
+    text-align:center;
+  }
+
+  .breakdown-item .label{
+    font-family:'Jost',sans-serif;
+    font-weight:400;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:rgba(27,36,32,.35);
+    margin-bottom:4px;
+  }
+
+  .breakdown-item .value{
+    font-family:'Jost',sans-serif;
+    font-weight:500;
+    font-size:14px;
+    color:rgba(27,36,32,.6);
+  }
+
+  .breakdown-item .value.savings{
+    color:var(--gold);
+    font-weight:600;
+  }
+
+  /* savings badge */
+  .savings-strip{
+    text-align:center;
+    padding:10px 0 0;
+  }
+
+  .savings-strip span{
+    font-family:'Jost',sans-serif;
+    font-weight:500;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    position:relative;
+    padding:0 20px;
+  }
+
+  .savings-strip span::before,
+  .savings-strip span::after{
+    content:'';
+    position:absolute;
+    top:50%;
+    width:32px;
+    height:1px;
+    background:var(--gold);
+    opacity:.3;
+  }
+  .savings-strip span::before{left:-20px}
+  .savings-strip span::after{right:-20px}
+
+  /* responsive */
+  @media(max-width:800px){
+    .banner-inner{
+      flex-direction:column;
+      padding:40px 32px;
+      gap:32px;
+    }
+    .divider{
+      width:100%;
+      height:1px;
+      align-self:auto;
+      background:linear-gradient(90deg,transparent,rgba(186,106,66,.25),transparent);
+    }
+    .banner-right{
+      flex:none;
+      width:100%;
+    }
+    .headline{font-size:26px}
+    .subtext{max-width:100%}
+  }
+
+  /* subtle entrance animation */
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(12px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+
+  .banner-left{animation:fadeUp .6s ease both}
+  .banner-right{animation:fadeUp .6s ease .15s both}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <div class="banner-inner">
+
+    <div class="banner-left">
+      <p class="kicker">Book Direct · Save More</p>
+      <h2 class="headline">Why pay more<br>for the <em>same stay?</em></h2>
+      <p class="subtext">
+        When you book through us, you skip the platform fees, the service charges, and the hidden extras. Same apartment, same hospitality — just the honest price.
+      </p>
+      <a href="https://mystayinmadinah.com" class="cta-btn">Book Direct</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="banner-right">
+      <p class="comparison-label">5 Nights · Price Comparison</p>
+
+      <div class="price-row airbnb">
+        <span class="platform-label">Airbnb</span>
+        <span class="amount">SR 629.92</span>
+      </div>
+
+      <div class="price-row direct">
+        <span class="platform-label">Direct</span>
+        <span class="amount">SR 480.00</span>
+      </div>
+
+      <div class="breakdown">
+        <div class="breakdown-item">
+          <p class="label">Service fee</p>
+          <p class="value">SR 0</p>
+        </div>
+        <div class="breakdown-item">
+          <p class="label">Hidden fees</p>
+          <p class="value">SR 0</p>
+        </div>
+        <div class="breakdown-item">
+          <p class="label">You save</p>
+          <p class="value savings">SR 149.92</p>
+        </div>
+      </div>
+
+      <div class="savings-strip">
+        <span>Save 24% by booking direct</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

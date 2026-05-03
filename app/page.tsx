@@ -72,6 +72,77 @@ export default async function Home() {
         </div>
       </header>
 
+      {/* Book Direct · Save More */}
+      <section id="book-direct" className="py-16 md:py-24 px-6 md:px-12 bg-ivory">
+        <div className="max-w-[90rem] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-24 items-center">
+
+            {/* Left — copy */}
+            <div className={isAr ? 'text-right' : ''}>
+              <div className={`inline-flex items-center gap-3 mb-6 ${isAr ? 'flex-row-reverse' : ''}`}>
+                <span className="h-[1px] w-8 bg-gold" />
+                <span className="text-gold tracking-[0.2em] text-[10px] md:text-xs uppercase font-medium">Book Direct · Save More</span>
+              </div>
+              <h2 className="font-playfair text-4xl md:text-5xl lg:text-[3.25rem] text-ink font-bold leading-[1.1] mb-6">
+                Why pay more<br />
+                for the <em className="text-gold not-italic font-normal italic">same stay?</em>
+              </h2>
+              <p className="text-ink/60 font-light text-base leading-relaxed mb-10 max-w-sm">
+                When you book through us, you skip the platform fees, the service charges, and the hidden extras. Same apartment, same hospitality — just the honest price.
+              </p>
+              <Link
+                href="/rooms"
+                className="inline-block bg-gold hover:bg-[#A05835] text-white px-10 py-4 font-medium tracking-[0.18em] text-xs uppercase transition-colors duration-300 rounded-none"
+              >
+                Book Direct
+              </Link>
+            </div>
+
+            {/* Right — price comparison widget */}
+            <div>
+              {/* Eyebrow */}
+              <p className="text-center text-ink/40 tracking-[0.22em] text-[10px] uppercase font-medium mb-5">
+                5 Nights · Price Comparison
+              </p>
+
+              {/* Airbnb row */}
+              <div className="bg-white border border-gray-200 px-6 py-5 mb-3 flex items-center justify-between">
+                <span className="text-ink/50 text-sm font-medium">Airbnb</span>
+                <span className="text-ink/30 text-2xl md:text-3xl font-medium line-through tracking-tight" dir="ltr">SR 629.92</span>
+              </div>
+
+              {/* Direct row */}
+              <div className="bg-[#F5EDE4] border border-gold/40 px-6 py-5 mb-6 flex items-center justify-between">
+                <span className="text-gold text-sm font-semibold">Direct</span>
+                <span className="text-ink text-3xl md:text-4xl font-bold tracking-tight" dir="ltr">SR 480.00</span>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-3 gap-4 mb-7">
+                {[
+                  { label: 'Service Fee', value: 'SR 0' },
+                  { label: 'Hidden Fees', value: 'SR 0' },
+                  { label: 'You Save', value: 'SR 149.92', highlight: true },
+                ].map(item => (
+                  <div key={item.label} className="text-center">
+                    <p className="text-ink/40 text-[9px] uppercase tracking-[0.18em] font-medium mb-1">{item.label}</p>
+                    <p className={`text-sm font-semibold ${item.highlight ? 'text-gold' : 'text-ink'}`} dir="ltr">{item.value}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Save banner */}
+              <div className="flex items-center gap-4">
+                <span className="flex-1 h-[1px] bg-gold/30" />
+                <span className="text-gold text-[10px] font-semibold tracking-[0.2em] uppercase whitespace-nowrap">Save 24% by Booking Direct</span>
+                <span className="flex-1 h-[1px] bg-gold/30" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 md:py-20 px-6 md:px-12 bg-ivory">
         <div className="max-w-[90rem] mx-auto border-t border-b border-gray-200 py-12 md:py-16">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 lg:gap-12">
