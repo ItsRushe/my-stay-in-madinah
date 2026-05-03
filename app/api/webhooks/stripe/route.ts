@@ -204,6 +204,73 @@ export async function POST(req: Request) {
           `
         });
       }
+
+      // 4. SEND HOST NOTIFICATION EMAIL
+      const amountPaid = session.amount_total ? `SAR ${(session.amount_total / 100).toFixed(2)}` : 'N/A';
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
+        to: 'info@mystayinmadinah.com',
+        subject: `New Booking — ${roomName} (${checkIn} → ${checkOut})`,
+        html: `
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head>
+<body style="margin:0;padding:0;background-color:#EFEFEA;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#EFEFEA;padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;">
+
+          <!-- HEADER -->
+          <tr>
+            <td style="background-color:#1B2420;text-align:center;padding:28px 32px;">
+              <p style="margin:0;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:#BA6A42;font-weight:600;">NEW BOOKING RECEIVED</p>
+            </td>
+          </tr>
+          <tr><td style="background-color:#BA6A42;height:3px;font-size:0;line-height:0;">&nbsp;</td></tr>
+
+          <!-- BODY -->
+          <tr>
+            <td style="background-color:#F9F8F4;padding:32px 32px 8px;">
+              <h1 style="margin:0 0 6px;font-size:22px;font-weight:600;color:#1B2420;">${roomName}</h1>
+              <p style="margin:0;font-size:13px;color:#BA6A42;letter-spacing:0.1em;text-transform:uppercase;">Order #${orderNumber}</p>
+            </td>
+          </tr>
+
+          <!-- DETAILS TABLE -->
+          <tr>
+            <td style="background-color:#F9F8F4;padding:24px 32px 32px;">
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e0ddd6;background:#fff;border-radius:2px;">
+                ${[
+                  ['Guest', guestName],
+                  ['Email', guestEmail || '—'],
+                  ['Check-in', checkIn],
+                  ['Check-out', checkOut],
+                  ['Amount Paid', amountPaid],
+                ].map(([label, value], i, arr) => `
+                <tr>
+                  <td style="padding:13px 20px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#9a9a90;border-bottom:${i < arr.length - 1 ? '1px solid #f0ede6' : 'none'};width:40%;">${label}</td>
+                  <td style="padding:13px 20px;font-size:14px;color:#1B2420;font-weight:500;border-bottom:${i < arr.length - 1 ? '1px solid #f0ede6' : 'none'};text-align:right;">${value}</td>
+                </tr>`).join('')}
+              </table>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td style="background-color:#1B2420;padding:20px 32px;text-align:center;">
+              <p style="margin:0;font-size:11px;color:#ffffff;opacity:0.5;">My Stay in Madinah · Host Notification</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+        `
+      });
     }
   }
 
