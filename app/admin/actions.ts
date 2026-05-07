@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { createClient } from '../../lib/supabase/server';
+import { createAdminClient } from '../../lib/supabase/admin';
 import { revalidatePath } from 'next/cache';
 
 const ADMIN_COOKIE = 'msm_admin_session';
@@ -46,7 +46,7 @@ export async function adminLogout() {
 
 export async function updateRoomStatus(roomId: string, isActive: boolean) {
   await requireAdmin();
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   await supabase.from('rooms').update({ is_available: isActive }).eq('id', roomId);
   revalidatePath('/admin');
   revalidatePath(`/admin/rooms/${roomId}`);
@@ -55,7 +55,7 @@ export async function updateRoomStatus(roomId: string, isActive: boolean) {
 export async function updateRoomRate(roomId: string, rate: number) {
   await requireAdmin();
   if (isNaN(rate) || rate < 0) return { error: 'Invalid rate.' };
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   await supabase.from('rooms').update({ price_per_night: rate }).eq('id', roomId);
   revalidatePath('/admin');
   revalidatePath(`/admin/rooms/${roomId}`);
@@ -63,7 +63,7 @@ export async function updateRoomRate(roomId: string, rate: number) {
 
 export async function updateRoomNumber(roomId: string, roomNumber: string) {
   await requireAdmin();
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   await supabase.from('rooms').update({ room_number: roomNumber.trim() }).eq('id', roomId);
   revalidatePath('/admin');
   revalidatePath(`/admin/rooms/${roomId}`);

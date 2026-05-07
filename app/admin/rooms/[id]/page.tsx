@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { createClient } from '../../../../lib/supabase/server';
+import RoomControls from './RoomControls';
 
 const ADMIN_COOKIE = 'msm_admin_session';
 
@@ -89,29 +90,19 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ id:
 
         {/* Room header */}
         <div style={{ background: '#fff', border: '1px solid #E5E2DA', padding: '28px 32px', marginBottom: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '6px' }}>
-                <span style={{ fontSize: '32px', fontWeight: 700, color: '#1B2420' }}>
-                  {room.room_number ? `Room #${room.room_number}` : room.name}
-                </span>
-                <span style={{
-                  background: active ? '#d4edda' : '#f8d7da',
-                  color: active ? '#155724' : '#721c24',
-                  padding: '3px 10px', fontSize: '11px', fontWeight: 600,
-                  letterSpacing: '0.08em', textTransform: 'uppercase', borderRadius: '2px',
-                }}>
-                  {active ? 'Active' : 'Coming Soon'}
-                </span>
-              </div>
-              {room.room_number && (
-                <p style={{ margin: 0, fontSize: '14px', color: '#6B7470' }}>{room.name}</p>
-              )}
-            </div>
-            <div style={{ fontSize: '24px', fontWeight: 600, color: '#BA6A42' }}>
-              SAR {room.price_per_night} / night
-            </div>
+          <div style={{ marginBottom: '16px' }}>
+            <span style={{ fontSize: '28px', fontWeight: 700, color: '#1B2420' }}>
+              {room.room_number ? `Room #${room.room_number}` : room.name}
+            </span>
+            {room.room_number && (
+              <p style={{ margin: '4px 0 0', fontSize: '14px', color: '#6B7470' }}>{room.name}</p>
+            )}
           </div>
+          <RoomControls
+            roomId={room.id}
+            initialActive={active}
+            initialRate={room.price_per_night}
+          />
         </div>
 
         {/* Stats */}
