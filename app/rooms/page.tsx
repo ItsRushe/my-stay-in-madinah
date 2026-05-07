@@ -80,7 +80,7 @@ export default async function RoomsPage() {
                 </div>
                 <h2 className="font-playfair text-3xl md:text-4xl font-medium mb-4">{displayName}</h2>
                 <p className="text-xl text-gold font-medium mb-4" dir="ltr">
-                  <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
+                  <PriceDisplay amountSAR={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
                 </p>
                 <p className="font-light leading-relaxed mb-6 opacity-80 line-clamp-3">{displayDesc}</p>
                 <ul className="grid grid-cols-2 gap-4 mb-8 text-sm font-light opacity-80">

@@ -29,10 +29,10 @@ async function expireStalePendingBookings() {
 }
 
 const RATES: Record<string, number> = {
-  GBP: 1,
-  USD: 1.27,
-  EUR: 1.17,
-  SAR: 5,
+  SAR: 1,
+  GBP: 0.2,
+  USD: 0.267,
+  EUR: 0.234,
 };
 
 const rateLimitMap = new Map<string, { count: number, lastReset: number }>();

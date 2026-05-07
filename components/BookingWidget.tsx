@@ -70,7 +70,7 @@ export default function BookingWidget({ room, bookable = true, maintenance = fal
         <img src="/icon-logo.png" className="h-12 w-auto mb-4 opacity-30 object-contain" alt="Icon" />
         <h3 className="font-playfair text-2xl text-ink font-medium mb-1 text-center">{room.name}</h3>
         <p className="text-xl font-medium text-ink/30 mb-6" dir="ltr">
-          {mounted ? formatPrice(room.pricePerNight) : `£${room.pricePerNight}`} <span className="text-sm font-light uppercase">{t('per_night')}</span>
+          {mounted ? formatPrice(room.pricePerNight) : `SAR ${room.pricePerNight}`} <span className="text-sm font-light uppercase">{t('per_night')}</span>
         </p>
 
         <div className="w-full border border-dashed border-ink/15 bg-ink/[0.03] py-8 px-6 text-center mb-6">
@@ -95,7 +95,7 @@ export default function BookingWidget({ room, bookable = true, maintenance = fal
         <img src="/icon-logo.png" className="h-12 w-auto mb-4 opacity-30 object-contain" alt="Icon" />
         <h3 className="font-playfair text-2xl text-ink font-medium mb-1 text-center">{room.name}</h3>
         <p className="text-xl font-medium text-ink/30 mb-6" dir="ltr">
-          {mounted ? formatPrice(room.pricePerNight) : `£${room.pricePerNight}`} <span className="text-sm font-light uppercase">{t('per_night')}</span>
+          {mounted ? formatPrice(room.pricePerNight) : `SAR ${room.pricePerNight}`} <span className="text-sm font-light uppercase">{t('per_night')}</span>
         </p>
 
         <div className="w-full border border-dashed border-gray-200 bg-gray-50 py-8 px-6 text-center mb-6">
@@ -120,7 +120,7 @@ export default function BookingWidget({ room, bookable = true, maintenance = fal
       <h3 className="font-playfair text-2xl text-ink font-medium mb-1">{t('book_room', { name: room.name })}</h3>
 
       <p className="text-xl font-medium text-gold mb-6" dir="ltr">
-        {mounted ? formatPrice(room.pricePerNight) : `£${room.pricePerNight}`} <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
+        {mounted ? formatPrice(room.pricePerNight) : `SAR ${room.pricePerNight}`} <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
       </p>
 
       {error && <div className="w-full bg-red-50 text-red-600 text-sm p-3 mb-4 text-center border border-red-100 rounded-none">{error}</div>}
@@ -140,7 +140,7 @@ export default function BookingWidget({ room, bookable = true, maintenance = fal
         <div className="w-full flex justify-between items-center py-4 border-t border-gray-100 mb-4 text-ink">
           <span className="font-light">{t('nights', { count: nights })}</span>
           <span className="font-semibold text-lg" dir="ltr">
-            {mounted ? formatPrice(room.pricePerNight * nights) : `£${room.pricePerNight * nights}`}
+            {mounted ? formatPrice(room.pricePerNight * nights) : `SAR ${room.pricePerNight * nights}`}
           </span>
         </div>
       )}

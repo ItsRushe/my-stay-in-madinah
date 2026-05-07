@@ -77,7 +77,7 @@ export default async function ToursPage() {
                   </div>
                   <h2 className="font-playfair text-3xl md:text-5xl font-medium mb-2">{displayName}</h2>
                   <p className="text-3xl text-gold font-medium mb-6" dir="ltr">
-                    <PriceDisplay amountGBP={tour.price} />
+                    <PriceDisplay amountSAR={tour.price} />
                     <span className="text-sm font-light opacity-50 uppercase tracking-wide ms-2">{t('per_group')}</span>
                   </p>
                   <div className="space-y-4 font-light leading-relaxed mb-8 text-lg opacity-80">

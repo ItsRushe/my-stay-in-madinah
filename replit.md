@@ -17,10 +17,10 @@ A Next.js boutique accommodation booking site for Madinah, Saudi Arabia.
 - **Fonts:** Playfair Display (headings), Jost (body), Tajawal (Arabic)
 
 ## Currency
-- Default display: SAR
-- DB stores prices in GBP
-- SAR rate = 5.0 (adjusted for clean math: 20 GBP = SAR 100, 25 GBP = SAR 125)
+- Master currency: **SAR** (stored in DB and used as base for all conversions)
 - Supported: SAR, GBP, USD, EUR
+- Conversion rates (from SAR): GBP × 0.2, USD × 0.267, EUR × 0.234
+- `CurrencyProvider.tsx` holds RATES; `PriceDisplay` takes `amountSAR` prop
 
 ## Localisation (next-intl)
 - Locale stored in `NEXT_LOCALE` cookie (no URL prefix)
@@ -30,13 +30,13 @@ A Next.js boutique accommodation booking site for Madinah, Saudi Arabia.
 - Arabic: RTL layout, Tajawal font, set via `lang="ar"` + `dir="rtl"` on `<html>`
 
 ## Rooms
-| Room ID | Name | GBP | SAR |
-|---|---|---|---|
-| premium-double | Classic King | 20 | 100 |
-| deluxe-twin | Classic Twin | 20 | 100 |
-| standard-twin | Standard Twin | 20 | 100 |
-| executive-king | Terrace King | 25 | 125 |
-| family-suite | Garden Oasis King Suite | 25 | 125 |
+| Room ID | Name | SAR |
+|---|---|---|
+| premium-double | Classic King | 100 |
+| deluxe-twin | Classic Twin | 100 |
+| standard-twin | Standard Twin | 100 |
+| executive-king | Terrace King | 95 |
+| family-suite | Garden Oasis King Suite | 125 |
 
 ## Contact
 - WhatsApp: `+966 50 815 1408` (Saudi number: `966508151408`)

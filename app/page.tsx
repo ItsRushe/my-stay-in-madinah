@@ -181,7 +181,7 @@ export default async function Home() {
                   <div className="p-6 md:p-8 flex flex-col flex-grow">
                     <h3 className="font-playfair text-xl md:text-2xl text-ink font-medium mb-2">{displayName}</h3>
                     <p className={`text-lg md:text-xl font-medium mb-3 ${available ? 'text-gold' : 'text-ink/30'}`} dir="ltr">
-                      <PriceDisplay amountGBP={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
+                      <PriceDisplay amountSAR={room.price_per_night} /> <span className="text-sm font-light text-ink/50 uppercase">{t('per_night')}</span>
                     </p>
                     <p className="text-ink/70 font-light text-sm line-clamp-2 mb-6 flex-grow">{displayDesc}</p>
                     {available ? (
@@ -312,7 +312,7 @@ export default async function Home() {
                       <h3 className="font-playfair text-3xl md:text-4xl text-white font-medium">{displayName}</h3>
                     </div>
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-2xl font-medium text-gold" dir="ltr"><PriceDisplay amountGBP={tour.price} /></span>
+                      <span className="text-2xl font-medium text-gold" dir="ltr"><PriceDisplay amountSAR={tour.price} /></span>
                       <span className="text-white/50 text-xs tracking-wider uppercase font-semibold">{t('per_group')} ({displayGroupSize})</span>
                     </div>
                     <p className="text-white/70 font-light mb-8 text-base md:text-lg leading-relaxed line-clamp-3">{displayDesc}</p>

@@ -1,15 +1,14 @@
 "use client";
 import { useCurrency } from "./CurrencyProvider";
 
-export default function PriceDisplay({ amountGBP }: { amountGBP: number }) {
+export default function PriceDisplay({ amountSAR }: { amountSAR: number }) {
   const { formatPrice, mounted } = useCurrency();
-  
-  // Prevent hydration mismatch on first load
-  if (!mounted) return <span className="notranslate" translate="no">£{amountGBP}</span>;
-  
+
+  if (!mounted) return <span className="notranslate" translate="no">SAR {amountSAR}</span>;
+
   return (
     <span className="notranslate" translate="no">
-      {formatPrice(amountGBP)}
+      {formatPrice(amountSAR)}
     </span>
   );
 }
