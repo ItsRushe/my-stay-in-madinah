@@ -9,7 +9,7 @@ interface Room {
   name: string;
   room_number: string | null;
   price_per_night: number;
-  is_active: boolean | null;
+  is_available: boolean | null;
 }
 
 interface Props {
@@ -25,8 +25,8 @@ export default function RoomManager({ rooms: initial }: Props) {
   const [, startTransition] = useTransition();
 
   function toggleActive(room: Room) {
-    const next = !(room.is_active ?? true);
-    setRooms(prev => prev.map(r => r.id === room.id ? { ...r, is_active: next } : r));
+    const next = !(room.is_available ?? true);
+    setRooms(prev => prev.map(r => r.id === room.id ? { ...r, is_available: next } : r));
     startTransition(() => updateRoomStatus(room.id, next));
   }
 
@@ -59,7 +59,7 @@ export default function RoomManager({ rooms: initial }: Props) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '12px' }}>
       {rooms.map(room => {
-        const active = room.is_active ?? true;
+        const active = room.is_available ?? true;
         const isEditingR = editingRate === room.id;
         const isEditingN = editingNumber === room.id;
 

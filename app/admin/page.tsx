@@ -36,7 +36,7 @@ export default async function AdminDashboard() {
       .order('check_in', { ascending: true }),
     supabase
       .from('rooms')
-      .select('id, name, room_number, price_per_night, is_active')
+      .select('id, name, room_number, price_per_night, is_available')
       .order('name'),
   ]);
 

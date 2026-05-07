@@ -40,7 +40,7 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ id:
   const [{ data: room }, { data: bookings }] = await Promise.all([
     supabase
       .from('rooms')
-      .select('id, name, room_number, price_per_night, is_active')
+      .select('id, name, room_number, price_per_night, is_available')
       .eq('id', id)
       .single(),
     supabase
@@ -55,7 +55,7 @@ export default async function RoomDetailPage({ params }: { params: Promise<{ id:
   const allBookings = bookings || [];
   const confirmed = allBookings.filter(b => b.status === 'confirmed');
   const totalRevenue = confirmed.reduce((sum, b) => sum + (b.amount_paid || 0), 0);
-  const active = room.is_active ?? true;
+  const active = room.is_available ?? true;
 
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const activeBookings = allBookings.filter(b =>

@@ -47,7 +47,7 @@ export async function adminLogout() {
 export async function updateRoomStatus(roomId: string, isActive: boolean) {
   await requireAdmin();
   const supabase = await createClient();
-  await supabase.from('rooms').update({ is_active: isActive }).eq('id', roomId);
+  await supabase.from('rooms').update({ is_available: isActive }).eq('id', roomId);
   revalidatePath('/admin');
   revalidatePath(`/admin/rooms/${roomId}`);
 }
