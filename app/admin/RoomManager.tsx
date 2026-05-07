@@ -39,7 +39,7 @@ export default function RoomManager({ rooms: initial }: Props) {
     const val = parseFloat(rateValues[room.id] ?? '');
     if (!isNaN(val) && val >= 0) {
       setRooms(prev => prev.map(r => r.id === room.id ? { ...r, price_per_night: val } : r));
-      startTransition(() => updateRoomRate(room.id, val));
+      startTransition(async () => { await updateRoomRate(room.id, val); });
     }
     setEditingRate(null);
   }
