@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import ContactForm from "../../components/ContactForm";
 import { getTranslations } from 'next-intl/server';
 
 export const metadata: Metadata = {
@@ -132,77 +133,7 @@ export default async function ContactPage() {
             <p className="text-ink/50 font-light text-sm mt-2">{t('form_sub')}</p>
           </div>
 
-          <form action="https://api.web3forms.com/submit" method="POST" className="space-y-8">
-            <input type="hidden" name="access_key" value="cf93d9fd-7d5e-45dd-9e48-3dcee22fcf48" />
-            <input type="hidden" name="subject" value="New Direct Booking Inquiry from Website" />
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div className="group">
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_name')}</label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  placeholder={t('form_name_placeholder')}
-                  className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light placeholder-gray-300 text-ink text-sm"
-                />
-              </div>
-              <div className="group">
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_email')}</label>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  placeholder={t('form_email_placeholder')}
-                  className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light placeholder-gray-300 text-ink text-sm"
-                  dir="ltr"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              <div>
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_checkin')}</label>
-                <input
-                  type="date"
-                  name="check_in"
-                  required
-                  className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light text-ink/60 text-sm"
-                  dir="ltr"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_checkout')}</label>
-                <input
-                  type="date"
-                  name="check_out"
-                  required
-                  className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light text-ink/60 text-sm"
-                  dir="ltr"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">{t('form_message')}</label>
-              <textarea
-                name="message"
-                rows={4}
-                required
-                placeholder={t('form_message_placeholder')}
-                className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light placeholder-gray-300 text-ink text-sm resize-none"
-              />
-            </div>
-
-            <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
-
-            <button
-              type="submit"
-              className="w-full bg-ink text-ivory py-4 text-sm font-medium tracking-widest uppercase hover:bg-gold transition-colors duration-300"
-            >
-              {t('form_submit')}
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </section>
 

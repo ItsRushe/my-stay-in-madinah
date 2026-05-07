@@ -118,7 +118,9 @@
     "form_checkout": "Check-out",
     "form_message": "Message or Special Requests",
     "form_message_placeholder": "Let us know how we can make your visit perfect...",
-    "form_submit": "Request Best Direct Rate"
+    "form_submit": "Request Best Direct Rate",
+    "success_title": "Message Received",
+    "success_sub": "Thank you — we'll be in touch shortly with a personalised response. For the fastest reply, message us on WhatsApp."
   },
   "Footer": {
     "about": "About Us",
