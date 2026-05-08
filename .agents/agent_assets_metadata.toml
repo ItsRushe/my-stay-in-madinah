@@ -6,3 +6,9 @@ id = "MLdZVJxtaGBl9WpDCryb-"
 uri = "file://My-Stay-in-Madinah-Brand-Guide.pdf"
 type = "pdf"
 title = "My Stay in Madinah — Brand Guidelines (Edition 01, 2026)"
+
+[[outputs]]
+id = "2a1kkNCwwaW6p3kea7hB4"
+uri = "file://public/house-rules.pdf"
+type = "pdf"
+title = "House Rules & Guest Guide — My Stay in Madinah"
