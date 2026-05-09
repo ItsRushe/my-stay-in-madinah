@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type State = 'idle' | 'loading' | 'success' | 'error';
 
@@ -10,23 +10,34 @@ export default function ArrivalForm() {
   const [phone, setPhone] = useState('');
   const [checkinTime, setCheckinTime] = useState('');
   const [notes, setNotes] = useState('');
+  const [bookingId, setBookingId] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const b = params.get('b');
+    if (b) setBookingId(b);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setState('loading');
+
+    const payload: Record<string, string> = {
+      name,
+      phone,
+      source: 'website',
+    };
+    if (checkinTime) payload.checkin_time = checkinTime;
+    if (notes) payload.notes = notes;
+    if (bookingId) payload.booking_id = bookingId;
+
     try {
-      const res = await fetch('/api/arrival', {
+      const res = await fetch('https://api.mystayinmadinah.com/arrival', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          phone,
-          checkin_time: checkinTime || null,
-          notes: notes || null,
-          source: 'website',
-        }),
+        body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error('Failed');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setState('success');
     } catch {
       setState('error');
@@ -79,14 +90,14 @@ export default function ArrivalForm() {
 
           <div>
             <label className="block text-xs font-medium tracking-widest uppercase text-ink/50 mb-3">
-              Booking Reference or Guest Name *
+              Guest Name *
             </label>
             <input
               type="text"
               required
               value={name}
               onChange={e => setName(e.target.value)}
-              placeholder="e.g. Omar Abdullah or #A1B2C3"
+              placeholder="e.g. Omar Abdullah"
               autoComplete="name"
               className="w-full border-b border-gray-200 bg-transparent pb-3 focus:outline-none focus:border-ink transition-colors font-light placeholder-gray-300 text-ink text-sm"
             />
@@ -101,7 +112,7 @@ export default function ArrivalForm() {
               required
               value={phone}
               onChange={e => setPhone(e.target.value)}
-              placeholder="+966501234567"
+              placeholder="+447123456789"
               autoComplete="tel"
               inputMode="tel"
               dir="ltr"
