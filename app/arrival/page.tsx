@@ -1,11 +1,9 @@
-import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import ArrivalForm from './ArrivalForm';
 
 export default function ArrivalPage() {
   return (
     <main className="bg-ivory min-h-screen">
-      <Navbar />
 
       {/* HERO */}
       <section className="bg-ink text-ivory pt-36 pb-24 px-6 md:px-12 text-center">
