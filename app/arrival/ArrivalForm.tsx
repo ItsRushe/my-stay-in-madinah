@@ -15,7 +15,7 @@ export default function ArrivalForm() {
     e.preventDefault();
     setState('loading');
     try {
-      const res = await fetch('https://api.mystayinmadinah.com/arrival', {
+      const res = await fetch('/api/arrival', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
